@@ -5,6 +5,20 @@ import Vue from 'vue';
 import vueCustomElement from 'vue-custom-element';
 Vue.use(vueCustomElement);
 
+const formaterPlugin = {
+        install(Vue, options) {
+            Vue.prototype.$shadeColor= function(color, percent) {  
+                    console.log("passage dans shade color");
+                     var f=parseInt(color.slice(1),16),t=percent<0?0:255,p=percent<0?percent*-1:percent,R=f>>16,G=f>>8&0x00FF,B=f&0x0000FF;
+                     // return "red";
+                     return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
+            }
+            
+        }
+};
+
+Vue.use( formaterPlugin);
+
 //pour la traduction 
 import VueI18n from 'vue-i18n';
 Vue.use(VueI18n);
@@ -14,7 +28,7 @@ Vue.use(VueI18n);
 
 
 
-import Skeleton from './formater-skeleton.vue';
+import FormaterSelect from './formater-select.vue';
 
 
 ljs.addAliases({
@@ -35,8 +49,8 @@ ljs.load('dep', function() {
 	}
 	
 	
-	Vue.customElement('formater-skeleton', Skeleton);
-	window.registredAerisElements.push('formater-skeleton');
+	Vue.customElement('formater-select', FormaterSelect);
+	window.registredAerisElements.push('formater-select');
 	
 })
 
