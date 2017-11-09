@@ -26,17 +26,5 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 
 ## Components
 
-### formater-select
+### [formater-select](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-select)
 
-#### example
-```
-<formater-select  name="index" options="['un', 'deux', 'trois']"  ></formater-select>
-```
-
-#### props
-
-##### :name
-> name, class 
-
-##### :options
-> array of select options
