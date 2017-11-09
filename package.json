@@ -1,7 +1,7 @@
 {
-  "name": "formater-skeleton-vjs",
+  "name": "formater-commons-components-vjs",
   "version": "0.0.1",
-  "description": "Skeleton for Web component",
+  "description": "commons components for poleterresolide",
   "preproduction": {
     "url": "https://rawgit.com/terresolide/"
   },
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/terresolide/formater-skeleton-vjs.git"
+    "url": "git+https://github.com/terresolide/formater-commons-components-vjs.git"
   },
   "keywords": [
     "vue.js"
