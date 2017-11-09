@@ -24,3 +24,19 @@ npm run build
 
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
+## Components
+
+### formater-select
+
+#### example
+```
+<formater-select  name="index" options="['un', 'deux', 'trois']"  ></formater-select>
+```
+
+#### props
+
+##### :name
+> name, class 
+
+##### :options
+> array of select options
