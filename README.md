@@ -1,11 +1,8 @@
-# formater-skeleton-vjs
+# formater-commons-components-vjs
 
 
-Just a component with a button used to begin a component
+Usual components for poleterresolide
 
-
-## Create your own repository from formater-skeleton-vjs
-See [HOW TO BEGIN YOUR OWN COMPONENT](https://github.com/terresolide/formater-skeleton-vjs/wiki)
 
 ## Build Setup
 
