@@ -43,12 +43,15 @@ export default {
     
     created: function(){
         var options = JSON.parse( this.options.replace(/'/g, '"'))
+       
+        
         this.value = options[0];   
         this.indexes = options;
-        this.$emit( 'input', this.value); 
-        this.initListeners();     
+        this.$emit( 'input', this.value);   
+        this.initListeners();
     },
     mounted: function(){
+       
         this.initCss();
     },
     destroyed: function() {
@@ -63,11 +66,13 @@ export default {
             evt.detail[this.name] = this.value;
         },
         handleTheme: function(theme) {
-	  		this.theme = theme.detail
-			this.ensureTheme()
+            console.log( this.name + "handleTheme");
+	  		this.theme = theme.detail;
+			this.ensureTheme();
 		},
 		  	
 		ensureTheme: function() {
+		    console.log( this.name + "ensureTheme");
 		 	if ( !this.color &&  (this.$el) && (this.$el.querySelector)) {
 		 		var color3 =  this.$shadeColor( this.theme.primary, 0.8);
 		 		this.$el.querySelector("select").style.backgroundColor = color3;
@@ -84,12 +89,15 @@ export default {
 	        }
     	},
 	    initListeners: function(){
-	        this.resetEventListener = this.handleReset.bind(this) 
-	        document.addEventListener('aerisResetEvent', this.resetEventListener);
-	        this.searchEventListener = this.handleSearch.bind(this) 
-	        document.addEventListener('aerisSearchEvent', this.searchEventListener);
+	        console.log('init listeners');
+	       this.resetEventListener = this.handleReset.bind(this) 
+	       document.addEventListener('aerisResetEvent', this.resetEventListener);
+	       this.searchEventListener = this.handleSearch.bind(this) 
+	       document.addEventListener('aerisSearchEvent', this.searchEventListener);
 	        this.aerisThemeListener = this.handleTheme.bind(this) 
 	        document.addEventListener('aerisTheme', this.aerisThemeListener);
+	     
+	       
 	    },
 	    removeListeners: function(){
 			document.removeEventListener('aerisResetEvent', this.resetEventListener);
