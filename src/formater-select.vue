@@ -66,7 +66,6 @@ export default {
             evt.detail[this.name] = this.value;
         },
         handleTheme: function(theme) {
-            console.log( this.name + "handleTheme");
 	  		this.theme = theme.detail;
 			this.ensureTheme();
 		},
