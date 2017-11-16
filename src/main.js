@@ -56,7 +56,6 @@ ljs.load('dep', function() {
     }
 	
 	registerElement('formater-select', FormaterSelect);
-	 var e = new CustomEvent("formaterCommonsComponentsLoaded");
-     document.dispatchEvent(e);
+
 })
 
