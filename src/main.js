@@ -48,10 +48,16 @@ ljs.load('dep', function() {
 	if (!window.registredAerisElements) {
 		window.registredAerisElements = [];
 	}
+	function registerElement(name, component) {
+	       
+        if (window.registredAerisElements.indexOf(name) < 0) {
+            Vue.customElement(name, component);
+            window.registredAerisElements.push(name)
+        }
+    }
 	
-	
-	Vue.customElement('formater-select', FormaterSelect);
-	window.registredAerisElements.push('formater-select');
-	
+	registerElement('formater-select', FormaterSelect);
+	 var e = new CustomEvent("formaterCommonsComponentsLoaded");
+     document.dispatchEvent(e);
 })
 

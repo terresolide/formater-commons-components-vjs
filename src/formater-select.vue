@@ -72,7 +72,6 @@ export default {
 		},
 		  	
 		ensureTheme: function() {
-		    console.log( this.name + "ensureTheme");
 		 	if ( !this.color &&  (this.$el) && (this.$el.querySelector)) {
 		 		var color3 =  this.$shadeColor( this.theme.primary, 0.8);
 		 		this.$el.querySelector("select").style.backgroundColor = color3;
@@ -83,13 +82,11 @@ export default {
 	            this.$el.querySelector("select").style.width = this.width;
 	            this.$el.style.width = this.width;
 	            if(this.color){
-	                console.log(this.color);
 	                this.$el.querySelector("select").style.backgroundColor = this.color;
 	            }
 	        }
     	},
 	    initListeners: function(){
-	        console.log('init listeners');
 	       this.resetEventListener = this.handleReset.bind(this) 
 	       document.addEventListener('aerisResetEvent', this.resetEventListener);
 	       this.searchEventListener = this.handleSearch.bind(this) 
