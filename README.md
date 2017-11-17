@@ -41,3 +41,4 @@ Or the last taged file:
 
 ### [formater-select](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-select)
 
+### [formater-search-box](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-search-box)
