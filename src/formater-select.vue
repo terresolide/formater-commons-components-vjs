@@ -51,8 +51,10 @@ export default {
         this.initListeners();
     },
     mounted: function(){
-       
         this.initCss();
+        var event = new CustomEvent('aerisThemeRequest', {});
+        document.dispatchEvent(event);
+  
     },
     destroyed: function() {
     	this.removeListeners();
