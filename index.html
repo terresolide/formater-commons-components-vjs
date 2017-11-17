@@ -14,7 +14,9 @@
 	<formater-select   width="150px"  name="autre" options="['un', 'deux', 'trois']"></formater-select>
 	<formater-select    color="#ccc" name="index" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  @input="test"></formater-select>
 
-
+	<formater-search-box header-icon-class="fa fa-bars" :title="$t('index')" :value="index" @input="index = $event.target.value">
+			<formater-select width="260px" name="index" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  ></formater-select>
+		</formater-search-box>
 	
     <!-- le fichier build est créé lorsqu'on lance la commande build -->
   	 <script src="dist/build.js"></script> 

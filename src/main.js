@@ -28,7 +28,7 @@ Vue.use(VueResource);
 
 
 import FormaterSelect from './formater-select.vue';
-
+import FormaterSearchBox from './formater-search-box.vue';
 
 ljs.addAliases({
 	dep: [//'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', 
@@ -56,6 +56,7 @@ ljs.load('dep', function() {
     }
 	
 	registerElement('formater-select', FormaterSelect);
+	registerElement('formater-search-box', FormaterSearchBox);
 
 })
 
