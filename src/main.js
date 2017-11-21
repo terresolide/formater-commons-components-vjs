@@ -29,13 +29,13 @@ Vue.use(VueResource);
 
 import FormaterSelect from './formater-select.vue';
 import FormaterSearchBox from './formater-search-box.vue';
-
+import FormaterTemporalSearch from './formater-temporal-search.vue';
 ljs.addAliases({
 	dep: [//'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', 
-	    'https://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.4.1/document-register-element.js',
+	   // 'https://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.4.1/document-register-element.js',
 	//    'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js',
 	//    'https://cdnjs.cloudflare.com/ajax/libs/moment-range/3.0.3/moment-range.min.js',
-	 //   'https://cdn.rawgit.com/aeris-data/aeris-commons-components-vjs/0.1.23/dist/aeris-commons-components-vjs_0.1.23.js'
+	    'https://cdn.rawgit.com/aeris-data/aeris-commons-components-vjs/0.1.23/dist/aeris-commons-components-vjs_0.1.23.js'
 	    ]
 })
 ljs.load('dep', function() {
@@ -55,8 +55,26 @@ ljs.load('dep', function() {
         }
     }
 	
-	registerElement('formater-select', FormaterSelect);
-	registerElement('formater-search-box', FormaterSearchBox);
+	var componentUsed = new Array('aeris-datepicker');
+	var loaded = setInterval(function() {
+        var result = componentUsed.filter( function( cpt){
+            return window.registredAerisElements.indexOf(cpt)>-1;
+        })
+        if ( result.length == componentUsed.length) {
+           console.log("Formater : aeris components loaded");
+           load();
+           clearInterval(loaded);
+        }
+     }, 100);
+     function load(){
+         
+         registerElement('formater-select', FormaterSelect);
+         registerElement('formater-temporal-search', FormaterTemporalSearch);
+         registerElement('formater-search-box', FormaterSearchBox);
+        
+    
+    }
+
 
 })
 

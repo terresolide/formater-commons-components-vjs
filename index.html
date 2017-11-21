@@ -3,8 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Vue Example</title>
-    <script src="https://cdn.rawgit.com/aeris-data/aeris-commons-components-vjs/0.1.23/dist/aeris-commons-components-vjs_0.1.23.js" ></script>
-  
+   
   </head>
   <body> 
   <h1>Tests component in dev</h1>
@@ -14,10 +13,13 @@
 	<formater-select   width="150px"  name="autre" options="['un', 'deux', 'trois']"></formater-select>
 	<formater-select    color="#ccc" name="index" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  @input="test"></formater-select>
 
-	<formater-search-box header-icon-class="fa fa-bars" :title="$t('index')" :value="index" @input="index = $event.target.value">
+	<formater-search-box header-icon-class="fa fa-bars" title="Mon titre" value="index" @input="index = $event.target.value">
 			<formater-select width="260px" name="index" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  ></formater-select>
 	</formater-search-box>
-	
+	<formater-search-box value="test" title="truc" >
+	<formater-temporal-search lang="fr"></formater-temporal-search>
+	</formater-search-box>
+	<formater-temporal-search></formater-temporal-search>
     <!-- le fichier build est créé lorsqu'on lance la commande build -->
   	 <script src="dist/build.js"></script> 
 	
