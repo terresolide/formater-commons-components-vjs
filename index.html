@@ -12,6 +12,7 @@
 	<aeris-theme id="theme2" active="true" primary="#DD9946" emphasis="#39B062"></aeris-theme>
 	<formater-select   width="150px"  name="autre" options="['un', 'deux', 'trois']"></formater-select>
 	<formater-select    color="#ccc" name="index" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  @input="test"></formater-select>
+<formater-select    color="#ccc" name="associatif" options="{'aa':'anatole armand', 'am': 'alphonse monge'}"  associative="true"></formater-select>
 
 	<formater-search-box header-icon-class="fa fa-bars" title="Mon titre" value="index" @input="index = $event.target.value">
 			<formater-select width="260px" name="index" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  ></formater-select>
