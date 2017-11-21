@@ -1,7 +1,7 @@
 <template>
 <div class="formater-select">
 	<select :id="name" :name="name" v-model="value" v-if="associative">
-		<option v-for="(item, key) in indexes" :value="key" :selected="key==value">{{key}}{{ item}}</option>
+		<option v-for="(item, key) in indexes" :value="key" :selected="key==value">{{ item}}</option>
 	</select>
 	<select :id="name" :name="name" v-model="value" v-else>
 		<option v-for="item in indexes" :value="item" :selected="item==value">{{ item}}</option>	
