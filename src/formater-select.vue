@@ -49,6 +49,7 @@ export default {
     },
     
     created: function(){
+        console.log(this.options);
         var options = JSON.parse( this.options.replace(/'/g, '"'));
   
          
