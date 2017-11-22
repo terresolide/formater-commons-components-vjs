@@ -55,24 +55,13 @@ export default {
     created: function(){
         var options = JSON.parse( this.options.replace(/'/g, '"'));
         this.indexes = options;
-        if(this.type == 'associative'){
-            if(this.default && options[this.default]){
-                this.value = this.default;
-            }else{
-            	this.value = Object.keys(options)[0];
-        	}
-        }else{
-            if( this.default && options.indexOf( this.default )>-1){
-                this.value = this.default;
-            }else{
-        		this.value = options[0]; 
-        	}
-    	}
+        
         this.$emit( 'input', this.value);   
         this.initListeners();
     },
     mounted: function(){
         this.initCss();
+        this.initDefaultValue();
         var event = new CustomEvent('aerisThemeRequest', {});
         document.dispatchEvent(event);
   
@@ -107,6 +96,22 @@ export default {
 	                this.$el.querySelector("select").style.backgroundColor = this.color;
 	            }
 	        }
+    	},
+    	
+    	initDefaultValue(){
+    	    if(this.type == 'associative'){
+                if(this.default && this.indexes[this.default]){
+                    this.value = this.default;
+                }else{
+                	this.value = Object.keys(this.indexes)[0];
+            	}
+            }else{
+                if( this.default && this.indexes.indexOf( this.default )>-1){
+                    this.value = this.default;
+                }else{
+            		this.value = this.indexes[0]; 
+            	}
+        	}
     	},
 	    initListeners: function(){
 	       this.resetEventListener = this.handleReset.bind(this) 

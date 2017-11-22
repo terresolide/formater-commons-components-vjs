@@ -18,7 +18,7 @@
 	<formater-search-box header-icon-class="fa fa-bars" :title="$t('index')" :value="index" @input="index = $event.target.value">
 			<formater-select width="260px" name="index" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  ></formater-select>
 	</formater-search-box>
-	<formater-select    color="#ccc" name="associatif" options="{'aa':'anatole armand', 'am': 'alphonse monge'}"  associative="true"></formater-select>
+	<formater-select    color="#ccc" name="associatif" options="{'aa':'anatole armand', 'am': 'alphonse monge'}"  type="associative" default="am"></formater-select>
 	
 	
     <!-- The file is generated when we laucnch in console: npm run pre
