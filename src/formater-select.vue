@@ -1,6 +1,6 @@
 <template>
 <div class="formater-select">
-	<select :id="name" :name="name" v-model="value" v-if="associative">
+	<select :id="name" :name="name" v-model="value" v-if="type=='associative'">
 		<option v-for="(item, key) in indexes" :value="key" :selected="key==value">{{ item}}</option>
 	</select>
 	<select :id="name" :name="name" v-model="value" v-else>
@@ -12,7 +12,7 @@
 export default {
     props:{
         options:{
-            type:String
+            type:[ String, Array, Object]
         },
         name:{
             type:String,
@@ -26,9 +26,9 @@ export default {
            type: String,
            default:null
        },
-       associative:{
-           type: Boolean,
-           default:false
+       type:{
+           type: String,
+           default: "simple"
        }
     },
   
@@ -49,13 +49,9 @@ export default {
     },
     
     created: function(){
-        console.log(this.options);
         var options = JSON.parse( this.options.replace(/'/g, '"'));
-  
-         
         this.indexes = options;
-        console.log(typeof this.indexes);
-        if(this.associative){
+        if(this.type == 'associative'){
             this.value = Object.keys(options)[0];
         }else{
         	this.value = options[0]; 
