@@ -10,14 +10,14 @@
 	
 	<!-- Call copxonents -->
 	<aeris-theme id="theme2" active="true" primary="#DD9946" emphasis="#39B062"></aeris-theme>
-	
+	<test-component></test-component>
 	<formater-select   width="150px"  name="autre" options="['un', 'deux', 'trois']"></formater-select>
-	<formater-select    color="#ccc" name="index" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  default="SFE" @input="test"></formater-select>
-<formater-select    color="#ccc" type="associative" options="{'aa':'anatole armand', 'am': 'alphonse monge'}"  ></formater-select>
-	 <formater-select type="associative" name="DataInterval" options="{'sec': 'second', 'min': 'minute', 'hor':'hour', 'day':'day', 'mon':'month'}" default="day" width="260px" ></formater-select>
+	<formater-select    color="#ccc" defaut="Kp" name="index0" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  @input="test"></formater-select>
+<formater-select    color="#ccc" type="associative" options="{'aa':'anatole armand', 'am': 'alphonse monge'}"  type="associative" defaut="am"></formater-select>
+	 <formater-select type="associative" defaut="hor" name="DataInterval0" options="{'sec': 'second', 'min': 'minute', 'hor':'hour', 'day':'day', 'mon':'month'}" width="260px" ></formater-select>
 
 	<formater-search-box header-icon-class="fa fa-bars" title="Mon titre" value="index" @input="index = $event.target.value">
-			<formater-select width="260px" name="index" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  ></formater-select>
+			<formater-select width="260px" name="index2" defaut="Kp" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  ></formater-select>
 	</formater-search-box>
 	<formater-search-box value="test" title="truc" >
 	<formater-temporal-search lang="fr"></formater-temporal-search>

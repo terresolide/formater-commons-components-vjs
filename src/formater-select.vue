@@ -30,7 +30,7 @@ export default {
            type: String,
            default: "simple"
        },
-       default:{
+       defaut:{
            type: String,
            default:null
        }
@@ -58,6 +58,7 @@ export default {
         
         this.$emit( 'input', this.value);   
         this.initListeners();
+      
     },
     mounted: function(){
         this.initCss();
@@ -79,7 +80,7 @@ export default {
         },
         handleTheme: function(theme) {
 	  		this.theme = theme.detail;
-			this.ensureTheme();
+	  		this.ensureTheme();
 		},
 		  	
 		ensureTheme: function() {
@@ -100,14 +101,14 @@ export default {
     	
     	initDefaultValue(){
     	    if(this.type == 'associative'){
-                if(this.default && this.indexes[this.default]){
-                    this.value = this.default;
+                if(this.defaut && this.indexes[this.defaut]){
+                    this.value = this.defaut;
                 }else{
                 	this.value = Object.keys(this.indexes)[0];
             	}
             }else{
-                if( this.default && this.indexes.indexOf( this.default )>-1){
-                    this.value = this.default;
+                if( this.defaut && this.indexes.indexOf( this.defaut )>-1){
+                    this.value = this.defaut;
                 }else{
             		this.value = this.indexes[0]; 
             	}
