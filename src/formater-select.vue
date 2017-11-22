@@ -1,9 +1,17 @@
 <template>
 <div class="formater-select">
-	<select :id="name" :name="name" v-model="value" v-if="type=='associative'">
-		<option v-for="(item, key) in indexes" :value="key" :selected="key==value">{{ item}}</option>
+	<!-- associative -->
+	<select :id="name" :name="name" v-model="values" :multiple="ismultiple" v-if="cas==0" >
+		<option v-for="(item, key) in indexes" :value="key" :selected="values.indexOf(key)>-1" >{{ item}}</option>
 	</select>
-	<select :id="name" :name="name" v-model="value" v-else>
+	<select :id="name" :name="name" v-model="value"  v-else-if="cas== 1" >
+		<option v-for="(item, key) in indexes" :value="key" :selected="value==key" >{{ item}}</option>
+	</select>
+	<!-- non associative -->
+	<select :id="name" :name="name" v-model="values" multiple="true" v-else-if="cas==2" >
+		<option v-for="item in indexes" :value="item" :selected="values.indexOf(item)>-1">{{ item}}</option>	
+	</select>
+	<select :id="name" :name="name" v-model="value"  v-else>
 		<option v-for="item in indexes" :value="item" :selected="item==value">{{ item}}</option>	
 	</select>
 </div>
@@ -33,12 +41,35 @@ export default {
        defaut:{
            type: String,
            default:null
+       },
+       ismultiple:{
+           type: Boolean,
+           default:false
        }
+    },
+    computed:{
+        cas: function(){
+            if( this.type == "associative" ){
+                if(this.ismultiple){
+                    return 0;
+                }else{
+                    return 1;
+                }
+            }else{
+                if(this.ismultiple){
+                    return 2;
+                }else{
+                    return 3;
+                }
+            }
+         
+        }
     },
   
     data(){
         return {
             value:'', 
+            values:[],
             indexes: [], 
             resetEventListener: null, 
             searchEventListener:null,
@@ -49,6 +80,9 @@ export default {
     watch:{
         value:function(ev){
             this.$emit( 'input', this.value);
+        },
+        values: function(ev){
+            this.$emit( 'input', this.values)
         }
     },
     
@@ -73,10 +107,15 @@ export default {
       
     methods:{
         handleReset: function(evt){
-            this.value = indexes[0];
+            this.initDefaultValue();
+            
     	},
         handleSearch: function(evt){
-            evt.detail[this.name] = this.value;
+            if(this.ismultiple){
+                evt.detail[this.name] = this.values;
+            }else{
+            	evt.detail[this.name] = this.value;
+            }
         },
         handleTheme: function(theme) {
 	  		this.theme = theme.detail;
@@ -100,19 +139,29 @@ export default {
     	},
     	
     	initDefaultValue(){
-    	    if(this.type == 'associative'){
-                if(this.defaut && this.indexes[this.defaut]){
-                    this.value = this.defaut;
+    	  
+                if(this.defaut && (this.indexes[this.defaut]
+                || this.indexes.indexOf( this.defaut )>-1)){
+                    if( this.ismultiple){
+                        this.values = [this.defaut];
+                    }else{
+                    	this.value = this.defaut;
+                    }
+                    
                 }else{
-                	this.value = Object.keys(this.indexes)[0];
+                    if( this.type == "associative"){
+                        var value = Object.keys(this.indexes)[0];
+                    }else{
+                        var value = this.indexes[0];
+                    }
+                    console.log("value=" +value);
+                    if( this.multiple){
+                        this.values =  [ value ];
+                    }else{
+                        this.value = value;
+                    }
+
             	}
-            }else{
-                if( this.defaut && this.indexes.indexOf( this.defaut )>-1){
-                    this.value = this.defaut;
-                }else{
-            		this.value = this.indexes[0]; 
-            	}
-        	}
     	},
 	    initListeners: function(){
 	       this.resetEventListener = this.handleReset.bind(this) 
@@ -179,7 +228,7 @@ export default {
 		box-sizing: border-box;
 	}
 	
-	.formater-select::after { /*  Custom dropdown arrow */
+	.formater-select::after{ /*  Custom dropdown arrow */
 		content: "\25BC";
 		height: 1em;
 		font-size: .625em;
@@ -187,6 +236,9 @@ export default {
 		right: 1.2em;
 		top: 50%;
 		margin-top: -.5em;
+	}
+	.formater-select:has( [multiple])::after{
+		content:"";
 	}
 	
 	.formater-select::before { /*  Custom dropdown arrow cover */
@@ -201,11 +253,11 @@ export default {
 		color: rgba(0, 0, 0, .3);
 	}
 	
-	.isgi-select select[disabled]::after {
+	.formater-select select[disabled]::after {
 		color: rgba(0, 0, 0, .1);
 	}
 	
 	/* FF only temp fix */
-	@-moz-document url-prefix () { .isgi-select select{ padding-right:.9em}}
+	@-moz-document url-prefix () { .formater-select select{ padding-right:.9em}}
 }
 </style>
