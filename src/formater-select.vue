@@ -29,6 +29,10 @@ export default {
        type:{
            type: String,
            default: "simple"
+       },
+       default:{
+           type: String,
+           default:null
        }
     },
   
@@ -52,9 +56,17 @@ export default {
         var options = JSON.parse( this.options.replace(/'/g, '"'));
         this.indexes = options;
         if(this.type == 'associative'){
-            this.value = Object.keys(options)[0];
+            if(this.default && options[this.default]){
+                this.value = this.default;
+            }else{
+            	this.value = Object.keys(options)[0];
+        	}
         }else{
-        	this.value = options[0]; 
+            if( this.default && options.indexOf( this.default )>-1){
+                this.value = this.default;
+            }else{
+        		this.value = options[0]; 
+        	}
     	}
         this.$emit( 'input', this.value);   
         this.initListeners();
