@@ -30,7 +30,7 @@ Vue.use(VueResource);
 import FormaterSelect from './formater-select.vue';
 import FormaterSearchBox from './formater-search-box.vue';
 import FormaterTemporalSearch from './formater-temporal-search.vue';
-//import Test from './test-component.vue';
+import Test from './test-component.vue';
 
 ljs.addAliases({
 	dep: [//'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', 
@@ -73,7 +73,7 @@ ljs.load('dep', function() {
          registerElement('formater-select', FormaterSelect);
          registerElement('formater-temporal-search', FormaterTemporalSearch);
          registerElement('formater-search-box', FormaterSearchBox);
-         //registerElement('test-component', Test);
+         registerElement('test-component', Test);
         
     
     }

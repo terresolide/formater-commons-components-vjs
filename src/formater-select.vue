@@ -1,14 +1,14 @@
 <template>
-<div class="formater-select">
+<div class="formater-select" :class="multiple? 'formater-multiple':''">
 	<!-- associative -->
-	<select :id="name" :name="name" v-model="values" :multiple="ismultiple" v-if="cas==0" >
+	<select :id="name" :name="name" v-model="values" :multiple="multiple" :size="computeSize" v-if="cas==0" >
 		<option v-for="(item, key) in indexes" :value="key" :selected="values.indexOf(key)>-1" >{{ item}}</option>
 	</select>
 	<select :id="name" :name="name" v-model="value"  v-else-if="cas== 1" >
 		<option v-for="(item, key) in indexes" :value="key" :selected="value==key" >{{ item}}</option>
 	</select>
 	<!-- non associative -->
-	<select :id="name" :name="name" v-model="values" multiple="true" v-else-if="cas==2" >
+	<select :id="name" :name="name" v-model="values" multiple="true" :size="computeSize" v-else-if="cas==2" >
 		<option v-for="item in indexes" :value="item" :selected="values.indexOf(item)>-1">{{ item}}</option>	
 	</select>
 	<select :id="name" :name="name" v-model="value"  v-else>
@@ -20,7 +20,7 @@
 export default {
     props:{
         options:{
-            type:[ String, Array, Object]
+            type:[ String,Array, Object]
         },
         name:{
             type:String,
@@ -42,28 +42,33 @@ export default {
            type: String,
            default:null
        },
-       ismultiple:{
+       multiple:{
            type: Boolean,
            default:false
+       },
+       size:{
+           type: Number,
+           default:null
        }
     },
     computed:{
         cas: function(){
             if( this.type == "associative" ){
-                if(this.ismultiple){
+                if(this.multiple){
                     return 0;
                 }else{
                     return 1;
                 }
             }else{
-                if(this.ismultiple){
+                if(this.multiple){
                     return 2;
                 }else{
                     return 3;
                 }
             }
          
-        }
+        },
+        
     },
   
     data(){
@@ -73,7 +78,8 @@ export default {
             indexes: [], 
             resetEventListener: null, 
             searchEventListener:null,
-            aerisThemeListener:null
+            aerisThemeListener:null,
+            computeSize: 5
             
         }
     },
@@ -82,15 +88,25 @@ export default {
             this.$emit( 'input', this.value);
         },
         values: function(ev){
-            this.$emit( 'input', this.values)
+            this.$emit( 'input', this.values);
         }
     },
     
     created: function(){
+       
         var options = JSON.parse( this.options.replace(/'/g, '"'));
         this.indexes = options;
-        
-        this.$emit( 'input', this.value);   
+       
+        if(this.multiple){
+            if(this.size){
+                this.computeSize = this.size;
+            }else{
+                this.computeSize = this.indexes.length;
+            }
+            this.$emit( 'input', this.values)
+        }else{
+        	this.$emit( 'input', this.value); 
+        }
         this.initListeners();
       
     },
@@ -111,7 +127,7 @@ export default {
             
     	},
         handleSearch: function(evt){
-            if(this.ismultiple){
+            if(this.multiple){
                 evt.detail[this.name] = this.values;
             }else{
             	evt.detail[this.name] = this.value;
@@ -142,7 +158,7 @@ export default {
     	  
                 if(this.defaut && (this.indexes[this.defaut]
                 || this.indexes.indexOf( this.defaut )>-1)){
-                    if( this.ismultiple){
+                    if( this.multiple){
                         this.values = [this.defaut];
                     }else{
                     	this.value = this.defaut;
@@ -204,7 +220,8 @@ export default {
       (-moz-appearance: none ) or
       (appearance: none )) { 
       
-	.formater-select { position:relative;
+	.formater-select {
+	 	position:relative;
 		display: inline-block;
 		vertical-align: middle;
 	}
@@ -228,7 +245,7 @@ export default {
 		box-sizing: border-box;
 	}
 	
-	.formater-select::after{ /*  Custom dropdown arrow */
+	.formater-select:not(.formater-multiple)::after{ /*  Custom dropdown arrow */
 		content: "\25BC";
 		height: 1em;
 		font-size: .625em;
@@ -237,10 +254,8 @@ export default {
 		top: 50%;
 		margin-top: -.5em;
 	}
-	.formater-select:has( [multiple])::after{
-		content:"";
-	}
 	
+
 	.formater-select::before { /*  Custom dropdown arrow cover */
 		width: 2em;
 		right: 0;
@@ -248,7 +263,10 @@ export default {
 		bottom: 0;
 		border-radius: 0 3px 3px 0;
 	}
-	
+	.formater-select.formater-multiple select[multiple]{
+		overflow-y:auto;
+		size:auto;
+	}
 	.formater-select select[disabled] {
 		color: rgba(0, 0, 0, .3);
 	}
