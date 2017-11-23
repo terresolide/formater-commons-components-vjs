@@ -1,14 +1,14 @@
 <template>
 <div class="formater-select" :class="multiple? 'formater-multiple':''">
 	<!-- associative -->
-	<select :id="name" :name="name" v-model="values" :multiple="multiple" :size="computeSize" v-if="cas==0" >
+	<select :id="name" :name="name" v-model="values" :multiple="multiple" :size="computedSize" v-if="cas==0" >
 		<option v-for="(item, key) in indexes" :value="key" :selected="values.indexOf(key)>-1" v-html="item" ></option>
 	</select>
 	<select :id="name" :name="name" v-model="value"  v-else-if="cas== 1" >
 		<option v-for="(item, key) in indexes" :value="key" :selected="value==key" v-html="item"></option>
 	</select>
 	<!-- non associative -->
-	<select :id="name" :name="name" v-model="values" multiple="true" :size="computeSize" v-else-if="cas==2" >
+	<select :id="name" :name="name" v-model="values" multiple="true" :size="computedSize" v-else-if="cas==2" >
 		<option v-for="item in indexes" :value="item" :selected="values.indexOf(item)>-1" v-html="item"></option>	
 	</select>
 	<select :id="name" :name="name" v-model="value"  v-else>
@@ -80,7 +80,7 @@ export default {
             resetEventListener: null, 
             searchEventListener:null,
             aerisThemeListener:null,
-            computeSize: 2
+            computedSize: "auto"
             
         }
     },
@@ -91,17 +91,9 @@ export default {
         values: function(ev){
             this.$emit( 'input', this.values);
         },
-     indexes(ev){
-
-            if(this.multiple){
-                if(this.size){
-                    this.computeSize = this.size;
-                }else{
-                    this.computeSize = this.indexes.length;
-                }
-               
-            }
-        }
+	    indexes(ev){
+			this.computeSize();
+	    }
        
     },
     
@@ -111,15 +103,12 @@ export default {
         this.indexes = options;
      
         if(this.multiple){
-            if(this.size){
-                this.computeSize = this.size;
-            }else{
-                this.computeSize = this.indexes.length;
-            }
+            
             this.$emit( 'input', this.values)
         }else{
         	this.$emit( 'input', this.value); 
         }
+        this.computeSize();
         this.initListeners();
       
     },
@@ -156,6 +145,17 @@ export default {
 		 		var color3 =  this.$shadeColor( this.theme.primary, 0.8);
 		 		this.$el.querySelector("select").style.backgroundColor = color3;
 		 	}
+		},
+		computeSize(){
+		    
+		    if(this.multiple){
+		        console.log( "calcul taille select");
+	            if(this.size){
+	                this.computedSize = this.size;
+	            }else{
+	                this.computedSize = Object.keys(this.indexes).length;
+	            }
+		    }
 		},
 		initCss: function(){
 	        if ((this.$el) && (this.$el.querySelector)) {
