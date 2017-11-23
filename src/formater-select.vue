@@ -265,7 +265,6 @@ export default {
 	}
 	.formater-select.formater-multiple select[multiple]{
 		overflow-y:auto;
-		size:auto;
 	}
 	.formater-select select[disabled] {
 		color: rgba(0, 0, 0, .3);
@@ -275,6 +274,15 @@ export default {
 		color: rgba(0, 0, 0, .1);
 	}
 	
+	.formater-select option{
+	    display:block;
+	 	white-space: normal;
+  		height: auto;
+  		padding: 2px 0;
+	}
+	.formater-select option::first-line{
+		padding-left:0px;
+	}
 	/* FF only temp fix */
 	@-moz-document url-prefix () { .formater-select select{ padding-right:.9em}}
 }
