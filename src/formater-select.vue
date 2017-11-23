@@ -161,6 +161,7 @@ export default {
 	        if ((this.$el) && (this.$el.querySelector)) {
 	            this.$el.querySelector("select").style.width = this.width;
 	            this.$el.style.width = this.width;
+	            this.$el.querySelector("option").style.width = this.width;
 	            if(this.color){
 	                this.$el.querySelector("select").style.backgroundColor = this.color;
 	            }
@@ -251,6 +252,7 @@ export default {
 		appearance: none;
 		/* Default color from aeris */
 		background-color: rgba(172, 220, 238, 0.3);
+
 	}
 	
 	.formater-select::before, .formater-select::after {
@@ -280,6 +282,7 @@ export default {
 	}
 	.formater-select.formater-multiple select[multiple]{
 		overflow-y:auto;
+
 	}
 	.formater-select select[disabled] {
 		color: rgba(0, 0, 0, .3);
@@ -291,8 +294,9 @@ export default {
 	
 	.formater-select option{
 	    display:block;
-	 	white-space: normal;
-	 	word-wrap:break-word;
+	 	white-space: initial;
+	 	line-break: auto;
+ 		word-wrap: break-word;       /* Internet Explorer 5.5+ */
   		height: auto;
   		padding: 2px 0;
 	}
