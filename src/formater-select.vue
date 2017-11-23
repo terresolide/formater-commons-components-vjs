@@ -2,17 +2,17 @@
 <div class="formater-select" :class="multiple? 'formater-multiple':''">
 	<!-- associative -->
 	<select :id="name" :name="name" v-model="values" :multiple="multiple" :size="computeSize" v-if="cas==0" >
-		<option v-for="(item, key) in indexes" :value="key" :selected="values.indexOf(key)>-1" >{{ item}}</option>
+		<option v-for="(item, key) in indexes" :value="key" :selected="values.indexOf(key)>-1" v-html="item" ></option>
 	</select>
 	<select :id="name" :name="name" v-model="value"  v-else-if="cas== 1" >
-		<option v-for="(item, key) in indexes" :value="key" :selected="value==key" >{{ item}}</option>
+		<option v-for="(item, key) in indexes" :value="key" :selected="value==key" v-html="item"></option>
 	</select>
 	<!-- non associative -->
 	<select :id="name" :name="name" v-model="values" multiple="true" :size="computeSize" v-else-if="cas==2" >
-		<option v-for="item in indexes" :value="item" :selected="values.indexOf(item)>-1">{{ item}}</option>	
+		<option v-for="item in indexes" :value="item" :selected="values.indexOf(item)>-1" v-html="item"></option>	
 	</select>
 	<select :id="name" :name="name" v-model="value"  v-else>
-		<option v-for="item in indexes" :value="item" :selected="item==value">{{ item}}</option>	
+		<option v-for="item in indexes" :value="item" :selected="item==value" v-html="item"></option>	
 	</select>
 </div>
 </template>
