@@ -52,7 +52,7 @@ export default {
        }
     },
     computed:{
-        cas: function(){
+        cas(){
             if( this.type == "associative" ){
                 if(this.multiple){
                     return 0;
@@ -67,7 +67,8 @@ export default {
                 }
             }
          
-        },
+        }
+        
         
     },
   
@@ -79,7 +80,7 @@ export default {
             resetEventListener: null, 
             searchEventListener:null,
             aerisThemeListener:null,
-            computeSize: 5
+            computeSize: 2
             
         }
     },
@@ -89,7 +90,19 @@ export default {
         },
         values: function(ev){
             this.$emit( 'input', this.values);
+        },
+     indexes(ev){
+
+            if(this.multiple){
+                if(this.size){
+                    this.computeSize = this.size;
+                }else{
+                    this.computeSize = this.indexes.length;
+                }
+               
+            }
         }
+       
     },
     
     created: function(){
@@ -226,8 +239,10 @@ export default {
 		vertical-align: middle;
 	}
 	
-	.formater-select select {
+	.formater-select:not(.formater-multiple) select {
 		padding-right: 2.5em;
+	}
+	.formater-select select {
 		/* accommodate with the pseudo elements for the dropdown arrow */
 		border: 0;
 		border-radius: 1px;
