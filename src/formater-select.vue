@@ -96,7 +96,7 @@ export default {
        
         var options = JSON.parse( this.options.replace(/'/g, '"'));
         this.indexes = options;
-       
+     
         if(this.multiple){
             if(this.size){
                 this.computeSize = this.size;
