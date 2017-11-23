@@ -228,10 +228,10 @@ export default {
 	margin: 0; /* remove default margins */
 }
 
-@supports (pointer-events: none ) and
+/*@supports (pointer-events: none ) and
       ((-webkit-appearance: none ) or
       (-moz-appearance: none ) or
-      (appearance: none )) { 
+      (appearance: none )) { */
       
 	.formater-select {
 	 	position:relative;
@@ -292,13 +292,12 @@ export default {
 	.formater-select option{
 	    display:block;
 	 	white-space: normal;
+	 	word-wrap:break-word;
   		height: auto;
   		padding: 2px 0;
 	}
-	.formater-select option::first-line{
-		padding-left:0px;
-	}
+
 	/* FF only temp fix */
 	@-moz-document url-prefix () { .formater-select select{ padding-right:.9em}}
-}
+/*}*/
 </style>
