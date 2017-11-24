@@ -66,12 +66,8 @@ export default {
                     return 3;
                 }
             }
-         
-        }
-        
-        
+        }    
     },
-  
     data(){
         return {
             value:'', 
@@ -80,6 +76,7 @@ export default {
             resetEventListener: null, 
             searchEventListener:null,
             aerisThemeListener:null,
+            selectMarkerListener:null,
             computedSize: "auto"
             
         }
@@ -97,7 +94,7 @@ export default {
        
     },
     
-    created: function(){
+    created(){
        
         var options = JSON.parse( this.options.replace(/'/g, '"'));
         this.indexes = options;
@@ -112,35 +109,35 @@ export default {
         this.initListeners();
       
     },
-    mounted: function(){
+    mounted(){
         this.initCss();
         this.initDefaultValue();
         var event = new CustomEvent('aerisThemeRequest', {});
         document.dispatchEvent(event);
   
     },
-    destroyed: function() {
+    destroyed() {
     	this.removeListeners();
       },
       
     methods:{
-        handleReset: function(evt){
+        handleReset(evt){
             this.initDefaultValue();
             
     	},
-        handleSearch: function(evt){
+        handleSearch(evt){
             if(this.multiple){
                 evt.detail[this.name] = this.values;
             }else{
             	evt.detail[this.name] = this.value;
             }
         },
-        handleTheme: function(theme) {
+        handleTheme(theme) {
 	  		this.theme = theme.detail;
 	  		this.ensureTheme();
 		},
 		  	
-		ensureTheme: function() {
+		ensureTheme() {
 		 	if ( !this.color &&  (this.$el) && (this.$el.querySelector)) {
 		 		var color3 =  this.$shadeColor( this.theme.primary, 0.8);
 		 		this.$el.querySelector("select").style.backgroundColor = color3;
@@ -157,7 +154,7 @@ export default {
 	            }
 		    }
 		},
-		initCss: function(){
+		initCss(){
 	        if ((this.$el) && (this.$el.querySelector)) {
 	            this.$el.querySelector("select").style.width = this.width;
 	            this.$el.style.width = this.width;
@@ -192,15 +189,29 @@ export default {
 
             	}
     	},
-	    initListeners: function(){
+    	selectOption( event ){
+    		if( event.detail.component != this.name ){
+    			return;
+    		}
+    		if(this.multiple){
+    			if(event.detail.selected){
+    				this.values.push( event.detail.name);
+    			}else{
+    				this.values.slice( event.detail.name, 1);
+    			}
+    		}else{
+    			this.value = event.detail.name;
+    		}
+    	},
+	    initListeners(){
 	       this.resetEventListener = this.handleReset.bind(this) 
 	       document.addEventListener('aerisResetEvent', this.resetEventListener);
 	       this.searchEventListener = this.handleSearch.bind(this) 
 	       document.addEventListener('aerisSearchEvent', this.searchEventListener);
-	        this.aerisThemeListener = this.handleTheme.bind(this) 
-	        document.addEventListener('aerisTheme', this.aerisThemeListener);
-	     
-	       
+	       this.aerisThemeListener = this.handleTheme.bind(this) 
+	       document.addEventListener('aerisTheme', this.aerisThemeListener);
+	       this.selectMarkerListener = this.selectOption.bind(this) 
+	       document.addEventListener('selectMarkerEvent', this.selectMarkerListener); 
 	    },
 	    removeListeners: function(){
 			document.removeEventListener('aerisResetEvent', this.resetEventListener);
@@ -209,6 +220,8 @@ export default {
 			this.searchEventListener = null;
 			document.removeEventListener('aerisTheme', this.aerisThemeListener);
 	        this.aerisThemeListener = null;
+	        document.removeEventListener('selectMarkerEvent', this.selectMarkerListener);
+	        this.selectMarkerListener = null;
 	    }
 	}
 
