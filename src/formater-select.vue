@@ -194,10 +194,10 @@ export default {
     			return;
     		}
     		if(this.multiple){
-    			if(event.detail.selected){
+    			if(event.detail.selected && this.values.indexOf( event.detail.name) < 0){
     				this.values.push( event.detail.name);
     			}else{
-    				this.values.slice( event.detail.name, 1);
+    				this.values.slice( this.values.indexOf( event.detail.name), 1);
     			}
     		}else{
     			this.value = event.detail.name;
