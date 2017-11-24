@@ -2,7 +2,7 @@
 <div class="formater-select" :class="multiple? 'formater-multiple':''">
 	<!-- associative -->
 	<select :id="name" :name="name" v-model="values" :multiple="multiple" :size="computedSize" v-if="cas==0" >
-		<option v-for="(item, key) in indexes" :value="key" :selected="values.indexOf(key)>-1" v-html="item" ></option>
+		<option v-for="(item, key) in indexes" :value="key" :selected="values.indexOf(key)>-1" v-html="item"></option>
 	</select>
 	<select :id="name" :name="name" v-model="value"  v-else-if="cas== 1" >
 		<option v-for="(item, key) in indexes" :value="key" :selected="value==key" v-html="item"></option>
@@ -161,7 +161,6 @@ export default {
 	        if ((this.$el) && (this.$el.querySelector)) {
 	            this.$el.querySelector("select").style.width = this.width;
 	            this.$el.style.width = this.width;
-	            this.$el.querySelector("option").style.width = this.width;
 	            if(this.color){
 	                this.$el.querySelector("select").style.backgroundColor = this.color;
 	            }
@@ -293,12 +292,14 @@ export default {
 	}
 	
 	.formater-select option{
-	    display:block;
+
 	 	white-space: initial;
+	 	-ms-line-break:auto;
 	 	line-break: auto;
  		word-wrap: break-word;       /* Internet Explorer 5.5+ */
   		height: auto;
-  		padding: 2px 0;
+  		padding: .1em 0;
+  		
 	}
 
 	/* FF only temp fix */
