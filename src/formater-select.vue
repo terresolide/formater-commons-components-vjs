@@ -236,7 +236,7 @@ export default {
 	.formater-select {
 	 	position:relative;
 		display: inline-block;
-		vertical-align: middle;
+	    vertical-align: top;
 	}
 	
 	.formater-select:not(.formater-multiple) select {

@@ -1,24 +1,31 @@
 
 <template>	
 	<span class="formater-layout">
+	<header>
 	<div class="formater-header">
 		<slot name="header"></slot>
 	</div>
+	</header>
+	
 	<div class="formater-wrapper">
+		<aside>
 		<div class="formater-sidebar">
 			<slot name="sidebar"></slot>
 		</div>
+		</aside>
+		<main>
 		<div class="formater-content">
 			<slot name="content"></slot>
 		</div>
+		</main>
 	</div>
+	<footer>
 	<div class="formater-footer">
 		<slot name="footer"></slot>
 	</div>
+	</footer>
 	</span>
 </template>
-
-
 
 <script>
 
@@ -75,6 +82,10 @@ export default {
 		sidebar content
 		footer footer";
 	}*/
+	.formater-layout aside,
+	.formater-layout main{
+		display:inline-block;
+	}
 	.formater-layout .formater-header,
 	.formater-layout .formater-footer{
 		width:100%;
@@ -83,6 +94,7 @@ export default {
 	.formater-layout .formater-wrapper{
 		text-align:center;
 	}
+
 	.formater-layout .formater-sidebar{
 		display:inline-block;
 		text-align:left;
