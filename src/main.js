@@ -30,6 +30,7 @@ Vue.use(VueResource);
 import FormaterSelect from './formater-select.vue';
 import FormaterSearchBox from './formater-search-box.vue';
 import FormaterTemporalSearch from './formater-temporal-search.vue';
+import FormaterLayout from './formater-layout.vue';
 //import Test from './test-component.vue';
 
 ljs.addAliases({
@@ -37,6 +38,7 @@ ljs.addAliases({
 	   // 'https://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.4.1/document-register-element.js',
 	//    'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js',
 	//    'https://cdnjs.cloudflare.com/ajax/libs/moment-range/3.0.3/moment-range.min.js',
+	  //  'https://rawgit.com/FremyCompany/css-grid-polyfill/master/bin/css-polyfills.min.js',
 	    'https://cdn.rawgit.com/aeris-data/aeris-commons-components-vjs/0.1.23/dist/aeris-commons-components-vjs_0.1.23.js'
 	    ]
 })
@@ -73,6 +75,7 @@ ljs.load('dep', function() {
          registerElement('formater-select', FormaterSelect);
          registerElement('formater-temporal-search', FormaterTemporalSearch);
          registerElement('formater-search-box', FormaterSearchBox);
+         registerElement('formater-layout', FormaterLayout);
        //  registerElement('test-component', Test);
         
     
