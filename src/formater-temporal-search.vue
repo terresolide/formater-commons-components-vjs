@@ -17,18 +17,17 @@
 
 <template>
 <span class="formater-temporal-search">
-<div class="formater-input-group" >
-   <span class="right">{{$t('from')}}</span>
-  <input id="from" v-model="from" @click="errorMessage = null" @change="test" />
-</div>
-<aeris-datepicker for="input#from" :format="format" ></aeris-datepicker>
-<div class="formater-input-group">
-	<span class="right">{{$t('to')}}</span>
-	<input id="to" v-model="to" @click="errorMessage = null">
-</div>
-<aeris-datepicker for="input#to" :format="format"></aeris-datepicker> 
-<span class="error-message" v-if="errorMessage">{{errorMessage}}</span>
-
+	<div class="formater-input-group" >
+	   <span class="right">{{$t('from')}}</span>
+	  <input id="from" v-model="from" @click="errorMessage = null" @change="test" />
+	</div>
+	<aeris-datepicker for="input#from" :format="format" ></aeris-datepicker>
+	<div class="formater-input-group">
+		<span class="right">{{$t('to')}}</span>
+		<input id="to" v-model="to" @click="errorMessage = null">
+	</div>
+	<aeris-datepicker for="input#to" :format="format"></aeris-datepicker> 
+	<span class="error-message" v-if="errorMessage">{{errorMessage}}</span>
 </span>
 </template>
 
@@ -55,7 +54,7 @@ export default {
   },
   
   created: function () {
-		this.$i18n.locale = this.lang
+		this.$i18n.locale = this.lang;
 		this.resetEventListener = this.handleReset.bind(this) 
 		document.addEventListener('aerisResetEvent', this.resetEventListener);
 		this.searchEventListener = this.handleSearch.bind(this) 

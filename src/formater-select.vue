@@ -190,6 +190,8 @@ export default {
             	}
     	},
     	selectOption( event ){
+    		console.log("selectOption");
+    		console.log(event);
     		if( event.detail.component != this.name ){
     			return;
     		}
