@@ -197,7 +197,8 @@ export default {
     			if(event.detail.selected && this.values.indexOf( event.detail.name) < 0){
     				this.values.push( event.detail.name);
     			}else{
-    				this.values.slice( this.values.indexOf( event.detail.name), 1);
+    				this.values.splice( this.values.indexOf( event.detail.name), 1);
+    				//this.$emit( 'input', this.values);
     			}
     		}else{
     			this.value = event.detail.name;
