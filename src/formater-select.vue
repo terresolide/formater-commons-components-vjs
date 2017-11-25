@@ -144,9 +144,7 @@ export default {
 		 	}
 		},
 		computeSize(){
-		    
 		    if(this.multiple){
-		        console.log( "calcul taille select");
 	            if(this.size){
 	                this.computedSize = this.size;
 	            }else{
@@ -192,11 +190,13 @@ export default {
     	selectOption( event ){
     		console.log("selectOption");
     		console.log(event);
+    		console.log( event.detail.component +" = " + this.name);
     		if( event.detail.component != this.name ){
     			return;
     		}
     		if(this.multiple){
-    			if(event.detail.selected && this.values.indexOf( event.detail.name) < 0){
+    			if(this.values.indexOf( event.detail.name) < 0){
+    				
     				this.values.push( event.detail.name);
     			}else{
     				this.values.splice( this.values.indexOf( event.detail.name), 1);
