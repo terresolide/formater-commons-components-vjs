@@ -3,44 +3,30 @@
 	<span class="formater-layout">
 	<header>
 	<div class="formater-header">
-		<slot name="header"></slot>
+		BCMT
 	</div>
 	</header>
 	
 	<div class="formater-wrapper">
 		<aside>
 		<div class="formater-sidebar">
-			<slot name="sidebar"></slot>
+			<bcmt-form></bcmt-form>
 		</div>
 		</aside>
 		<main>
 		<div class="formater-content">
-			<slot name="content"></slot>
+			<bcmt-map></bcmt-map>
 		</div>
 		</main>
 	</div>
 	<footer>
 	<div class="formater-footer">
-		<slot name="footer"></slot>
+		pied de page
 	</div>
 	</footer>
 	</span>
 </template>
 
-<script>
-
-
-export default {
-
-  props:{
-	   
-    
-  },
-  
- 
-}
-
-</script>
 
 <style>
 /*.formater-header{

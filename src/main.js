@@ -71,11 +71,11 @@ ljs.load('dep', function() {
         }
      }, 100);
      function load(){
-         
+    	 registerElement('formater-layout', FormaterLayout);
          registerElement('formater-select', FormaterSelect);
          registerElement('formater-temporal-search', FormaterTemporalSearch);
          registerElement('formater-search-box', FormaterSearchBox);
-         registerElement('formater-layout', FormaterLayout);
+        
        //  registerElement('test-component', Test);
         
     
