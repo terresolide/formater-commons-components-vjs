@@ -1,29 +1,7 @@
 
 <template>	
 	<span class="formater-layout">
-	<header>
-	<div class="formater-header">
-		<slot name="header"></slot>
-	</div>
-	</header>
-	
-	<div class="formater-wrapper">
-		<aside>
-		<div class="formater-sidebar">
-			<slot name="sidebar"></slot>
-		</div>
-		</aside>
-		<main>
-		<div class="formater-content">
-			<slot name="content"></slot>
-		</div>
-		</main>
-	</div>
-	<footer>
-	<div class="formater-footer">
-		<slot name="footer"></slot>
-	</div>
-	</footer>
+	<slot></slot>
 	</span>
 </template>
 
