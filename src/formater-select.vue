@@ -188,9 +188,7 @@ export default {
             	}
     	},
     	selectOption( event ){
-    		console.log("selectOption");
-    		console.log(event);
-    		console.log( event.detail.component +" = " + this.name);
+    	
     		if( event.detail.component != this.name ){
     			return;
     		}

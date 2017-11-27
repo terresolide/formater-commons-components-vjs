@@ -3,25 +3,25 @@
 	<span class="formater-layout">
 	<header>
 	<div class="formater-header">
-		BCMT
+		<slot name="header"></slot>
 	</div>
 	</header>
 	
 	<div class="formater-wrapper">
 		<aside>
 		<div class="formater-sidebar">
-			<bcmt-form></bcmt-form>
+			<slot name="sidebar"></slot>
 		</div>
 		</aside>
 		<main>
 		<div class="formater-content">
-			<bcmt-map></bcmt-map>
+			<slot name="content"></slot>
 		</div>
 		</main>
 	</div>
 	<footer>
 	<div class="formater-footer">
-		pied de page
+		<slot name="footer"></slot>
 	</div>
 	</footer>
 	</span>
