@@ -195,15 +195,15 @@ export default {
     			return;
     		}
     		if(this.multiple){
-    			if(this.values.indexOf( event.detail.name) < 0){
+    			if(this.values.indexOf( event.detail.value) < 0){
     				
-    				this.values.push( event.detail.name);
+    				this.values.push( event.detail.value);
     			}else{
-    				this.values.splice( this.values.indexOf( event.detail.name), 1);
+    				this.values.splice( this.values.indexOf( event.detail.value), 1);
     				//this.$emit( 'input', this.values);
     			}
     		}else{
-    			this.value = event.detail.name;
+    			this.value = event.detail.value;
     		}
     	},
 	    initListeners(){
