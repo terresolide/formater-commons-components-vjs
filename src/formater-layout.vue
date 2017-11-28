@@ -62,6 +62,12 @@ mounted: function(){
 	-webkit-margin-before: 0em;
     -webkit-margin-after: 0em;
 }
+.formater-layout h1,
+.formater-layout h2,
+.formater-layout h3,
+.formater-layout h4{
+ 	color:#fff;
+}
 .formater-layout .formater-wrapper{
 	 display: block;
 	-webkit-box-flex: 1;
