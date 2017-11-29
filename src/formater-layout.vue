@@ -22,7 +22,9 @@ methods: {
 	  	
 	 ensureTheme: function() {
 	  	if ((this.$el) && (this.$el.querySelector)) {
-	  		this.$el.querySelector(".formater-layout > header").style.background= this.theme.primary;
+	  	    var node = this.$el.querySelector(".formater-layout > header");
+	  	    if(node)
+	  		node.style.background= this.theme.primary;
   		}
 	 }
  },
