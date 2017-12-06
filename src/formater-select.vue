@@ -95,7 +95,7 @@ export default {
     },
     
     created(){
-       console.log(this.options.replace(/'/g, '"'));
+       
         var options = JSON.parse( this.options.replace(/'/g, '"'));
         this.indexes = options;
      
