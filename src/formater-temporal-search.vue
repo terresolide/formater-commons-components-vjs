@@ -75,10 +75,7 @@ export default {
    		resetEventListener: null,
    		aerisThemeListener:null,
    		theme:null,
-    	north:null,
-    	south:null,
-    	east:null,
-    	west:null,
+    	from:null,
     	to:null,
     	errorMessage: null,
     }
