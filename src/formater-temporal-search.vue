@@ -112,19 +112,19 @@ export default {
 		   	e.detail.error = true;
 	    }
 		
-		if( from == to ){
-		    this.errorMessage = this.$i18n.t('equal_dates');
-		   	e.detail.error = true;
-	    }
+		
 		   
 	
 		var str_from = from.isValid() ? from.format('YYYY-MM-DD') : '';
 		var str_to = to.isValid() ? to.format('YYYY-MM-DD') : '';
 		
-		if(str_from && str_to){
-			e.detail.StartTime= str_from;
-			e.detail.EndTime = str_to;
-		}	
+		if(str_from ){
+			e.detail.start = str_from;
+		}
+		if(str_to){
+		
+			e.detail.end = str_to;
+		}
 	  },
 	 
       handleTheme: function(theme) {
