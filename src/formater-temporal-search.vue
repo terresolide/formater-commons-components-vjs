@@ -21,12 +21,12 @@
 	   <span class="right">{{$t('from')}}</span>
 	  <input id="from" v-model="from" @click="errorMessage = null" @change="test" />
 	</div>
-	<aeris-datepicker for="input#from" :format="format" ></aeris-datepicker>
+	<aeris-datepicker for="input#from" :format="format" :lang="lang" ></aeris-datepicker>
 	<div class="formater-input-group">
 		<span class="right">{{$t('to')}}</span>
 		<input id="to" v-model="to" @click="errorMessage = null">
 	</div>
-	<aeris-datepicker for="input#to" :format="format"></aeris-datepicker> 
+	<aeris-datepicker for="input#to" :format="format" :lang="lang"></aeris-datepicker> 
 	<span class="error-message" v-if="errorMessage">{{errorMessage}}</span>
 </span>
 </template>
