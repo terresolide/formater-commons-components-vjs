@@ -20,7 +20,7 @@
 export default {
     props:{
         options:{
-            type:[ String,Array, Object]
+            type:[String, Array, Object]
         },
         name:{
             type:String,
@@ -95,8 +95,13 @@ export default {
     },
     
     created(){
-       
-        var options = JSON.parse( this.options.replace(/'/g, '"'));
+        if( this.options.substr(0,1) == "["){
+        	 var options = JSON.parse( this.options.replace(/'/g, '"'));
+        }else{
+
+            var options = this.options.split(",");
+        }
+       // var options = JSON.parse( this.options.replace(/'/g, '"'));
         this.indexes = options;
      
         if(this.multiple){
