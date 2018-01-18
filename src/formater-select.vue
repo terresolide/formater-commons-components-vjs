@@ -95,7 +95,7 @@ export default {
     },
     
     created(){
-        if( this.options.substr(0,1) == "["){
+        if( this.options.substr(0,1) == "[" || this.options.substr(0,1) == "{"){
         	 var options = JSON.parse( this.options.replace(/'/g, '"'));
         }else{
 
