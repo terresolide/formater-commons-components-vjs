@@ -98,6 +98,8 @@ export default {
 	  
 	handleSearch: function(e) {
 		if( this.last ){
+			this.from = "";
+			this.to = "";
 		    return;
 		}
 		//v-model not working??

@@ -12,7 +12,7 @@
 </header>
  <div id="collapse" class="box-collapsable-part">
   <main class="box-body">
-    <div class="content">
+    <div class="content" :class="mainClass">
       <slot></slot>
     </div>
   </main>
@@ -31,15 +31,19 @@ export default {
     deployed:  {
         type: Boolean,
         default: false
-      },
+    },
     openIconClass:  {
         type: String,
         default: 'fa fa-chevron-down'
-      },
-      title:  {
-          type: String,
-          default: ''
-        }  
+    },
+    title:  {
+        type: String,
+        default: ''
+    }, 
+    mainClass: {
+    	type: String,
+    	default: ''
+    }
     
     
   },
