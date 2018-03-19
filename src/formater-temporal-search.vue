@@ -21,12 +21,12 @@
 	   <span class="right">{{$t('from')}}</span>
 	  <input id="from" v-model="from" @click="errorMessage = null" @change="test" />
 	</div>
-	<aeris-datepicker for="input#from" :format="format" :lang="lang" ></aeris-datepicker>
+	<aeris-datepicker for="input#from" :format="format" :lang="lang"  :daymin="daymin" :daymax="daymax"></aeris-datepicker>
 	<div class="formater-input-group">
 		<span class="right">{{$t('to')}}</span>
 		<input id="to" v-model="to" @click="errorMessage = null">
 	</div>
-	<aeris-datepicker for="input#to" :format="format" :lang="lang"></aeris-datepicker> 
+	<aeris-datepicker for="input#to" :format="format" :lang="lang" :daymin="daymin" :daymax="daymax"></aeris-datepicker> 
 	<span class="error-message" v-if="errorMessage">{{errorMessage}}</span>
 </span>
 </template>
@@ -42,6 +42,14 @@ export default {
     format:{
         type: String,
         default:'DD/MM/YYYY'
+    },
+    daymin:{
+    	type: String,
+    	default:'1970-01-01'
+    },
+    daymax:{
+    	type:String,
+    	default:'now'
     }
   }, 
   destroyed: function() {
@@ -49,8 +57,8 @@ export default {
 		this.resetEventListener = null;
 		document.removeEventListener('aerisSearchEvent', this.searchEventListener);
 		this.searchEventListener = null;
-		 document.removeEventListener('aerisTheme', this.aerisThemeListener);
-         this.aerisThemeListener = null;
+		document.removeEventListener('aerisTheme', this.aerisThemeListener);
+        this.aerisThemeListener = null;
   },
   
   created: function () {
