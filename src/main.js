@@ -31,6 +31,7 @@ ljs.addAliases({
 	//    'https://cdnjs.cloudflare.com/ajax/libs/moment-range/3.0.3/moment-range.min.js',
 	  //  'https://rawgit.com/FremyCompany/css-grid-polyfill/master/bin/css-polyfills.min.js',
 	    'https://cdn.rawgit.com/aeris-data/aeris-commons-components-vjs/54930cc643e71bba5344d17804038d136e8fd963/dist/aeris-commons-components-vjs_0.1.30.js'
+		//'https://api.poleterresolide.fr/webcomponents/aeris-commons-components-vjs_0.1.30.js'
 	    ]
 })
 ljs.load('dep', function() {
