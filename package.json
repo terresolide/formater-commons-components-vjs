@@ -3,7 +3,7 @@
   "version": "0.1.7",
   "description": "commons components for poleterresolide",
   "preproduction": {
-    "url": "https://rawgit.com/terresolide/"
+       "url": "https://api.poleterresolide.fr/"
   },
   "production": {
     "url": "https://cdn.rawgit.com/terresolide/"

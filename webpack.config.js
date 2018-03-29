@@ -1,11 +1,11 @@
-var apiUrl = "https://api.poleterresolide.fr/";
+
 var path = require('path')
 var webpack = require('webpack')
 var PACKAGE = require('./package.json');
 var buildVersion = PACKAGE.version;
 var buildName = PACKAGE.name;
 var CleanWebpackPlugin = require('clean-webpack-plugin');
-var preUrl = apiUrl + "webcomponents/";
+var preUrl = PACKAGE.preproduction.url + "/webcomponents/";
 var prodUrl = PACKAGE.production.url + buildName + "/" + buildVersion + "/dist/";
 
 var pathsToClean = [
@@ -108,7 +108,7 @@ if (process.env.NODE_ENV === 'preproduction') {
           NODE_ENV: '"production"'
         }
       }),
-      new CleanWebpackPlugin(["webcomponents/*.*"]),
+     // new CleanWebpackPlugin(["webcomponents/*.*"]),
       new webpack.optimize.UglifyJsPlugin({
         sourceMap: true,
         compress: {
