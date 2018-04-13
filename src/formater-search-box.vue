@@ -120,7 +120,7 @@ export default {
     transition: 0.3s
 }
 .formater-search-box.showBody .chevron {
-    transform: rotate(180deg)
+    transform: rotate(-90deg)
 }
 .formater-search-box .chevron {
     transition: 0.3s

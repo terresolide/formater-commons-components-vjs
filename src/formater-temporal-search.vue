@@ -19,7 +19,7 @@
 <span class="formater-temporal-search">
 	<div class="formater-input-group" >
 	   <span class="right">{{$t('from')}}</span>
-	  <input id="from" v-model="from" @click="errorMessage = null" @change="test" />
+	  <input id="from" v-model="from" @click="errorMessage = null" @change="test" @keypress="close" />
 	</div>
 	<aeris-datepicker for="input#from" :format="format" :lang="lang"  :daymin="daymin" :daymax="daymax"></aeris-datepicker>
 	<div class="formater-input-group">
@@ -94,6 +94,9 @@ export default {
 
   
   methods: {
+	  close:function(){
+		  console.log("close");
+	  },
       test: function(){
       },
 	handleReset: function() {
