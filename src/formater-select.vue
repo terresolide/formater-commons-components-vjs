@@ -169,11 +169,23 @@ export default {
     	
     	initDefaultValue(){
     	  
-                if(this.defaut && (this.indexes[this.defaut]
-                || this.indexes.indexOf( this.defaut )>-1)){
+    			console.log( this.defaut);
+                if(this.defaut){
                     if( this.multiple){
-                        this.values = [this.defaut];
+                    	var defaut = this.defaut.split(",");
+                        if( this.type == "associative"){
+                        	var values = Object.keys(this.indexes);
+                        }else{
+                        	var values = this.indexes;
+                        }
+                        this.values = values.filter(function(n){
+                        		return defaut.indexOf(n)>-1;
+                        });
+                      
                     }else{
+                    	if( (this.indexes[this.defaut]
+                        || this.indexes.indexOf( this.defaut )>-1))
+                
                     	this.value = this.defaut;
                     }
                     
