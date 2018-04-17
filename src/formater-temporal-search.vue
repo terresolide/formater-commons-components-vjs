@@ -19,12 +19,12 @@
 <span class="formater-temporal-search">
 	<div class="formater-input-group" >
 	   <span class="right">{{$t('from')}}</span>
-	  <input id="from" v-model="from" @click="errorMessage = null" @change="test" @keypress="close" :placeholder="date2str(daymin)" :pattern="pattern"/>
+	  <input id="from" v-model="from" @click="errorMessage = null" @change="change"  :placeholder="date2str(daymin)" :pattern="pattern"/>
 	</div>
 	<aeris-datepicker for="input#from" :format="format" :lang="lang"  :daymin="daymin" :daymax="daymax"></aeris-datepicker>
 	<div class="formater-input-group">
 		<span class="right">{{$t('to')}}</span>
-		<input id="to" v-model="to" @click="errorMessage = null" :placeholder="now()" :pattern="pattern">
+		<input id="to" v-model="to" @click="errorMessage = null" @change="change" :placeholder="now()" :pattern="pattern">
 	</div>
 	<aeris-datepicker for="input#to" :format="format" :lang="lang" :daymin="daymin" :daymax="daymax" ></aeris-datepicker> 
 	<span class="error-message" v-if="errorMessage">{{errorMessage}}</span>
@@ -89,7 +89,9 @@ export default {
    		theme:null,
     	from:null,
     	to:null,
+    	old:{ from:null, to: null},
     	errorMessage: null,
+    	hasChanged:false
     }
   },
  
@@ -101,7 +103,10 @@ export default {
 	  close:function(){
 		  console.log("close");
 	  },
-      test: function(){
+      change: function(){
+    	  
+    	  var event = new CustomEvent('temporalChangeEvent');
+    	  document.dispatchEvent(event);
       },
       date2str(  date){
     	  return moment(date).format(this.format);
