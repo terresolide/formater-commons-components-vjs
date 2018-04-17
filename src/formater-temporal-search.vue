@@ -19,14 +19,14 @@
 <span class="formater-temporal-search">
 	<div class="formater-input-group" >
 	   <span class="right">{{$t('from')}}</span>
-	  <input id="from" v-model="from" @click="errorMessage = null" @change="test" @keypress="close" :placeholder="date2str(daymin)"/>
+	  <input id="from" v-model="from" @click="errorMessage = null" @change="test" @keypress="close" :placeholder="date2str(daymin)" :pattern="pattern"/>
 	</div>
 	<aeris-datepicker for="input#from" :format="format" :lang="lang"  :daymin="daymin" :daymax="daymax"></aeris-datepicker>
 	<div class="formater-input-group">
 		<span class="right">{{$t('to')}}</span>
-		<input id="to" v-model="to" @click="errorMessage = null" :placeholder="now()">
+		<input id="to" v-model="to" @click="errorMessage = null" :placeholder="now()" :pattern="pattern">
 	</div>
-	<aeris-datepicker for="input#to" :format="format" :lang="lang" :daymin="daymin" :daymax="daymax"></aeris-datepicker> 
+	<aeris-datepicker for="input#to" :format="format" :lang="lang" :daymin="daymin" :daymax="daymax" ></aeris-datepicker> 
 	<span class="error-message" v-if="errorMessage">{{errorMessage}}</span>
 </span>
 </template>
@@ -42,6 +42,10 @@ export default {
     format:{
         type: String,
         default:'DD/MM/YYYY'
+    },
+    pattern:{
+    	type: String,
+    	default:'(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/[0-9]{4}'
     },
     daymin:{
     	type: String,
@@ -102,6 +106,13 @@ export default {
       date2str(  date){
     	  return moment(date).format(this.format);
       },
+      str2date( str, format){
+    	  if( str == "now"){
+    		  return moment();
+    	  }else{
+    		  return moment( str, format);
+    	  }
+      },
       now(){
     	  return this.date2str( moment());
       },
@@ -124,26 +135,36 @@ export default {
 		this.from =  this.$el.querySelector('#from').value
 		this.to =  this.$el.querySelector('#to').value
 		
-		var from = moment(this.from, this.format);
-		var to = moment(this.to, this.format);
-		if( from > to ){
+
+		if( this.from == "" ){
+			var from = str2date( this.daymin, "YYYY-MM-DD");
+		}else{
+			var from = moment(this.from, this.format);
+		}
+		if( this.to == ""){
+			var to = str2date( this.daymax, "YYYY-MM-DD");
+		}else{
+			var to = moment(this.to, this.format);
+		}
+		
+		
+	
+		if(!from.isValid() || !to.isValid() || from > to ){
 		    this.errorMessage = this.$i18n.t('inconsistent_dates');
 		   	e.detail.error = true;
+	    }else{
+		
+			var str_from = from.format('YYYY-MM-DD');
+			var str_to = to.format('YYYY-MM-DD');
+			
+			if(str_from ){
+				e.detail.start = str_from;
+			}
+			if(str_to){
+			
+				e.detail.end = str_to;
+			}
 	    }
-		
-		
-		   
-	
-		var str_from = from.isValid() ? from.format('YYYY-MM-DD') : '';
-		var str_to = to.isValid() ? to.format('YYYY-MM-DD') : '';
-		
-		if(str_from ){
-			e.detail.start = str_from;
-		}
-		if(str_to){
-		
-			e.detail.end = str_to;
-		}
 	  },
 	 
       handleTheme: function(theme) {
@@ -201,6 +222,7 @@ export default {
 	background-color: transparent;
 	padding: 0 5px;
 	outline: none;
+	width:70%;
 }
 	
 .formater-temporal-search .formater-input-group span:first-letter {
