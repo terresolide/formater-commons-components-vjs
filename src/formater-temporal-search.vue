@@ -137,12 +137,12 @@ export default {
 		
 
 		if( this.from == "" ){
-			var from = str2date( this.daymin, "YYYY-MM-DD");
+			var from = this.str2date( this.daymin, "YYYY-MM-DD");
 		}else{
 			var from = moment(this.from, this.format);
 		}
 		if( this.to == ""){
-			var to = str2date( this.daymax, "YYYY-MM-DD");
+			var to = this.str2date( this.daymax, "YYYY-MM-DD");
 		}else{
 			var to = moment(this.to, this.format);
 		}
