@@ -19,12 +19,12 @@
 <span class="formater-temporal-search">
 	<div class="formater-input-group" >
 	   <span class="right">{{$t('from')}}</span>
-	  <input id="from" v-model="from" @click="errorMessage = null" @change="change"  :placeholder="date2str(daymin)" :pattern="pattern"/>
+	  <input id="from" v-model="from" @click="errorMessage = null" @input="input"  :placeholder="date2str(daymin)" :pattern="pattern"/>
 	</div>
 	<aeris-datepicker for="input#from" :format="format" :lang="lang"  :daymin="daymin" :daymax="daymax"></aeris-datepicker>
 	<div class="formater-input-group">
 		<span class="right">{{$t('to')}}</span>
-		<input id="to" v-model="to" @click="errorMessage = null" @change="change" :placeholder="now()" :pattern="pattern">
+		<input id="to" v-model="to" @click="errorMessage = null" @input="input" :placeholder="now()" :pattern="pattern">
 	</div>
 	<aeris-datepicker for="input#to" :format="format" :lang="lang" :daymin="daymin" :daymax="daymax" ></aeris-datepicker> 
 	<span class="error-message" v-if="errorMessage">{{errorMessage}}</span>
@@ -103,9 +103,17 @@ export default {
 	  close:function(){
 		  console.log("close");
 	  },
-      change: function(){
-    	  
-    	  var event = new CustomEvent('temporalChangeEvent');
+      input: function(e){
+    	  //Impossible de déclencher un événement avec this.$emit sur le composant??
+    	  // Apparemment c'est une question de profondeur.
+    	  var event = new CustomEvent(
+    			  'temporalChangeEvent', 
+    			  {detail:
+    			  	{
+    				  name:e.target.id , 
+    				  value:moment(e.target.value, this.format).format("YYYY-MM-DD")
+    				 }
+    			  });
     	  document.dispatchEvent(event);
       },
       date2str(  date){

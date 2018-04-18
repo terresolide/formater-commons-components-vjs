@@ -30,7 +30,7 @@ ljs.addAliases({
 	//    'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js',
 	//    'https://cdnjs.cloudflare.com/ajax/libs/moment-range/3.0.3/moment-range.min.js',
 	  //  'https://rawgit.com/FremyCompany/css-grid-polyfill/master/bin/css-polyfills.min.js',
-	    'https://cdn.rawgit.com/aeris-data/aeris-commons-components-vjs/50b9623af4b2d6bd228364d2ecf9acb00834446f/dist/aeris-commons-components-vjs_0.2.1.js'
+	    'https://cdn.rawgit.com/aeris-data/aeris-commons-components-vjs/541295cd45aad4102b5fc35f6d1dbf03d644895e/dist/aeris-commons-components-vjs_0.3.0.js'
 		//'http://localhost:8083/dist/build.js'
 	    ]
 })
