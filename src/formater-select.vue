@@ -83,9 +83,28 @@ export default {
     },
     watch:{
         value:function(ev){
+        	 var event = new CustomEvent(
+       			  'selectChangeEvent', 
+       			  {detail:
+       			  	{
+       				  name: this.name, 
+       				  value: this.value
+       				 }
+       			  });
+       	  	document.dispatchEvent(event);
             this.$emit( 'input', this.value);
         },
         values: function(ev){
+        	 var event = new CustomEvent(
+          			  'selectChangeEvent', 
+          			  {detail:
+          			  	{
+          				  name: this.name, 
+          				  values: this.values
+          				 }
+          			  });
+          	 document.dispatchEvent(event);
+
             this.$emit( 'input', this.values);
         },
 	    indexes(ev){
