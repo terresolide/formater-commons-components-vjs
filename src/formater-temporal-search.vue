@@ -32,8 +32,14 @@
 </template>
 
 <script>
+import AerisDatepicker from 'aeris-commons-components-vjs/src/aeris-datepicker/aeris-datepicker.vue';
+import moment from 'moment';
+import { extendMoment } from 'moment-range';
+window.momentCst = extendMoment(moment);
 export default {
-	 
+  components: {
+    AerisDatepicker
+  },
   props: {
   	lang:  {
       type: String,
@@ -251,7 +257,5 @@ export default {
     line-height: 25px;
     overflow: hidden;
 }
-
-
 
 </style>

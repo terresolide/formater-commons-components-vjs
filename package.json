@@ -1,9 +1,9 @@
 {
   "name": "formater-commons-components-vjs",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "commons components for poleterresolide",
   "preproduction": {
-       "url": "https://api.poleterresolide.fr/"
+    "url": "https://api.poleterresolide.fr/"
   },
   "production": {
     "url": "https://cdn.rawgit.com/terresolide/"
@@ -24,6 +24,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "aeris-commons-components-vjs": "github:aeris-data/aeris-commons-components-vjs",
     "vue": "^2.5.13",
     "vue-custom-element": "^1.4.4",
     "vue-i18n": "7.0.5",
