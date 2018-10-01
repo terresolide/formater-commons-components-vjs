@@ -2,7 +2,10 @@
  * Export components
  */
 
-export FormaterSearchBox from './src/formater-search-box.vue'
-export FormaterSelect from './src/formater-select.vue'
-export FormaterTemporalSearch from './src/formater-temporal-search.vue'
-export FormaterTools from './src/formater-tools.js'
+import FormaterSearchBox from './src/formater-search-box.vue'
+import FormaterSelect from './src/formater-select.vue'
+import FormaterTemporalSearch from './src/formater-temporal-search.vue'
+import FormaterLayout from './src/formater-layout.vue'
+import ftTools from './src/formater-tools.js'
+
+export {FormaterLayout, FormaterSearchBox, FormaterSelect, FormaterTemporalSearch, ftTools}
