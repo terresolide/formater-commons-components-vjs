@@ -12,11 +12,11 @@
 	<aeris-theme id="theme2" active="true" primary="#DD9946" emphasis="#39B062"></aeris-theme>
 	<test-component></test-component>
 	<formater-layout>
-		<span slot="header"><h1>mon layout test</h1></span>
-		<span slot="sidebar">
+		<header><h1>mon layout test</h1></header>
+		<aside>
 		<formater-select    width="150px"  name="autre" options="['un', 'deux', '<b>trois </b> jfsm jsmq fkjmqf jfmqsfjsmq f']" multiple="true" defaut="deux"></formater-select>
 		<formater-select    color="#ccc" defaut="Kp" name="index0" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  @input="test"></formater-select>
-		</span>
+		</aside>
 		<span slot="content">
 		<formater-select   width="260px" color="#ccc" type="associative" options="{'aa':'anatole armand jfsm jsmq fkjmqf jfmqsfjsmq f', 'am': 'alphonse monge'}"  type="associative" defaut="am"></formater-select>
 		<formater-select type="associative" defaut="hor" name="DataInterval0" options="{'sec': 'second', 'min': 'minute', 'hor':'hour', 'day':'day', 'mon':'month'}" width="260px" ></formater-select>

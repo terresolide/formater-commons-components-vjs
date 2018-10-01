@@ -21,8 +21,7 @@ import AerisTheme from 'aeris-commons-components-vjs/src/aeris-theme/aeris-theme
 import FormaterSelect from './formater-select.vue';
 import FormaterSearchBox from './formater-search-box.vue';
 import FormaterTemporalSearch from './formater-temporal-search.vue';
-
-
+import FormaterLayout from './formater-layout.vue';
 //import Test from './test-component.vue';
 
 ljs.addAliases({
@@ -68,6 +67,7 @@ ljs.load('dep', function() {
      }, 100);
      function load(){
     	  registerElement('aeris-theme', AerisTheme);
+    	  registerElement('formater-layout', FormaterLayout);
          registerElement('formater-select', FormaterSelect);
          registerElement('formater-temporal-search', FormaterTemporalSearch);
          registerElement('formater-search-box', FormaterSearchBox);
