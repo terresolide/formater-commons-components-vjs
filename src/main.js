@@ -1,6 +1,6 @@
 require("exports-loader?!./l.min.js")
 
-// import Tools from './formater-tools.js';
+import Tools from './formater-tools.js';
 
 import Vue from 'vue';
 

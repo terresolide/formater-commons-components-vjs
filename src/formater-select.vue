@@ -17,7 +17,7 @@
 </div>
 </template>
 <script>
-import ftTools from './formater-tools.js'
+// import ftTools from './formater-tools.js'
 export default {
     props:{
         options:{
