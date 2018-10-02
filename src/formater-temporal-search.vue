@@ -36,6 +36,7 @@ import AerisDatepicker from 'aeris-commons-components-vjs/src/aeris-datepicker/a
 import moment from 'moment';
 import { extendMoment } from 'moment-range';
 window.momentCst = extendMoment(moment);
+import ftTools from './formater-tools.js'
 export default {
   components: {
     AerisDatepicker
