@@ -60,9 +60,8 @@ Or the last taged file:
 
 
 ## Components
+### [formater-search-box](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-search-box)
 
 ### [formater-select](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-select)
-
-### [formater-search-box](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-search-box)
 
 ### [formater-temporal-search](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-temporal-search)
