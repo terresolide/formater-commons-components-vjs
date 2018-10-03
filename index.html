@@ -12,7 +12,7 @@
 	<aeris-theme id="theme2" active="true" primary="#DD9946" emphasis="#39B062"></aeris-theme>
 	<test-component></test-component>
 	<formater-layout>
-		<header><h1>mon layout test</h1></header>
+		<header><h1>mon layout test <language-switcher lang="MAIN"></language-switcher></h1> </header>
 		<aside>
 		<formater-select    width="150px"  name="autre" options="['un', 'deux', '<b>trois </b> jfsm jsmq fkjmqf jfmqsfjsmq f']" multiple="true" defaut="deux"></formater-select>
 		<formater-select    color="#ccc" defaut="Kp" name="index0" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  @input="test"></formater-select>
@@ -21,14 +21,17 @@
 		<formater-select   width="260px" color="#ccc" type="associative" options="{'aa':'anatole armand jfsm jsmq fkjmqf jfmqsfjsmq f', 'am': 'alphonse monge'}"  type="associative" defaut="am"></formater-select>
 		<formater-select type="associative" defaut="hor" name="DataInterval0" options="{'sec': 'second', 'min': 'minute', 'hor':'hour', 'day':'day', 'mon':'month'}" width="260px" ></formater-select>
 	</span>
-</formater-layout>
+	<formater-attribution name="machin" position="TR"></formater-attribution>
+	<formater-alert-message msg="['message 1','message 2']" ></formater-alert-message>
+	</formater-layout>
 	<formater-search-box header-icon-class="fa fa-bars" title="Mon titre" value="index" @input="index = $event.target.value" >
 			<formater-select width="260px" name="index2" defaut="Kp" multiple="true" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  ></formater-select>
 	</formater-search-box>
 	<formater-search-box value="test" title="truc" >
 	<formater-temporal-search lang="fr" daymin="1981-05-12"></formater-temporal-search>
+
 	</formater-search-box>
-	
+		
     <!-- le fichier build est créé lorsqu'on lance la commande build -->
   	 <script src="dist/build.js"></script> 
 	

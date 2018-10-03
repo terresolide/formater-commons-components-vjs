@@ -15,7 +15,6 @@ data(){
 methods: {
 
 	handleTheme: function(theme) {
-	    console.log("formater layout handle theme");
 	  		this.theme = theme.detail
 			this.ensureTheme()
 	},
@@ -50,6 +49,7 @@ mounted: function(){
 
 .formater-layout{
 	display:block;
+	position:relative;
 }
 .formater-layout > header{
 	color:#fff;

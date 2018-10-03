@@ -187,56 +187,53 @@ export default {
     	},
     	
     	initDefaultValue(){
-    	  
-    			console.log( this.defaut);
-                if(this.defaut){
-                    if( this.multiple){
-                    	var defaut = this.defaut.split(",");
-                        if( this.type == "associative"){
-                        	var values = Object.keys(this.indexes);
-                        }else{
-                        	var values = this.indexes;
-                        }
-                        this.values = values.filter(function(n){
-                        		return defaut.indexOf(n)>-1;
-                        });
-                      
-                    }else{
-                    	if( (this.indexes[this.defaut]
-                        || this.indexes.indexOf( this.defaut )>-1))
-                
-                    	this.value = this.defaut;
-                    }
-                    
-                }else{
-                    if( this.type == "associative"){
-                        var value = Object.keys(this.indexes)[0];
-                    }else{
-                        var value = this.indexes[0];
-                    }
-                    console.log("value=" +value);
-                    if( this.multiple){
-                        this.values =  [ value ];
-                    }else{
-                        this.value = value;
-                    }
+               if(this.defaut){
+                   if( this.multiple){
+                   	var defaut = this.defaut.split(",");
+                       if( this.type == "associative"){
+                       	var values = Object.keys(this.indexes);
+                       }else{
+                       	var values = this.indexes;
+                       }
+                       this.values = values.filter(function(n){
+                       		return defaut.indexOf(n)>-1;
+                       });
+                     
+                   }else{
+                   	if( (this.indexes[this.defaut]
+                       || this.indexes.indexOf( this.defaut )>-1))
+               
+                   	this.value = this.defaut;
+                   }
+               }else{
+                   if( this.type == "associative"){
+                       var value = Object.keys(this.indexes)[0];
+                   }else{
+                       var value = this.indexes[0];
+                   }
+                   console.log("value=" +value);
+                   if( this.multiple){
+                       this.values =  [ value ];
+                   }else{
+                       this.value = value;
+                   }
 
-            	}
+           	}
     	},
     	selectOption( event ){
     	
-    		if( event.detail.component != this.name ){
+    		if (event.detail.component != this.name) {
     			return;
     		}
     		if(this.multiple){
-    			if(this.values.indexOf( event.detail.value) < 0){
+    			if (this.values.indexOf( event.detail.value) < 0) {
     				
     				this.values.push( event.detail.value);
-    			}else{
+    			} else {
     				this.values.splice( this.values.indexOf( event.detail.value), 1);
     				//this.$emit( 'input', this.values);
     			}
-    		}else{
+    		} else {
     			this.value = event.detail.value;
     		}
     	},
