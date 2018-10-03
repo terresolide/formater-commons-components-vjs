@@ -41,6 +41,7 @@
     "exports-loader": "^0.6.4",
     "file-loader": "^0.9.0",
     "style-loader": "^0.18.2",
+    "url-loader": "^1.1.1",
     "vue-loader": "^12.1.0",
     "vue-template-compiler": "^2.5.13",
     "webpack": "^2.6.1",
