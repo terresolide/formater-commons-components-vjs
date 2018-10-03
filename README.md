@@ -24,11 +24,11 @@ npm run build
 For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
 ## Use
-### Import in your component
+### Install in your component
 ```
 npm install terresolide/formater-commons-components-vjs
 ```
-And import component in your component
+And import one or more components in your own component
 ```
   <template>
     ...
