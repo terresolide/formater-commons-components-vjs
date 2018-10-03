@@ -60,8 +60,18 @@ Or the last taged file:
 
 
 ## Components
+### [formater-alert-message](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-alert-message)
+
+### [formater-attribution](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-attribution)
+
+### [formater-draggable-block](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-draggable-block)
+
+### [formater-layout](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-layout)
+
 ### [formater-search-box](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-search-box)
 
 ### [formater-select](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-select)
 
 ### [formater-temporal-search](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-temporal-search)
+
+### [language-switcher](https://github.com/terresolide/formater-commons-components-vjs/wiki/language-switcher)
