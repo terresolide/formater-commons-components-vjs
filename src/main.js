@@ -26,6 +26,7 @@ import FormaterSelect from './formater-select.vue'
 import FormaterTemporalSearch from './formater-temporal-search.vue'
 import ftTools from './formater-tools.js'
 import LanguageSwitcher from './language-switcher.vue'
+import DragdropFile from './drag-drop-file.vue'
 
 //import Test from './test-component.vue';
 
@@ -75,6 +76,7 @@ ljs.load('dep', function() {
         registerElement('formater-temporal-search', FormaterTemporalSearch);
         registerElement('formater-search-box', FormaterSearchBox); // register last because it can contains other component
         registerElement('language-switcher', LanguageSwitcher);
+        registerElement('dragdrop-file', DragdropFile);
 
     }
 })

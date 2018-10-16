@@ -10,7 +10,8 @@ import FormaterSelect from './src/formater-select.vue'
 import FormaterTemporalSearch from './src/formater-temporal-search.vue'
 import ftTools from './src/formater-tools.js'
 import LanguageSwitcher from './src/language-switcher.vue'
+import DragdropFile from './src/drag-drop-file.vue'
 
 export {FormaterAlertMessage, FormaterAttribution, FormaterDraggableBlock, 
   FormaterLayout, FormaterSearchBox, FormaterSelect, FormaterTemporalSearch,
-  ftTools, LanguageSwitcher}
+  ftTools, LanguageSwitcher, DragdropFile}
