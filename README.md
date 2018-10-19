@@ -60,6 +60,8 @@ Or the last taged file:
 
 
 ## Components
+### [dragdrop-file](https://github.com/terresolide/formater-commons-components-vjs/wiki/dragdrop-file) @inprogress
+
 ### [formater-alert-message](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-alert-message)
 
 ### [formater-attribution](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-attribution)
@@ -76,4 +78,4 @@ Or the last taged file:
 
 ### [language-switcher](https://github.com/terresolide/formater-commons-components-vjs/wiki/language-switcher)
 
-### [dragdrop-file](https://github.com/terresolide/formater-commons-components-vjs/wiki/dragdrop-file)
+
