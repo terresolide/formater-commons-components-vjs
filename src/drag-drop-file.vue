@@ -31,16 +31,16 @@
  	      <input id="input-file" ref="file" type="file" class="hidden-input" @change="readUrl"/>
  	    </div>
  	</div>
-	<span class="files-container" :style="{height: height +'px'}">
-	  <div @drop="handleDrop" @dragover="handleDragOver">
-	  <span class="fa fa-chevron-left"></span>
-	  <span class="files">
-	     <formater-file v-for="(file,index) in files" :key="index" :filename="file.name" :lang="lang"></formater-file>
-	  </span>
-	  <span class="fa fa-chevron-right"></span>
+	<div class="files-container" :style="{height: height +'px'}">
+	  <div class="fa fa-chevron-left" style="height:150px;line-height:150px;display:inline;"></div>
+	  <div class="box-files" @drop="handleDrop" @dragover="handleDragOver">
+		  <span class="files">
+		     <formater-file v-for="(file,index) in files" :key="index" :filename="file.name" :lang="lang"></formater-file>
+		  </span>
+	  </div>
+	  <div class="fa fa-chevron-right" style="height:150px;line-height:150px;display:inline;"></div>
       <span v-show="this.files.length === 0">{{$t('drop_files_here')}}</span>
-	</div>
-	 </span>
+	 </div>
  </span>
 </template>
 <script>
@@ -74,7 +74,7 @@ export default {
     return {
       extension: [],
       aerisThemeListener: null,
-      files: [{name:'machin.png'}],
+      files: [{name:'machin.png'},{name: 'chose.jpg'}, {name:'bidule.gif'}],
       theme: null
     }
   },
@@ -102,12 +102,12 @@ export default {
       
     },
     getWidth () {
+      var width = ''
       if (this.width) {
-        return 'width: ' + this.width + 'px;'
-      } else {
-        return ''
+        width = 'width: ' + this.width + 'px;'
       }
-      
+      return width
+
     },
     handleDrop(event) {
       event.preventDefault()
@@ -198,7 +198,7 @@ export default {
   }
   .files-container > div {
      height: 100%;
-     display:block;
+     display:inline;
      line-height:150px;
      text-align:left;
   }
@@ -268,5 +268,13 @@ export default {
     left: 0px;
     width: 100%;
     height: 100%;
+  }
+  .box-files {
+    display: inline-block;
+    overflow:hidden;
+    width: -webkit-calc(100% - 120px);
+    width:    -moz-calc(100% - 120px);
+    width:         calc(100% - 120px);
+
   }
 </style>
