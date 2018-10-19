@@ -36,7 +36,7 @@ import AerisDatepicker from 'aeris-commons-components-vjs/src/aeris-datepicker/a
 import moment from 'moment';
 import { extendMoment } from 'moment-range';
 window.momentCst = extendMoment(moment);
- // import ftTools from './formater-tools.js'
+
 export default {
   components: {
     AerisDatepicker
@@ -194,7 +194,7 @@ export default {
 	  	
 	 ensureTheme: function() {
 	  	if ((this.$el) && (this.$el.querySelector)) {
-	  		var color3 =  ftTools.shadeColor( this.theme.primary, 0.8);
+	  		var color3 =  this.$shadeColor( this.theme.primary, 0.8);
 	  		var nodes= this.$el.querySelectorAll(".formater-input-group");
 	  		[].forEach.call(nodes, function(node){
 	  		    node.style.backgroundColor = color3;

@@ -5,19 +5,16 @@
 <i18n>
 { 
   "en": {
-    "drop_files_here": "Drop your files here",
-    "select": "Select",
-    "remove": "Remove all"
+    "remove": "Remove"
   },
   "fr": {
-    "drop_files_here": "Déposez vos fichiers ici",
-    "select": "Sélectionner",
     "remove": "Effacer"
   }
 }
 </i18n>
 <template>
 <span class="formater-file">
+       <span class="fa fa-close" @click="remove()" :title="$t('remove')"></span>
 	   <div class="file-container">
 	      <i class="fa fa-file"></i>
 	      <div>{{filename}}</div>
@@ -46,9 +43,13 @@ export default {
     this.$i18n.locale = this.lang
   },
   mounted () { 
-    this.extension = this.ext.split(',')
   },
   destroyed () {
+  },
+  watch : {
+    lang (newvalue) {
+      this.$i18n.locale = newvalue
+    }
   },
   methods: {
     remove () {
@@ -59,24 +60,43 @@ export default {
 </script>
 <style scoped>
 .formater-file{
-  display:inline;
+  display:inline-block;
   vertical-align:middle;
+  position:relative;
 }
- .file-container{
+ .formater-file .file-container{
    line-height: 1;
    position: relative;
    border: 1px dotted grey;
-   padding: 5px;
+   padding: 10px 5px 5px 5px;
    display: block;
    background: lightgrey;
    border-radius: 4px;
+   margin: auto 10px;
+   text-align:center;
+   width:110px;
+   min-width:110px;
+   max-width:110px;
+   height:120px;
+
  }
- .file-container i{
+ .formater-file .file-container i{
    font-size:60px;
    color:grey;
  }
- .file-container div {
+ .formater-file .file-container div {
     font-size: 12px;
     margin: 10px 0 0 0;
+ }
+ .formater-file span.fa-close {
+    position:absolute;
+    top:0;
+    right:12px;
+    z-index:1;
+    color: #cc0000;
+    cursor:pointer;
+ }
+ .formater-file span.fa-close:hover {
+    color:red;
  }
 </style>

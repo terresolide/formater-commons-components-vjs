@@ -17,8 +17,7 @@
 }
 </i18n>
 <template>
-<span>
-	<formater-alert-message :msg="JSON.stringify(alert)" :playing="false"></formater-alert-message>
+<span class="drag-drop-file" :style="getWidth()">
 	<div class="upload-buttons-wrapper">
 	    <div id="pick-files" role="button" style="z-index: 1;" @click="$refs.file.click()">
 	      <i class="fa fa-folder-open"></i>
@@ -32,11 +31,13 @@
  	      <input id="input-file" ref="file" type="file" class="hidden-input" @change="readUrl"/>
  	    </div>
  	</div>
-	<span class="dragdrop-file">
-	  <div @drop="dropHandler" @dragover="dragOverHandler">
-	  <div class="files-container">
-	     <formater-file v-for="(file,index) in files" :key="index" :filename="file.name"></formater-file>
-	  </div>
+	<span class="files-container" :style="{height: height +'px'}">
+	  <div @drop="handleDrop" @dragover="handleDragOver">
+	  <span class="fa fa-chevron-left"></span>
+	  <span class="files">
+	     <formater-file v-for="(file,index) in files" :key="index" :filename="file.name" :lang="lang"></formater-file>
+	  </span>
+	  <span class="fa fa-chevron-right"></span>
       <span v-show="this.files.length === 0">{{$t('drop_files_here')}}</span>
 	</div>
 	 </span>
@@ -59,29 +60,56 @@ export default {
     ext: {
       type: String,
       default: 'png,jpeg,jpg,gif'
+    },
+    width: {
+      type: Number,
+      default:null
+    },
+    height: {
+      type: Number,
+      default: 150
     }
   },
-
   data () {
     return {
-      alert: [],
       extension: [],
-      files: [{name:'machin.png'}]
+      aerisThemeListener: null,
+      files: [{name:'machin.png'}],
+      theme: null
+    }
+  },
+  watch : {
+    lang (newvalue) {
+      this.$i18n.locale = newvalue
     }
   },
   created () {
     this.$i18n.locale = this.lang
+    this.aerisThemeListener = this.handleTheme.bind(this) 
+    document.addEventListener('aerisTheme', this.aerisThemeListener)
   },
   mounted () { 
     this.extension = this.ext.split(',')
+    var event = new CustomEvent('aerisThemeRequest', {})
+  	document.dispatchEvent(event)
   },
   destroyed () {
+    document.removeEventListener('aerisTheme', this.aerisThemeListener)
+  	this.aerisThemeListener = null
   },
   methods: {
     isAcceptedFile (filename) {
       
     },
-    dropHandler (event) {
+    getWidth () {
+      if (this.width) {
+        return 'width: ' + this.width + 'px;'
+      } else {
+        return ''
+      }
+      
+    },
+    handleDrop(event) {
       event.preventDefault()
       console.log(event)
       if (event.dataTransfer.items) {
@@ -106,22 +134,51 @@ export default {
       // Pass event to removeDragData for cleanup
       // removeDragData(event)
     },
+    handleDragOver(event) {
+      event.preventDefault()
+     // console.log(event)
+    },
+  	handleTheme: function(theme) {
+  		this.theme = theme.detail
+		this.ensureTheme()
+  	},
+  	ensureTheme: function() {
+	  	if (this.theme) {
+	  		if (this.$el) { 
+	  			this.$el.querySelector(".files-container").style.background = this.$shadeColor( this.theme.primary, 0.8)
+	  			var color = this.theme.primary;
+		  		var color1 = this.$shadeColor( this.theme.primary, 0.1); //lightcolor
+		  		var color2 = this.$shadeColor( this.theme.primary, -.1); //dark color
+		  		var color3 = this.$shadeColor( this.theme.primary, 0.2);
+		  		this.$el.querySelectorAll("[role='button']").forEach(function (button) {
+		  		    button.style.background = color
+			  		button.style.borderColor= color1 + ' '+ color2 + ' ' + color2;
+			  		button.style. textShadow=" 0 -1px 1px "+color3+" , 1px 0 1px "+color2+", 0 1px 1px "+color2+", -1px 0 1px "+color3;
+			  		button.addEventListener("mouseover", function(e){
+	
+			  			this.style.backgroundColor = color1;
+			  		});
+			  		button.addEventListener("mouseout", function(e){
+		
+			  			this.style.backgroundColor = color;
+			  		})
+		  		  
+		  		})
+	  		}
+	  	}
+  	},
     readUrl (event) {
       event.preventDefault()
       var file = event.target.files[0]
       this.receiveFile(file)
     },
     receiveFile (file) {
-      console.log(ftTools.getExtension(file.name))
-      console.log(this.extension.indexOf(ftTools.getExtension(file.name)) )
-      if (this.extension.indexOf(ftTools.getExtension(file.name)) >= 0) {
+      console.log(this.$getExtension(file.name))
+      console.log(this.extension.indexOf(this.$getExtension(file.name)) )
+      if (this.extension.indexOf(this.$getExtension(file.name)) >= 0) {
         console.log('fichier valide')
       }
 
-    },
-    dragOverHandler (event) {
-      event.preventDefault()
-     // console.log(event)
     },
     removeAll () {
       console.log('remove all files')
@@ -130,31 +187,31 @@ export default {
 }
 </script>
 <style>
-  
-  .dragdrop-file {
+  .drag-drop-file{
+    display:block;
+  }
+  .files-container {
       position:relative;
-      display:inline-block;
-      width:100%;
+      display:block;
       height:150px;
       background: #eaf4f4;  
   }
-  .dragdrop-file > div {
+  .files-container > div {
      height: 100%;
      display:block;
      line-height:150px;
-     text-align:center;
+     text-align:left;
   }
-  .dragdrop-file > div > span {
+  .files-container > div > span {
     vertical-align:middle;
     color:grey;
     font-size:20px;
-    width:100%;
+    margin: auto 20px;
   }
-  .dragdrop-file .files-container {
-    position:absolute;
-    top:0;
-    left:0;
+  .files-container > span{
     height:150px;
+    width:100%;
+    
   }
   div.upload-buttons-wrapper{
     width: 310px;
@@ -168,7 +225,7 @@ export default {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     position: absolute;
     top: 0;
-    width: 145px;
+    width: 100px;
     background-color: #47A4A5;
     border-color: #47A4A5;
     color: #FFFFFF;
@@ -192,7 +249,7 @@ export default {
 	border-radius: 4px;
   }
   div[id="reset-all"]{
-    left:180px;
+    left:120px;
   }
   div.select-file {
     position: absolute;

@@ -15,6 +15,8 @@ Vue.use(VueI18n);
 import VueResource from 'vue-resource';
 Vue.use(VueResource);
 
+import VueTools from './formater-tools.js'
+Vue.use(VueTools)
 
 import AerisTheme from 'aeris-commons-components-vjs/src/aeris-theme/aeris-theme.vue';
 import FormaterAlertMessage from './formater-alert-message.vue'
@@ -24,7 +26,6 @@ import FormaterLayout from './formater-layout.vue'
 import FormaterSearchBox from './formater-search-box.vue'
 import FormaterSelect from './formater-select.vue'
 import FormaterTemporalSearch from './formater-temporal-search.vue'
-import ftTools from './formater-tools.js'
 import LanguageSwitcher from './language-switcher.vue'
 import DragdropFile from './drag-drop-file.vue'
 
@@ -54,7 +55,7 @@ ljs.load('dep', function() {
 	/**
 	 * @todo passer les fonctions globales dans vue et non en global window ??
 	 */
-	window.ftTools = ftTools;
+//	window.ftTools = ftTools;
 	var componentUsed = new Array(); // plus de composant dont on attend l'enregistrement
 	var loaded = setInterval(function() {
         var result = componentUsed.filter( function( cpt){

@@ -17,7 +17,7 @@
 </div>
 </template>
 <script>
-// import ftTools from './formater-tools.js'
+
 export default {
     props:{
         options:{
@@ -163,7 +163,7 @@ export default {
 		  	
 		ensureTheme() {
 		 	if ( !this.color &&  (this.$el) && (this.$el.querySelector)) {
-		 		var color3 =  ftTools.shadeColor( this.theme.primary, 0.8);
+		 		var color3 =  this.$shadeColor( this.theme.primary, 0.8);
 		 		this.$el.querySelector("select").style.backgroundColor = color3;
 		 	}
 		},
