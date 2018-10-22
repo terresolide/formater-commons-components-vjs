@@ -54,6 +54,7 @@ export default {
   methods: {
     remove () {
       console.log('remove')
+      this.$emit('remove', this.filename)
     }
   }
 }
@@ -66,6 +67,7 @@ export default {
 }
  .formater-file .file-container{
    line-height: 1;
+   color:grey;
    position: relative;
    border: 1px dotted grey;
    padding: 10px 5px 5px 5px;
@@ -78,7 +80,6 @@ export default {
    min-width:110px;
    max-width:110px;
    height:120px;
-
  }
  .formater-file .file-container i{
    font-size:60px;
@@ -87,6 +88,7 @@ export default {
  .formater-file .file-container div {
     font-size: 12px;
     margin: 10px 0 0 0;
+    word-wrap: break-word;
  }
  .formater-file span.fa-close {
     position:absolute;

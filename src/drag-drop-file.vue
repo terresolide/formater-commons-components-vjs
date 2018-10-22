@@ -31,15 +31,17 @@
  	      <input id="input-file" ref="file" type="file" class="hidden-input" @change="readUrl"/>
  	    </div>
  	</div>
-	<div class="files-container" :style="{height: height +'px'}">
-	  <div class="fa fa-chevron-left" style="height:150px;line-height:150px;display:inline;"></div>
-	  <div class="box-files" @drop="handleDrop" @dragover="handleDragOver">
-		  <span class="files">
-		     <formater-file v-for="(file,index) in files" :key="index" :filename="file.name" :lang="lang"></formater-file>
-		  </span>
+	<div class="files-container" :style="{height: height +'px'}" @drop="handleDrop" @dragover="handleDragOver" @dragexit="handleDragExit">
+	  <div class="fa fa-chevron-left" @click="step = step - 1" :class="step <= 0 ? 'disabled':''"></div>
+	  <div class="box-files"  v-show="files.length > 0"  >
+		  <div class="files" :style="{transform:'translateX(-'+ step*142 +'px)'}" >
+		     <formater-file v-for="(file,index) in files" :key="index" :filename="file.name" :lang="lang" @remove="remove"></formater-file>
+		  </div>
 	  </div>
-	  <div class="fa fa-chevron-right" style="height:150px;line-height:150px;display:inline;"></div>
-      <span v-show="this.files.length === 0">{{$t('drop_files_here')}}</span>
+	  <div class="fa fa-chevron-right" @click="step = step + 1" :class="step >= files.length -1 ? 'disabled': ''"></div>
+      <div v-show="this.files.length === 0" class="drop-text">
+         <div>{{$t('drop_files_here')}}</div>
+      </div>
 	 </div>
  </span>
 </template>
@@ -74,8 +76,13 @@ export default {
     return {
       extension: [],
       aerisThemeListener: null,
-      files: [{name:'machin.png'},{name: 'chose.jpg'}, {name:'bidule.gif'}],
-      theme: null
+      files: [],
+     // files: [{name:'machin.png'},{name: 'chose.jpg'}, {name:'bidule.gif'}],
+      theme: null,
+      step:0,
+      color: null,
+      darkColor:  '#eaf4f4',
+      fileByPage: null
     }
   },
   watch : {
@@ -85,11 +92,15 @@ export default {
   },
   created () {
     this.$i18n.locale = this.lang
+    this.color =  this.$shadeColor( this.darkColor, 0.8)
+    this.darkColor = this.$shadeColor( this.darkColor, 0.6)
     this.aerisThemeListener = this.handleTheme.bind(this) 
     document.addEventListener('aerisTheme', this.aerisThemeListener)
   },
   mounted () { 
     this.extension = this.ext.split(',')
+    this.fileByPage = Math.trunc(this.$el.offsetWidth/142)
+    this.$el.style.width = (this.fileByPage * 142 + 62) + 'px'
     var event = new CustomEvent('aerisThemeRequest', {})
   	document.dispatchEvent(event)
   },
@@ -98,8 +109,16 @@ export default {
   	this.aerisThemeListener = null
   },
   methods: {
-    isAcceptedFile (filename) {
-      
+    indexOfFile (filename) {
+      var found = false
+      var i = 0
+      while (found === false && i < this.files.length) {
+        if (this.files[i].name === filename) {
+          found = i
+        }
+        i++
+      }
+      return found
     },
     getWidth () {
       var width = ''
@@ -107,36 +126,45 @@ export default {
         width = 'width: ' + this.width + 'px;'
       }
       return width
-
     },
     handleDrop(event) {
       event.preventDefault()
       console.log(event)
+      this.$el.querySelector('.files-container').style.background = this.color
       if (event.dataTransfer.items) {
       // Use DataTransferItemList interface to access the file(s)
         for (var i = 0; i < event.dataTransfer.items.length; i++) {
         // If dropped items aren't files, reject them
           if (event.dataTransfer.items[i].kind === 'file') {
             var file = event.dataTransfer.items[i].getAsFile();
-            console.log('... file[' + i + '].name = ' + file.name);
-            console.log(file)
             this.receiveFile(file)
           }
         }
       } else {
         // Use DataTransfer interface to access the file(s)
         for (var i = 0; i < event.dataTransfer.files.length; i++) {
-          console.log('... file[' + i + '].name = ' + event.dataTransfer.files[i].name);
-          this.receiveFile(file)
+          this.receiveFile(+ event.dataTransfer.files[i])
         }
       } 
-  
       // Pass event to removeDragData for cleanup
-      // removeDragData(event)
+      this.removeDragData(event)
     },
-    handleDragOver(event) {
+    handleDragOver (event) {
       event.preventDefault()
-     // console.log(event)
+      console.log(event.target.className)
+     this.$el.querySelector('.files-container').style.background = this.darkColor
+    },
+    handleDragExit (event) {
+      this.$el.querySelector('.files-container').style.background = this.color
+    },
+    removeDragData (ev) {
+      if (ev.dataTransfer.items) {
+        // Use DataTransferItemList interface to remove the drag data
+        ev.dataTransfer.items.clear();
+      } else {
+        // Use DataTransfer interface to remove the drag data
+        ev.dataTransfer.clearData();
+      }
     },
   	handleTheme: function(theme) {
   		this.theme = theme.detail
@@ -145,21 +173,22 @@ export default {
   	ensureTheme: function() {
 	  	if (this.theme) {
 	  		if (this.$el) { 
+	  		    this.color =  this.$shadeColor( this.theme.primary, 0.8)
+	  		    this.darkColor = this.$shadeColor( this.theme.primary, 0.6)
 	  			this.$el.querySelector(".files-container").style.background = this.$shadeColor( this.theme.primary, 0.8)
-	  			var color = this.theme.primary;
+	  			var color = this.theme.primary;	
 		  		var color1 = this.$shadeColor( this.theme.primary, 0.1); //lightcolor
 		  		var color2 = this.$shadeColor( this.theme.primary, -.1); //dark color
 		  		var color3 = this.$shadeColor( this.theme.primary, 0.2);
+
 		  		this.$el.querySelectorAll("[role='button']").forEach(function (button) {
 		  		    button.style.background = color
 			  		button.style.borderColor= color1 + ' '+ color2 + ' ' + color2;
 			  		button.style. textShadow=" 0 -1px 1px "+color3+" , 1px 0 1px "+color2+", 0 1px 1px "+color2+", -1px 0 1px "+color3;
 			  		button.addEventListener("mouseover", function(e){
-	
 			  			this.style.backgroundColor = color1;
 			  		});
 			  		button.addEventListener("mouseout", function(e){
-		
 			  			this.style.backgroundColor = color;
 			  		})
 		  		  
@@ -173,15 +202,47 @@ export default {
       this.receiveFile(file)
     },
     receiveFile (file) {
-      console.log(this.$getExtension(file.name))
-      console.log(this.extension.indexOf(this.$getExtension(file.name)) )
-      if (this.extension.indexOf(this.$getExtension(file.name)) >= 0) {
-        console.log('fichier valide')
+      if (this.extension.indexOf(this.$getExtension(file.name).toLowerCase()) >= 0) {
+        this.files.push(file)
+        this.step =  Math.trunc((this.files.length - 1) / this.fileByPage) * this.fileByPage
+        this.$emit('change', file)
+        var event = new CustomEvent('receiveFile', {detail:file})
+        document.dispatchEvent(event)
+        // this.testPreview(file)
+        return true
+      } else {
+        
+        return false
       }
+    },
+    /** function to test with image file type */
+    testPreview (file) {
+      var reader  = new FileReader();
+      var img = document.createElement('img')
+      img.setAttribute('width',250)
+      document.body.appendChild(img)
+      reader.addEventListener("load", function () {
+        img.src = reader.result;
+      }, false);
 
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    },
+    remove (filename) {
+      console.log('filename =' + filename)
+      var index = this.indexOfFile(filename)
+      if (index !== false) {
+        console.log('delete file n°=' + index)
+        this.files.splice(index,1)
+        this.step = this.step > 0 ? this.step - 1 : 0
+      }
+      console.log(this.files)
     },
     removeAll () {
       console.log('remove all files')
+      this.files = []
+      this.step = 0
     }
   }
 }
@@ -190,31 +251,41 @@ export default {
   .drag-drop-file{
     display:block;
   }
-  .files-container {
+  .drag-drop-file .files-container {
       position:relative;
       display:block;
       height:150px;
+      text-align:center;
       background: #eaf4f4;  
   }
-  .files-container > div {
+  .drag-drop-file .files-container > div {
      height: 100%;
-     display:inline;
      line-height:150px;
      text-align:left;
   }
-  .files-container > div > span {
-    vertical-align:middle;
+
+  .drag-drop-file .files-container > div.drop-text {
+    line-height:150px;
+    text-align:center;
     color:grey;
-    font-size:20px;
-    margin: auto 20px;
+    margin:0 33px;
+    width: -webkit-calc(100% - 62px);
+    width:    -moz-calc(100% - 62px);
+    width:         calc(100% - 62px);
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38gYGAEESAAEGAAasgJOgzOKCoAAAAASUVORK5CYII=);  
   }
-  .files-container > span{
+  .drag-drop-file .files-container > div.drop-text > div{
+    line-height:1;
+    vertical-align:middle;
+    display:inline-block;;
+  }
+ /*  .files-container > span{
     height:150px;
     width:100%;
     
-  }
+  } */
   div.upload-buttons-wrapper{
-    width: 310px;
+    width: 240px;
     margin: 0 auto 10px auto;
     height: 33px;
     position: relative;
@@ -269,12 +340,41 @@ export default {
     width: 100%;
     height: 100%;
   }
-  .box-files {
-    display: inline-block;
-    overflow:hidden;
-    width: -webkit-calc(100% - 120px);
-    width:    -moz-calc(100% - 120px);
-    width:         calc(100% - 120px);
-
+  .drag-drop-file .files-container > div.fa {
+     position:absolute;
+     opacity:0.8;
+     cursor:pointer;
+     padding: 0 10px;
   }
+  .drag-drop-file .files-container > div.fa.disabled {
+    opacity:0.2;
+    pointer-events:none;
+  }
+  
+  .drag-drop-file .files-container > .fa-chevron-left {
+        left:0px;
+        border-right: 1px dotted grey;
+  }
+  .drag-drop-file .files-container > .fa-chevron-right {
+        right:0px;
+        border-left:1px dotted grey;
+  }
+  .drag-drop-file .box-files {
+    position:relative;
+    display: inline-block;
+    margin: 0 31px;
+    overflow:hidden;
+    width: -webkit-calc(100% - 62px);
+    width:    -moz-calc(100% - 62px);
+    width:         calc(100% - 62px);
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38gYGAEESAAEGAAasgJOgzOKCoAAAAASUVORK5CYII=);  
+  }
+  .drag-drop-file .box-files div.files{
+  	position:absolute;
+  	max-height:150px;
+  	min-width:100%;
+  	width:1000px;
+  	transition: transform 1s;
+  }
+  
 </style>

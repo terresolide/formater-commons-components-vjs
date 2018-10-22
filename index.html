@@ -34,11 +34,23 @@
 <div style="position:relative;">
 	<language-switcher lang="MAIN"></language-switcher>
  </div>
-<div style="width:900px;">
-   <dragdrop-file ext="png,jpg" height="150" lang="en"></dragdrop-file>
+<div style="width:600px;">
+   <dragdrop-file ext="png,jpg" height="150" lang="en" ></dragdrop-file>
 </div>
     <!-- le fichier build est créé lorsqu'on lance la commande build -->
   	 <script src="dist/build.js"></script> 
-	
+	 <script>
+	   document.addEventListener('receiveFile', function (event) {
+	     console.log(event)
+	   })
+	   function addImage(e) {
+	     console.log("change")
+	     var img = document.createElement('img')
+	     img.setAttribute('width',250)
+	     console.log(e.file.getAsDataUrl())
+	     img.src = e.file.getAsDataUrl()
+	     document.body.appendChild(img)
+	   }
+	 </script>
   </body>
 </html>
