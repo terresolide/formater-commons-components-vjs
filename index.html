@@ -43,11 +43,17 @@
 	   document.addEventListener('receiveFile', function (event) {
 	     addImage(event)
 	   })
+	   document.addEventListener('removeFile', function (event) {
+	     removeImage(event)
+	   })
+	   var files = []
 	   function addImage(e) {
 	     var reader  = new FileReader();
 	     var img = document.createElement('img')
 	     img.setAttribute('width',250)
 	     document.body.appendChild(img)
+	     files.push(e.detail.name)
+	     img.setAttribute('name', e.detail.name)
 	     reader.addEventListener("load", function () {
 	       img.src = reader.result;
 	     }, false);
@@ -55,8 +61,12 @@
 	     if (e.detail) {
 	       reader.readAsDataURL(e.detail);
 	     }
+	     console.log(files)
 	   }
-	  
+	   function removeImage(event) {
+		   var node = document.querySelector('[name="' + event.detail + '"]')
+		   node.remove()
+	   }
 	 </script>
   </body>
 </html>

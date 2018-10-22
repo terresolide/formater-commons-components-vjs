@@ -35,7 +35,7 @@
 	  <div class="fa fa-chevron-left" @click="step = step - 1" :class="step <= 0 ? 'disabled':''"></div>
 	  <div class="box-files"  v-show="files.length > 0"  >
 		  <div class="files" :style="{transform:'translateX(-'+ step*142 +'px)'}" >
-		     <formater-file v-for="(file,index) in files" :key="index" :filename="file.name" :lang="lang" @remove="remove"></formater-file>
+		     <formater-file ref="file" v-for="(file,index) in files" :key="index" :filename="file" :lang="lang" @remove="remove"></formater-file>
 		  </div>
 	  </div>
 	  <div class="fa fa-chevron-right" @click="step = step + 1" :class="step >= files.length -1 ? 'disabled': ''"></div>
@@ -203,7 +203,7 @@ export default {
     },
     receiveFile (file) {
       if (this.extension.indexOf(this.$getExtension(file.name).toLowerCase()) >= 0) {
-        this.files.push(file)
+        this.files.push(file.name)
         this.step =  Math.trunc((this.files.length - 1) / this.fileByPage) * this.fileByPage
         this.$emit('change', file)
         var event = new CustomEvent('receiveFile', {detail:file})
@@ -237,11 +237,18 @@ export default {
         this.files.splice(index,1)
         this.step = this.step > 0 ? this.step - 1 : 0
       }
-      console.log(this.files)
+      var event = new CustomEvent('removeFile', {detail: filename})
+      document.dispatchEvent(event)
     },
     removeAll () {
-      console.log('remove all files')
-      this.files = []
+     // for(var i = this.files.length - 1; i >=0; i--) {
+    	  this.$refs.file.forEach(function (node) {
+    		  node.remove()
+    	  })
+    	  this.files = []
+    	 // this.$refs['file'+i].remove()
+    	  // this.remove(this.files[i])
+     // }
       this.step = 0
     }
   }
