@@ -41,16 +41,22 @@
   	 <script src="dist/build.js"></script> 
 	 <script>
 	   document.addEventListener('receiveFile', function (event) {
-	     console.log(event)
+	     addImage(event)
 	   })
 	   function addImage(e) {
-	     console.log("change")
+	     var reader  = new FileReader();
 	     var img = document.createElement('img')
 	     img.setAttribute('width',250)
-	     console.log(e.file.getAsDataUrl())
-	     img.src = e.file.getAsDataUrl()
 	     document.body.appendChild(img)
+	     reader.addEventListener("load", function () {
+	       img.src = reader.result;
+	     }, false);
+
+	     if (e.detail) {
+	       reader.readAsDataURL(e.detail);
+	     }
 	   }
+	  
 	 </script>
   </body>
 </html>
