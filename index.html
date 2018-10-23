@@ -3,13 +3,16 @@
   <head>
     <meta charset="utf-8">
     <title>Vue Example</title>
+    <style>img.dragdrop{
+      margin-top:50px;
+    }</style>
    
   </head>
   <body> 
   <h1>Tests component in dev</h1>
   
 	<!-- Call copxonents -->
-	<aeris-theme id="theme2" active="true" primary="#DD9946" emphasis="#39B062"></aeris-theme>
+<aeris-theme id="theme2" active="false" primary="#DD9946" emphasis="#39B062"></aeris-theme> 
 	<test-component></test-component>
 	<formater-layout>
 		<header><h1>mon layout test </h1> </header>
@@ -34,8 +37,8 @@
 <div style="position:relative;margin-bottom:50px;">
 	<language-switcher lang="MAIN"></language-switcher>
  </div>
-<div style="width:600px;">
-   <dragdrop-file ext="png,jpg" max-files="3" lang="en" ></dragdrop-file>
+<div style="width:300px;">
+   <dragdrop-file ext="png,jpg" max-files="3" lang="fr" ></dragdrop-file>
 </div>
     <!-- le fichier build est créé lorsqu'on lance la commande build -->
   	 <script src="dist/build.js"></script> 
@@ -51,6 +54,7 @@
 	     var reader  = new FileReader();
 	     var img = document.createElement('img')
 	     img.setAttribute('width',250)
+	      img.setAttribute('class','dragdrop')
 	     document.body.appendChild(img)
 	     files.push(e.detail.name)
 	     img.setAttribute('name', e.detail.name)

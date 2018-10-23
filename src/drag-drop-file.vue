@@ -22,7 +22,6 @@
 </i18n>
 <template>
 <span class="drag-drop-file" :style="getWidth()">
-<div>{{$tc('over_maxfiles', 3, {count:3})}}</div>
   <div class="upload-buttons-wrapper">
       <div id="pick-files" role="button" style="z-index: 1;" @click="$refs.file.click()">
         <i class="fa fa-folder-open"></i>
@@ -52,11 +51,9 @@
  </span>
 </template>
 <script>
-import FormaterAlertMessage from './formater-alert-message.vue'
 import FormaterFile from './formater-file.vue'
 export default {
   components: {
-    FormaterAlertMessage,
     FormaterFile
   },
   name: 'DragdropFile',
@@ -76,6 +73,10 @@ export default {
     maxFiles: {
       type: Number,
       default: null
+    },
+    color: {
+      type: String,
+      default: '#54a1a1'
     }
   },
   data () {
@@ -86,8 +87,6 @@ export default {
      // files: [{name:'machin.png'},{name: 'chose.jpg'}, {name:'bidule.gif'}],
       theme: null,
       step:0,
-      color: null,
-      darkColor:  '#eaf4f4',
       fileByPage: null,
       error: null
     }
@@ -99,9 +98,8 @@ export default {
   },
   created () {
     this.$i18n.locale = this.lang
-    this.theme = {primary: this.darkColor }
-   // this.color =  this.$shadeColor( this.darkColor, 0.8)
-   // this.darkColor = this.$shadeColor( this.darkColor, 0.6)
+    this.theme = {primary: this.color }
+  
    
     this.aerisThemeListener = this.handleTheme.bind(this) 
     document.addEventListener('aerisTheme', this.aerisThemeListener)
@@ -129,7 +127,7 @@ export default {
     },
     handleDrop(event) {
       event.preventDefault()
-      this.$el.querySelector('.files-container').style.background = this.color
+      this.$el.querySelector('.files-container').style.background = this.lightColor
       if (!this.checkUnderMaxFiles()){
         this.removeDragData(event)
         return
@@ -173,7 +171,7 @@ export default {
      this.$el.querySelector('.files-container').style.background = this.darkColor
     },
     handleDragExit (event) {
-      this.$el.querySelector('.files-container').style.background = this.color
+      this.$el.querySelector('.files-container').style.background = this.lightColor
     },
     removeDragData (ev) {
       if (ev.dataTransfer.items) {
@@ -190,10 +188,10 @@ export default {
     },
     ensureTheme: function() {
       if (this.theme) {
+        this.lightColor =  this.$shadeColor( this.theme.primary, 0.8)
+        this.darkColor = this.$shadeColor( this.theme.primary, 0.6)
         if (this.$el && this.$el.querySelector) { 
-          this.color =  this.$shadeColor( this.theme.primary, 0.8)
-          this.darkColor = this.$shadeColor( this.theme.primary, 0.6)
-          this.$el.querySelector(".files-container").style.background = this.color
+          this.$el.querySelector(".files-container").style.background = this.lightColor
           var color = this.theme.primary;  
           var color1 = this.$shadeColor( this.theme.primary, 0.1); //lightcolor
           var color2 = this.$shadeColor( this.theme.primary, -.1); //dark color
