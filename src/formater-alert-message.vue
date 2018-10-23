@@ -8,7 +8,7 @@
             <span class="close" @click="close()" v-show="!isPlaying">&#x2716;</span>
             <div v-html="html"></div>
           </div>
-      </div>
+  </div>
  </span>
 </template>
 <script>
@@ -47,8 +47,10 @@ export default {
     }
   },
   mounted () {
+   
     if (this.msg.length > 0) {
       this.createHTML(this.msg)
+       this.initSize()
     }
     if (this.playing) {
       this.start()
@@ -58,6 +60,10 @@ export default {
     this.stop()
   },
   methods: {
+    initSize () {
+      var h = window.innerHeight
+      this.$el.style.lineHeight = h + 'px'
+    },
     createHTML (newvalue) {
       this.message = JSON.parse(newvalue.replace(/'/g, '"'))
       this.html = this.message.join('<br />')
@@ -91,19 +97,25 @@ export default {
 </script>
 <style>
   .formater-alert {
-      position: absolute;
-      top:50px;
+      position: fixed;
+      display:inline-block;
+      top:0;
       left: 0;
+      height:100%;
       width:100%;
+      line-height:100%;
       text-align:center;
-      z-index:1000;
+      z-index:2001;
+      background: rgba(0,0,0,0.7);
   }
+
   .formater-alert > div {
-      margin: auto;
-      width: 450px;
+    margin: auto;
+    display:inline-block;
+    vertical-align:middle;
+    width: 450px;
     position:relative;
     background:white;
-    box-shadow: 0px 1px 5px #888888;
     border-radius:5px;
     color: darkred;
     line-height:1.2;
@@ -112,8 +124,8 @@ export default {
   }
   .formater-alert > div .close {
      position: absolute;
-     right: 2px;
-     top: 2px;
+     right: 3px;
+     top: 0px;
      cursor: pointer;
   }
   .formater-alert > div {
