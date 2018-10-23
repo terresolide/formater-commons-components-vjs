@@ -31,11 +31,11 @@
 	<formater-temporal-search lang="fr" daymin="1981-05-12"></formater-temporal-search>
 
 	</formater-search-box>
-<div style="position:relative;">
+<div style="position:relative;margin-bottom:50px;">
 	<language-switcher lang="MAIN"></language-switcher>
  </div>
 <div style="width:600px;">
-   <dragdrop-file ext="png,jpg" height="150" lang="en" ></dragdrop-file>
+   <dragdrop-file ext="png,jpg" max-files="3" lang="en" ></dragdrop-file>
 </div>
     <!-- le fichier build est créé lorsqu'on lance la commande build -->
   	 <script src="dist/build.js"></script> 
@@ -65,7 +65,9 @@
 	   }
 	   function removeImage(event) {
 		   var node = document.querySelector('[name="' + event.detail + '"]')
-		   node.remove()
+		   if (node) {
+		     node.remove()
+		   }
 	   }
 	 </script>
   </body>
