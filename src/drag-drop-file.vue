@@ -31,7 +31,8 @@
  	      <input id="input-file" ref="file" type="file" class="hidden-input" @change="readUrl"/>
  	    </div>
  	</div>
-	<div class="files-container" :style="{height: height +'px'}" @drop="handleDrop" @dragover="handleDragOver" @dragexit="handleDragExit">
+	<div class="files-container"  @drop="handleDrop" @dragover="handleDragOver" @dragexit="handleDragExit">
+	  <div class="error" v-if="error"><div v-html="error"></div></div>
 	  <div class="fa fa-chevron-left" @click="step = step - 1" :class="step <= 0 ? 'disabled':''"></div>
 	  <div class="box-files"  v-show="files.length > 0"  >
 		  <div class="files" :style="{transform:'translateX(-'+ step*142 +'px)'}" >
@@ -67,9 +68,9 @@ export default {
       type: Number,
       default:null
     },
-    height: {
+    maxFiles: {
       type: Number,
-      default: 150
+      default: null
     }
   },
   data () {
@@ -82,7 +83,8 @@ export default {
       step:0,
       color: null,
       darkColor:  '#eaf4f4',
-      fileByPage: null
+      fileByPage: null,
+      error: 'test'
     }
   },
   watch : {
@@ -92,8 +94,10 @@ export default {
   },
   created () {
     this.$i18n.locale = this.lang
-    this.color =  this.$shadeColor( this.darkColor, 0.8)
-    this.darkColor = this.$shadeColor( this.darkColor, 0.6)
+    this.theme = {primary: this.darkColor }
+   // this.color =  this.$shadeColor( this.darkColor, 0.8)
+   // this.darkColor = this.$shadeColor( this.darkColor, 0.6)
+   
     this.aerisThemeListener = this.handleTheme.bind(this) 
     document.addEventListener('aerisTheme', this.aerisThemeListener)
   },
@@ -101,6 +105,7 @@ export default {
     this.extension = this.ext.split(',')
     this.fileByPage = Math.trunc(this.$el.offsetWidth/142)
     this.$el.style.width = (this.fileByPage * 142 + 62) + 'px'
+    this.ensureTheme()
     var event = new CustomEvent('aerisThemeRequest', {})
   	document.dispatchEvent(event)
   },
@@ -175,7 +180,8 @@ export default {
 	  		if (this.$el) { 
 	  		    this.color =  this.$shadeColor( this.theme.primary, 0.8)
 	  		    this.darkColor = this.$shadeColor( this.theme.primary, 0.6)
-	  			this.$el.querySelector(".files-container").style.background = this.$shadeColor( this.theme.primary, 0.8)
+	  			this.$el.querySelector(".files-container").style.background = this.color
+	  			this.$el.querySelector(".files-container div.error").style.background = this.color
 	  			var color = this.theme.primary;	
 		  		var color1 = this.$shadeColor( this.theme.primary, 0.1); //lightcolor
 		  		var color2 = this.$shadeColor( this.theme.primary, -.1); //dark color
@@ -265,6 +271,16 @@ export default {
       text-align:center;
       background: #eaf4f4;  
   }
+  .drag-drop-file .files-container > div.error {
+    position:absolute;
+    margin: 0 31px;
+    color: darkred;
+    text-align:center;
+    background: #eaf4f4;
+    width: -webkit-calc(100% - 62px);
+    width:    -moz-calc(100% - 62px);
+    width:         calc(100% - 62px);
+  }
   .drag-drop-file .files-container > div {
      height: 100%;
      line-height:150px;
@@ -281,10 +297,11 @@ export default {
     width:         calc(100% - 62px);
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38gYGAEESAAEGAAasgJOgzOKCoAAAAASUVORK5CYII=);  
   }
-  .drag-drop-file .files-container > div.drop-text > div{
+  .drag-drop-file .files-container > div.drop-text > div,
+  .drag-drop-file .files-container > div.error > div {
     line-height:1;
     vertical-align:middle;
-    display:inline-block;;
+    display:inline-block;
   }
  /*  .files-container > span{
     height:150px;
