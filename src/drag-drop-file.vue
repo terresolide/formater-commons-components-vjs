@@ -38,13 +38,13 @@
   <div class="files-container"  @drop="handleDrop" @dragover="handleDragOver" @dragexit="handleDragExit">
     <div class="error" v-show="error" @click="error = null"><div  v-html="error"></div></div>
     <div class="fa fa-chevron-left" @click="step = step - 1" :class="step <= 0 ? 'disabled':''"></div>
-    <div class="box-files"  v-show="files.length > 0"  >
+    <div class="box-files"  v-show="nbFiles > 0"  >
       <div class="files" :style="{transform:'translateX(-'+ step*142 +'px)'}" >
-         <formater-file ref="files" v-for="(file,index) in files" :key="index" :filename="file" :lang="lang" @remove="remove"></formater-file>
+         <formater-file ref="files" v-for="(file,index) in files" v-if="file" :key="index" :filename="file" :index="index" :lang="lang" @remove="remove"></formater-file>
       </div>
     </div>
-    <div class="fa fa-chevron-right" @click="step = step + 1" :class="step >= files.length -1 ? 'disabled': ''"></div>
-      <div v-show="this.files.length === 0" class="drop-text">
+    <div class="fa fa-chevron-right" @click="step = step + 1" :class="step >= nbFiles -1 ? 'disabled': ''"></div>
+      <div v-show="nbFiles === 0" class="drop-text">
          <div>{{$t('drop_files_here')}}</div>
       </div>
    </div>
@@ -88,6 +88,7 @@ export default {
       theme: null,
       step:0,
       fileByPage: null,
+      nbFiles: 0,
       error: null
     }
   },
@@ -99,8 +100,6 @@ export default {
   created () {
     this.$i18n.locale = this.lang
     this.theme = {primary: this.color }
-  
-   
     this.aerisThemeListener = this.handleTheme.bind(this) 
     document.addEventListener('aerisTheme', this.aerisThemeListener)
   },
@@ -108,7 +107,6 @@ export default {
     this.extension = this.ext.split(',')
     this.fileByPage = Math.trunc(this.$el.offsetWidth/142)
     this.$el.style.width = (this.fileByPage * 142 + 62) + 'px'
-    // this.showError('test 2 une phrase plutot longue pour faire tenir sur plusieurs lignes???')
     this.ensureTheme()
     var event = new CustomEvent('aerisThemeRequest', {})
     document.dispatchEvent(event)
@@ -151,7 +149,7 @@ export default {
       this.removeDragData(event)
     },
     checkUnderMaxFiles () {
-      if (this.maxFiles && this.files.length >= this.maxFiles) {
+      if (this.maxFiles && this.nbFiles >= this.maxFiles) {
         this.showError(this.$i18n.tc('over_maxfiles', this.maxFiles, {count:this.maxFiles}))
         return false
       } else {
@@ -232,10 +230,11 @@ export default {
         return false
       }
       if (this.extension.indexOf(this.$getExtension(file.name).toLowerCase()) >= 0) {
-        this.files.push(file.name)
-        this.step =  Math.trunc((this.files.length - 1) / this.fileByPage) * this.fileByPage
-        this.$emit('change', file)
-        var event = new CustomEvent('receiveFile', {detail:file})
+        var index = this.files.push(file.name) - 1
+        this.nbFiles++
+        this.step =  Math.trunc((this.nbFiles - 1) / this.fileByPage) * this.fileByPage
+        this.$emit('change', {index: index, filename: file.name})
+        var event = new CustomEvent('receiveFile', {detail: {index: index, file: file}})
         document.dispatchEvent(event)
         // this.testPreview(file)
         return true
@@ -258,15 +257,14 @@ export default {
         reader.readAsDataURL(file);
       }
     },
-    remove (filename) {
-      console.log('filename =' + filename)
-      var index = this.files.indexOf(filename)
+    remove (event) {
+      var index = event.index
       if (index !== false) {
-        console.log('delete file n°=' + index)
-        this.files.splice(index,1)
+        this.$set(this.files, index, null)
+        this.nbFiles--
         this.step = this.step > 0 ? this.step - 1 : 0
       }
-      var event = new CustomEvent('removeFile', {detail: filename})
+      var event = new CustomEvent('removeFile', {detail: event})
       document.dispatchEvent(event)
     },
     removeAll () {

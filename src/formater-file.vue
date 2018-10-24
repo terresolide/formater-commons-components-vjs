@@ -1,6 +1,9 @@
 /**
- * Display icon file with its name 
- * @event remove with index when click on button remove
+ * Display icon file with its name  and its index
+ * @property {String} lang code of language ('fr' or 'en')
+ * @property {String} filename
+ * @property {Integer} index  
+ * @event remove trigger  when click on button remove, with detail= {index: index, filename: filename}
  */
 <i18n>
 { 
@@ -33,6 +36,10 @@ export default {
     filename: {
       type: String,
       default: 'unknown'
+    },
+    index: {
+      type: Number,
+      default:-1
     }
   },
   data () {
@@ -53,8 +60,7 @@ export default {
   },
   methods: {
     remove () {
-      console.log('remove')
-      this.$emit('remove', this.filename)
+      this.$emit('remove', {filename: this.filename, index: this.index})
     }
   }
 }

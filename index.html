@@ -51,24 +51,27 @@
 	   })
 	   var files = []
 	   function addImage(e) {
+	     console.log(e)
 	     var reader  = new FileReader();
 	     var img = document.createElement('img')
 	     img.setAttribute('width',250)
 	      img.setAttribute('class','dragdrop')
 	     document.body.appendChild(img)
-	     files.push(e.detail.name)
-	     img.setAttribute('name', e.detail.name)
+	     files[e.detail.index]= e.detail.file.name
+	     img.setAttribute('name', e.detail.file.name)
+	     img.setAttribute('id', 'img'+ e.detail.index)
 	     reader.addEventListener("load", function () {
 	       img.src = reader.result;
 	     }, false);
 
 	     if (e.detail) {
-	       reader.readAsDataURL(e.detail);
+	       reader.readAsDataURL(e.detail.file);
 	     }
 	     console.log(files)
 	   }
 	   function removeImage(event) {
-		   var node = document.querySelector('[name="' + event.detail + '"]')
+	       console.log(event.detail)
+		   var node = document.querySelector('#img' + event.detail.index)
 		   if (node) {
 		     node.remove()
 		   }
