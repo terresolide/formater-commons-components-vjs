@@ -38,12 +38,13 @@
   <div class="files-container"  @drop="handleDrop" @dragover="handleDragOver" @dragexit="handleDragExit">
     <div class="error" v-show="error" @click="error = null"><div  v-html="error"></div></div>
     <div class="fa fa-chevron-left" @click="step = step - 1" :class="step <= 0 ? 'disabled':''"></div>
-    <div class="box-files"  v-show="nbFiles > 0"  >
+   
+    <div class="fa fa-chevron-right" @click="step = step + 1" :class="step >= nbFiles -1 ? 'disabled': ''"></div>
+     <div class="box-files"  v-show="nbFiles > 0"  >
       <div class="files" :style="{transform:'translateX(-'+ step*142 +'px)'}" >
          <formater-file ref="files" v-for="(file,index) in files" v-if="file" :key="index" :filename="file" :index="index" :lang="lang" @remove="remove"></formater-file>
       </div>
     </div>
-    <div class="fa fa-chevron-right" @click="step = step + 1" :class="step >= nbFiles -1 ? 'disabled': ''"></div>
       <div v-show="nbFiles === 0" class="drop-text">
          <div>{{$t('drop_files_here')}}</div>
       </div>
@@ -282,6 +283,7 @@ export default {
 }
 </script>
 <style>
+  /* @import "./assets/css/font-drag-drop.css";*/
   .drag-drop-file{
     display:block;
   }

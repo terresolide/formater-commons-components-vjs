@@ -37,6 +37,10 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: /\.s[a|c]ss$/,
+        loader: 'style!css!sass'
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
         options: {
@@ -51,13 +55,23 @@ module.exports = {
 //          name: '[name].[ext]?[hash]'
 //        }
 //      },
+//      {
+//    	  test: /\.(ttf|eot|woff|woff2)$/,
+//    	  loader: "file-loader",
+//    	  options: {
+//    	    name: "fonts/[name].[ext]",
+//    	  },
+//    	},
       {
-    	  test: /\.(ttf|eot|woff|woff2)$/,
-    	  loader: "file-loader",
-    	  options: {
-    	    name: "fonts/[name].[ext]",
-    	  },
-    	}
+        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        use: [{
+            loader: 'url-loader',
+            options: {
+                limit: 10000,
+                name: 'assets/fonts/[name].[hash:7].[ext]'
+            }
+        }]
+    }
       
     ]
   },
