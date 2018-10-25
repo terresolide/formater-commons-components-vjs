@@ -421,9 +421,9 @@ export default {
     display: inline-block;
     margin: 0 31px;
     overflow:hidden;
-    width: -webkit-calc(100% - 62px);
-    width:    -moz-calc(100% - 62px);
-    width:         calc(100% - 62px);
+    width: -webkit-calc(100% - 64px);
+    width:    -moz-calc(100% - 64px);
+    width:         calc(100% - 64px);
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38gYGAEESAAEGAAasgJOgzOKCoAAAAASUVORK5CYII=);  
   }
   .drag-drop-file .box-files div.files{
