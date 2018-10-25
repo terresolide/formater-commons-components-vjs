@@ -299,9 +299,9 @@ export default {
     text-align:center;
     background: rgba(200,200,200,0.5);
     opacity:1;
-    width: -webkit-calc(100% - 62px);
-    width:    -moz-calc(100% - 62px);
-    width:         calc(100% - 62px);
+    width: -webkit-calc(100% - 66px);
+    width:    -moz-calc(100% - 66px);
+    width:         calc(100% - 66px);
     z-index:1;
   }
 
@@ -315,10 +315,12 @@ export default {
     line-height:150px;
     text-align:center;
     color:grey;
-    margin:0 33px;
-    width: -webkit-calc(100% - 62px);
-    width:    -moz-calc(100% - 62px);
-    width:         calc(100% - 62px);
+    border-right: 1px dotted grey;
+    border-left: 1px dotted grey;
+    margin:0 31px;
+    width: -webkit-calc(100% - 64px);
+    width:    -moz-calc(100% - 64px);
+    width:         calc(100% - 64px);
     background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAABZJREFUeNpi2r9//38gYGAEESAAEGAAasgJOgzOKCoAAAAASUVORK5CYII=);  
   }
   .drag-drop-file .files-container > div.drop-text > div,
@@ -408,11 +410,11 @@ export default {
   
   .drag-drop-file .files-container > .fa-chevron-left {
     left:0px;
-    border-right: 1px dotted grey;
+   /*border-right: 1px dotted grey;*/
   }
   .drag-drop-file .files-container > .fa-chevron-right {
     right:0px;
-    border-left:1px dotted grey;
+   /* border-left:1px dotted grey;*/
   }
   .drag-drop-file .box-files {
     position:relative;
