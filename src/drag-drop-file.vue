@@ -24,11 +24,11 @@
 <span class="drag-drop-file" :style="getWidth()">
   <div class="upload-buttons-wrapper">
       <div id="pick-files" role="button" style="z-index: 1;" @click="$refs.file.click()">
-        <i class="fa fa-folder-open"></i>
+        <i class="fmt fmt-folder-open"></i>
         <span class="ui-button-text">{{$t('select')}}</span>
       </div>
       <div id="reset-all" role="button" @click="removeAll()">
-         <span class="fa fa-close"></span>
+         <span class="fmt fmt-close"></span>
          <span class="ui-button-text">{{$t('remove')}}</span>
       </div>
        <div class="select-file">
@@ -37,9 +37,9 @@
    </div>
   <div class="files-container"  @drop="handleDrop" @dragover="handleDragOver" @dragexit="handleDragExit">
     <div class="error" v-show="error" @click="error = null"><div  v-html="error"></div></div>
-    <div class="fa fa-chevron-left" @click="step = step - 1" :class="step <= 0 ? 'disabled':''"></div>
+    <div class="fmt fmt-chevron-left" @click="step = step - 1" :class="step <= 0 ? 'disabled':''"></div>
    
-    <div class="fa fa-chevron-right" @click="step = step + 1" :class="step >= nbFiles -1 ? 'disabled': ''"></div>
+    <div class="fmt fmt-chevron-right" @click="step = step + 1" :class="step >= nbFiles -1 ? 'disabled': ''"></div>
      <div class="box-files"  v-show="nbFiles > 0"  >
       <div class="files" :style="{transform:'translateX(-'+ step*142 +'px)'}" >
          <formater-file ref="files" v-for="(file,index) in files" v-if="file" :key="index" :filename="file" :index="index" :lang="lang" @remove="remove"></formater-file>
@@ -283,7 +283,7 @@ export default {
 }
 </script>
 <style>
-  /* @import "./assets/css/font-drag-drop.css";*/
+  @import "./assets/css/font-drag-drop.css";
   .drag-drop-file{
     display:block;
   }
@@ -312,7 +312,9 @@ export default {
      line-height:150px;
      text-align:left;
   }
-
+  .drag-drop-file .files-container > div .fmt {
+    line-height:1em;
+  }
   .drag-drop-file .files-container > div.drop-text {
     line-height:150px;
     text-align:center;
@@ -399,22 +401,22 @@ export default {
     width: 100%;
     height: 100%;
   }
-  .drag-drop-file .files-container > div.fa {
+  .drag-drop-file .files-container > div.fmt {
      position:absolute;
      opacity:0.8;
      cursor:pointer;
      padding: 0 10px;
   }
-  .drag-drop-file .files-container > div.fa.disabled {
+  .drag-drop-file .files-container > div.fmt.disabled {
     opacity:0.2;
     pointer-events:none;
   }
   
-  .drag-drop-file .files-container > .fa-chevron-left {
+  .drag-drop-file .files-container > .fmt-chevron-left {
     left:0px;
    /*border-right: 1px dotted grey;*/
   }
-  .drag-drop-file .files-container > .fa-chevron-right {
+  .drag-drop-file .files-container > .fmt-chevron-right {
     right:0px;
    /* border-left:1px dotted grey;*/
   }

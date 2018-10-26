@@ -17,9 +17,9 @@
 </i18n>
 <template>
 <span class="formater-file">
-       <span class="fa fa-close" @click="remove()" :title="$t('remove')"></span>
+       <span class="fmt fmt-close" @click="remove()" :title="$t('remove')"></span>
 	   <div class="file-container">
-	      <i class="fa fa-file"></i>
+	      <i class="fmt fmt-file"></i>
 	      <div>{{filename}}</div>
 	   </div>
  </span>
@@ -96,7 +96,7 @@ export default {
     margin: 10px 0 0 0;
     word-wrap: break-word;
  }
- .formater-file span.fa-close {
+ .formater-file span.fmt-close {
     position:absolute;
     top:0;
     right:12px;
@@ -104,7 +104,7 @@ export default {
     color: #cc0000;
     cursor:pointer;
  }
- .formater-file span.fa-close:hover {
+ .formater-file span.fmt-close:hover {
     color:red;
  }
 </style>
