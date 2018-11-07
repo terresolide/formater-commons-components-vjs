@@ -234,28 +234,12 @@ export default {
         var index = this.files.push(file.name) - 1
         this.nbFiles++
         this.step =  Math.trunc((this.nbFiles - 1) / this.fileByPage) * this.fileByPage
-        this.$emit('change', {index: index, filename: file.name})
-        var event = new CustomEvent('receiveFile', {detail: {index: index, file: file}})
-        document.dispatchEvent(event)
+        this.$emit('change', {type: 'add', index: index, file: file})
         // this.testPreview(file)
         return true
       } else {
         this.showError(this.$i18n.t('unsupported_extension') + ' ' + this.extension.join(', '))
         return false
-      }
-    },
-    /** function to test with image file type */
-    testPreview (file) {
-      var reader  = new FileReader();
-      var img = document.createElement('img')
-      img.setAttribute('width',250)
-      document.body.appendChild(img)
-      reader.addEventListener("load", function () {
-        img.src = reader.result;
-      }, false);
-
-      if (file) {
-        reader.readAsDataURL(file);
       }
     },
     remove (event) {
@@ -265,8 +249,7 @@ export default {
         this.nbFiles--
         this.step = this.step > 0 ? this.step - 1 : 0
       }
-      var event = new CustomEvent('removeFile', {detail: event})
-      document.dispatchEvent(event)
+      this.$emit('change', {type: 'remove', index: index, filename: event.name})
     },
     removeAll () {
      // for(var i = this.files.length - 1; i >=0; i--) {

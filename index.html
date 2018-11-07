@@ -40,7 +40,7 @@
 	<language-switcher lang="MAIN"></language-switcher>
  </div>
 <div style="width:358px;">
-   <dragdrop-file ext="png,jpg" max-files="3" lang="fr" ></dragdrop-file>
+   <dragdrop-file ext="png,jpg" max-files="3" lang="fr" @receive="receive()"></dragdrop-file>
 </div>
     <!-- le fichier build est créé lorsqu'on lance la commande build -->
   	 <script src="dist/build.js"></script> 
@@ -51,7 +51,13 @@
 	   document.addEventListener('removeFile', function (event) {
 	     removeImage(event)
 	   })
+	   var node = document.querySelector('dragdrop-file');
+	   console.log(node);
 	   var files = []
+	   function receive(e) {
+	     console.log('receive');
+	     console.log(e);
+	   }
 	   function addImage(e) {
 	     console.log(e)
 	     var reader  = new FileReader();
