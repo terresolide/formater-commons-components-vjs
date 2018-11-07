@@ -29,7 +29,7 @@ For detailed explanation on how things work, consult the [docs for vue-loader](h
 npm install terresolide/formater-commons-components-vjs
 ```
 And import one or more components in your own component
-```
+```html
   <template>
     ...
     <formater-select name="test" options="['yes', 'no']"></formater-select>
@@ -47,15 +47,9 @@ And import one or more components in your own component
   ```
 ### Directly
 You can use directly in your html page with calling the "compiled" file
-```
+```html
 <formater-select name="test" options="['yes', 'no']"></formater-select>
-<script src="https://rawgit.com/terresolide/formater-commons-components-vjs/master/dist/formater-commons-components-vjs.js"></script> 
-```
-
-Or the last taged file:
-```
-<formater-select name="test" options="['yes', 'no']"></formater-select>
-<script  src="https://cdn.rawgit.com/terresolide/formater-commons-component-vjs/[last-tag]/dist/formater-commons-components-vjs.js"/></script>
+<script  src="url_to/dist/formater-commons-components-vjs.js"/></script>
 ```
 
 
