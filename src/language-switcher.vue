@@ -66,13 +66,14 @@ export default {
     currentLanguage () {
       var event = new CustomEvent('languageChange', {detail: this.current})
       document.dispatchEvent(event)
+      // emit event language change for DrawLocal
+      this.$emit('change', this.current)
     },
     changeLanguage (key) {
       this.$i18n.locale = key
       this.current = key
       this.currentLanguage()
-      // emit event language change for DrawLocal
-      // this.$emit('languageChange', key)
+
     }
   }
 }
