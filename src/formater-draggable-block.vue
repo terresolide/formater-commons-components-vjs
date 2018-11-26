@@ -17,6 +17,14 @@ export default {
     id: {
       type: String,
       default: 'draggable-block'
+    },
+    show: {
+      type: Boolean,
+      default: false
+    },
+    position: {
+      type: Object,
+      default: null
     }
   },
   data () {
@@ -34,9 +42,11 @@ export default {
       pos: {x:0, y:0},
       top: 50,
       left: 50,
+      right: null,
       closeEnabled: false,
       layerId: null,
-      visible: false
+      visible: false,
+      parent: null
 	}
   },
   watch: {
@@ -45,6 +55,10 @@ export default {
     },
     top (newval) {
       this.$el.style.top = newval + 'px'
+    },
+    show (newval) {
+      console.log('show change' + newval)
+      this.visible = newval
     }
   },
   methods: {
@@ -79,6 +93,7 @@ export default {
       }
     },
     open (evt) {
+      console.log(evt)
       if (evt.detail.blockId !== this.id){
         return
       }
@@ -106,13 +121,10 @@ export default {
     },
     moveEnd () {
       this.selected = false
-    },
-//     draw (evt) {
-//       console.log(evt)
-//     },
-
+    }
   },
   created () {
+    console.log('created valeur de show ' + this.show)
  	this.blockContentListener = this.enableClose.bind(this) 
     document.addEventListener('blockContentEvent', this.blockContentListener)
 	
@@ -135,7 +147,13 @@ export default {
   
   },
   mounted () {
-  
+    this.visible = this.show
+    if (this.position.left) {
+      this.left = this.position.left
+    }
+    if (this.position.top) {
+      this.top = this.position.top
+    }
   },
   destroyed () {
     document.removeEventListener('blockContentEvent', this.blockContentListener)
