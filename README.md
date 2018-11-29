@@ -54,13 +54,13 @@ You can use directly in your html page with calling the "compiled" file
 
 
 ## Components
-### [dragdrop-file](https://github.com/terresolide/formater-commons-components-vjs/wiki/dragdrop-file) @inprogress
+### [dragdrop-file](https://github.com/terresolide/formater-commons-components-vjs/wiki/dragdrop-file) 
 
 ### [formater-alert-message](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-alert-message)
 
 ### [formater-attribution](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-attribution)
 
-### [formater-draggable-block](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-draggable-block)
+### [formater-draggable-block](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-draggable-block) @inprogress
 
 ### [formater-layout](https://github.com/terresolide/formater-commons-components-vjs/wiki/formater-layout)
 
