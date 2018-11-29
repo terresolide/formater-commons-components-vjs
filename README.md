@@ -13,10 +13,10 @@ npm install
 # serve with hot reload at localhost:8080
 npm run dev
 
-# build for preproduction with minification
+# build for production with minification with version number in filename
 npm run pre
 
-# build for production with minification
+# build for production with minification without version number in filename
 npm run build
 
 ```
