@@ -46,7 +46,7 @@ And import one or more components in your own component
   </script>
   ```
 ### Directly
-You can use directly in your html page with calling the "compiled" file
+You can use it directly in your html page by calling the "compiled" file
 ```html
 <formater-select name="test" options="['yes', 'no']"></formater-select>
 <script  src="url_to/dist/formater-commons-components-vjs.js"/></script>
