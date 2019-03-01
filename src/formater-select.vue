@@ -115,27 +115,31 @@ export default {
     },
     
     created(){
-        if( this.options.substr(0,1) == "[" || this.options.substr(0,1) == "{"){
+      
+        if (typeof this.options === 'object'){
+            var options = this.options
+        }else if( this.options.substr(0,1) == "[" || this.options.substr(0,1) == "{"){
         	 var options = JSON.parse( this.options.replace(/'/g, '"'));
         }else{
 
             var options = this.options.split(",");
         }
+        
        // var options = JSON.parse( this.options.replace(/'/g, '"'));
         this.indexes = options;
-        if(this.multiple){
-            
-            this.$emit( 'input', this.values)
-        }else{
-        	this.$emit( 'input', this.value); 
-        }
+        this.initDefaultValue(); // trigger value change
+//         if(this.multiple){
+//             this.$emit( 'input', this.values)
+//         }else{
+//         	this.$emit( 'input', this.value); 
+//         }
         this.computeSize();
         this.initListeners();
       
     },
     mounted(){
         this.initCss();
-        this.initDefaultValue();
+        
         var event = new CustomEvent('aerisThemeRequest', {});
         document.dispatchEvent(event);
   
@@ -202,7 +206,6 @@ export default {
                    }else{
                    	if( (this.indexes[this.defaut]
                        || this.indexes.indexOf( this.defaut )>-1))
-               
                    	this.value = this.defaut;
                    }
                }else{
