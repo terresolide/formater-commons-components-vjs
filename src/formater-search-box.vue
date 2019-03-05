@@ -3,10 +3,13 @@
 <div id="main" class="box noselect">
 <header class="box-heading" v-on:click="isdeployed = !isdeployed">
   <div class="box-title">
+     <div class="box-heading-buttons fmt-before" v-if="type != 'fill'">
+    <i class="chevron" :class="openIconClass"></i>
+  </div>
       <i  :class="headerIconClass" id="icon" v-show="headerIconClass"></i>
     <h4 no-label-float>{{title}}</h4>
   </div>
-  <div class="box-heading-buttons">
+  <div class="box-heading-buttons" v-if="type === 'fill'">
     <i class="chevron" :class="openIconClass"></i>
   </div>
 </header>
@@ -34,12 +37,16 @@ export default {
     },
     openIconClass:  {
         type: String,
-        default: 'fa fa-chevron-down'
+        default: 'fa fa-chevron-right'
     },
     title:  {
         type: String,
         default: ''
     }, 
+    type: {
+        type: String,
+        default: 'fill'
+    },
     mainClass: {
     	type: String,
     	default: ''
@@ -98,7 +105,11 @@ export default {
   	ensureTheme: function() {
   	if (this.theme) {
   		if (this.$el) { 
+  		  if (this.type === 'fill') {
   			this.$el.querySelector("header").style.background=this.theme.primary
+  		  } else {
+  		    this.$el.querySelector("header").style.color=this.theme.primary
+  		  }
   		}
   	}
   	}
@@ -120,10 +131,10 @@ export default {
     transition: 0.3s
 }
 .formater-search-box.showBody .chevron {
-    transform: rotate(-90deg)
+   transform: rotate(90deg);
 }
 .formater-search-box .chevron {
-    transition: 0.3s
+    transition: 0.3s;
 }
 
 
