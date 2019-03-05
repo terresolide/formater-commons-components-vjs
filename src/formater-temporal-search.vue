@@ -137,13 +137,12 @@ export default {
     	  return this.date2str( moment());
       },
 	handleReset: function() {
-		 this.from=""
-		 this.to=""
-		  
+		 this.from = ""
+		 this.$el.querySelector('#from').value = ""
+		 this.to = ""
+		 this.$el.querySelector('#to').value = ""
 	},
 	
-
-	  
 	handleSearch: function(e) {
 		if( this.last ){
 			this.from = "";
@@ -154,15 +153,18 @@ export default {
 		 
 		this.from =  this.$el.querySelector('#from').value
 		this.to =  this.$el.querySelector('#to').value
-		
+		var fromDefault = false;
+		var toDefault = false
 
 		if( this.from == "" ){
 			var from = this.str2date( this.daymin, "YYYY-MM-DD");
+			var fromDefault = true
 		}else{
 			var from = moment(this.from, this.format);
 		}
 		if( this.to == ""){
 			var to = this.str2date( this.daymax, "YYYY-MM-DD");
+			var toDefault = true
 		}else{
 			var to = moment(this.to, this.format);
 		}
@@ -184,6 +186,8 @@ export default {
 			
 				e.detail.end = str_to;
 			}
+			e.detail.startDefault = fromDefault
+			e.detail.endDefault = toDefault
 	    }
 	  },
 	 
@@ -194,7 +198,7 @@ export default {
 	  	
 	 ensureTheme: function() {
 	  	if ((this.$el) && (this.$el.querySelector)) {
-	  		var color3 =  this.$shadeColor( this.theme.primary, 0.8);
+	  		var color3 =  this.$shadeColor( this.theme.emphasis, 0.8);
 	  		var nodes= this.$el.querySelectorAll(".formater-input-group");
 	  		[].forEach.call(nodes, function(node){
 	  		    node.style.backgroundColor = color3;
