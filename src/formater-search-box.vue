@@ -1,5 +1,5 @@
 <template>
-<span class="formater-search-box" v-bind:class="{ showBody: isdeployed }">
+<span class="formater-search-box" v-bind:class="{ showBody: isdeployed && !disable, disable: disable }">
 <div id="main" class="box noselect">
 <header class="box-heading" v-on:click="isdeployed = !isdeployed">
   <div class="box-title">
@@ -50,6 +50,10 @@ export default {
     mainClass: {
     	type: String,
     	default: ''
+    },
+    disable: {
+        type: Boolean,
+        default: false
     }
     
     
@@ -67,6 +71,7 @@ export default {
    this.aerisThemeListener = this.handleTheme.bind(this) 
    document.addEventListener('aerisTheme', this.aerisThemeListener);
    this.isdeployed = this.deployed
+   console.log(this.disable)
   },
 
   mounted: function() {
@@ -130,7 +135,7 @@ export default {
     display: block;
     transition: 0.3s
 }
-.formater-search-box.showBody .chevron {
+.formater-search-box:not(.disable).showBody .chevron {
    transform: rotate(90deg);
 }
 .formater-search-box .chevron {
@@ -202,7 +207,15 @@ export default {
     padding: 10px;
     background-color: var(--catalog-box-header-background-color, #f5f5f5);
     border: var(--catalog-box-header-border, none);
-    cursor: pointer
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 1;
+}
+.formater-search-box.disable .box-heading {
+
+    cursor: none;
+    pointer-events: none;
+    opacity: 0.7;
 }
 .formater-search-box .box-heading .box-heading-buttons {
     display: flex;
