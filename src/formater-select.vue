@@ -1,5 +1,5 @@
 <template>
-<div class="formater-select" :class="multiple? 'formater-multiple':''">
+<div class="formater-select" :class="{'formater-multiple': multiple, disable: disable}">
 	<!-- associative -->
 	<select :id="name" :name="name" v-model="values" :multiple="multiple" :size="computedSize" v-if="cas==0" >
 		<option v-for="(item, key) in indexes" :value="key" :selected="values.indexOf(key)>-1" v-html="item"></option>
@@ -50,6 +50,10 @@ export default {
        size:{
            type: Number,
            default:null
+       },
+       disable: {
+           type: Boolean,
+           default: false
        }
     },
     computed:{
@@ -270,6 +274,10 @@ export default {
 	position: relative;
 	display: inline-block;
 	vertical-align: middle;
+}
+.formater-select.disable {
+	pointer-events: none;
+	opacity:0.8;
 }
 
 .formater-select select {

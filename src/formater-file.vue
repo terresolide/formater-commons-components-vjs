@@ -16,7 +16,7 @@
 }
 </i18n>
 <template>
-<span class="formater-file">
+<span class="formater-file" >
        <span class="fmt fmt-close" @click="remove()" :title="$t('remove')"></span>
 	   <div class="file-container">
 	      <i class="fmt fmt-file"></i>
@@ -71,6 +71,7 @@ export default {
   vertical-align:middle;
   position:relative;
 }
+
  .formater-file .file-container{
    line-height: 1;
    color:grey;

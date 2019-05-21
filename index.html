@@ -29,18 +29,18 @@
 	<formater-attribution name="machin" position="TR"></formater-attribution>
 	<formater-alert-message msg="['message 1','message 2']" ></formater-alert-message>
 	</formater-layout>
-	<formater-search-box header-icon-class="fa fa-bars" disable="true" title="Mon titre" value="index" @input="index = $event.target.value" deployed="true">
-			<formater-select width="260px" name="index2" defaut="Kp" multiple="true" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  ></formater-select>
+	<formater-search-box header-icon-class="fa fa-bars" disable-level="1" title="Mon titre" value="index" @input="index = $event.target.value" deployed="true">
+			<formater-select width="260px" name="index2" defaut="Kp" disable="true" multiple="true" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  ></formater-select>
 	</formater-search-box>
 	<formater-search-box value="test" title="truc" >
-	<formater-temporal-search lang="fr" daymin="1981-05-12"></formater-temporal-search>
+	<formater-temporal-search lang="fr" daymin="1981-05-12" disable="true"></formater-temporal-search>
 
 	</formater-search-box>
 <div style="position:relative;margin-bottom:50px;">
 	<language-switcher lang="MAIN"></language-switcher>
  </div>
 <div style="width:358px;">
-   <dragdrop-file ext="png,jpg" max-files="3" lang="fr"></dragdrop-file>
+   <dragdrop-file ext="png,jpg" max-files="3" lang="fr" disable="true"></dragdrop-file>
 </div>
     <!-- le fichier build est créé lorsqu'on lance la commande build -->
   	 <script src="dist/build.js"></script> 

@@ -1,5 +1,5 @@
 <template>
-<span class="formater-search-box" v-bind:class="{ showBody: isdeployed && !disable, disable: disable }">
+<span class="formater-search-box" v-bind:class="{ showBody: isdeployed, 'partial-disable': disableLevel === 1, disable: disableLevel ===2 }">
 <div id="main" class="box noselect">
 <header class="box-heading" v-on:click="isdeployed = !isdeployed">
   <div class="box-title">
@@ -51,9 +51,9 @@ export default {
     	type: String,
     	default: ''
     },
-    disable: {
-        type: Boolean,
-        default: false
+    disableLevel: {
+        type: Number,
+        default: 0
     }
     
     
@@ -80,7 +80,7 @@ export default {
   },
   
   computed: {
-	  
+	
   },
 
    data () {
@@ -215,6 +215,9 @@ export default {
 
     cursor: none;
     pointer-events: none;
+    opacity: 0.7;
+}
+.formater-search-box.partial-disable .box-heading {
     opacity: 0.7;
 }
 .formater-search-box .box-heading .box-heading-buttons {

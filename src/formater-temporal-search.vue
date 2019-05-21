@@ -16,7 +16,7 @@
 </i18n>
 
 <template>
-<span class="formater-temporal-search">
+<span class="formater-temporal-search" :class="{disable: disable}">
 	<div class="formater-input-group" >
 	   <span class="right">{{$t('from')}}</span>
 	  <input id="from" v-model="from" @click="errorMessage = null" @input="input"  :placeholder="date2str(daymin)" :pattern="pattern"/>
@@ -34,9 +34,11 @@
 <script>
 import AerisDatepicker from 'aeris-commons-components-vjs/src/aeris-datepicker/aeris-datepicker.vue';
 import moment from 'moment';
-import { extendMoment } from 'moment-range';
-window.momentCst = extendMoment(moment);
-
+ // (!window.momentCst) {
+ import { extendMoment } from 'moment-range';
+ // var extendMoment = (extendMoment)  => import('moment-range')
+  window.momentCst = extendMoment(moment);
+//}
 export default {
   components: {
     AerisDatepicker
@@ -61,6 +63,10 @@ export default {
     daymax:{
     	type:String,
     	default:'now'
+    },
+    disable: {
+        type: Boolean,
+        default: false
     }
   }, 
   destroyed: function() {
@@ -216,6 +222,11 @@ export default {
 
 .formater-temporal-search {
     display: block
+}
+.formater-temporal-search.disable{
+   opacity: 0.8;
+   pointer-events: none;
+   
 }
 
 .formater-temporal-search .right {

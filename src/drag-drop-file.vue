@@ -21,7 +21,7 @@
 }
 </i18n>
 <template>
-<span class="drag-drop-file" :style="getWidth()">
+<span class="drag-drop-file" :style="getWidth()" :class="{disable: disable}">
   <div class="upload-buttons-wrapper">
       <div id="pick-files" role="button" style="z-index: 1;" @click="$refs.file.click()">
         <i class="fmt fmt-folder-open"></i>
@@ -78,6 +78,10 @@ export default {
     color: {
       type: String,
       default: '#54a1a1'
+    },
+    disable: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -269,6 +273,10 @@ export default {
   @import "./assets/css/font-drag-drop.css";
   .drag-drop-file{
     display:block;
+  }
+  .drag-drop-file.disable{
+    pointer-events: none;
+    opacity:0.8;
   }
   .drag-drop-file .files-container {
     position:relative;
