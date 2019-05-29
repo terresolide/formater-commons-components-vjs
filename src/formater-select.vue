@@ -2,14 +2,14 @@
 <div class="formater-select" :class="{'formater-multiple': multiple, disable: disable}">
 	<!-- associative -->
 	<select :id="name" :name="name" v-model="values" :multiple="multiple" :size="computedSize" v-if="cas==0" >
-		<option v-for="(item, key) in indexes" :value="key" :selected="values.indexOf(key)>-1" v-html="item"></option>
+		<option v-for="(item, key) in indexes" :value="key" :selected="values.indexOf(key)>-1" v-html="item"  @mouseup="changeOption"></option>
 	</select>
 	<select :id="name" :name="name" v-model="value"  v-else-if="cas== 1" >
 		<option v-for="(item, key) in indexes" :value="key" :selected="value==key" v-html="item"></option>
 	</select>
 	<!-- non associative -->
 	<select :id="name" :name="name" v-model="values" multiple="true" :size="computedSize" v-else-if="cas==2" >
-		<option v-for="item in indexes" :value="item" :selected="values.indexOf(item)>-1" v-html="item"></option>	
+		<option v-for="item in indexes" :value="item" :selected="values.indexOf(item)>-1" v-html="item" @mouseup="changeOption" ></option>	
 	</select>
 	<select :id="name" :name="name" v-model="value"  v-else>
 		<option v-for="item in indexes" :value="item" :selected="item==value" v-html="item"></option>	
@@ -54,6 +54,10 @@ export default {
        disable: {
            type: Boolean,
            default: false
+       },
+       required: {
+           type: Boolean,
+           default: false
        }
     },
     computed:{
@@ -82,12 +86,14 @@ export default {
             searchEventListener:null,
             aerisThemeListener:null,
             selectMarkerListener:null,
-            computedSize: "auto"
+            computedSize: "auto",
+            associative: false
             
         }
     },
     watch:{
-        value:function(ev){
+        value:function(newvalue){
+             console.log('value change')
         	 var event = new CustomEvent(
        			  'selectChangeEvent', 
        			  {detail:
@@ -99,7 +105,8 @@ export default {
        	  	document.dispatchEvent(event);
             this.$emit( 'input', this.value);
         },
-        values: function(ev){
+        values: function(newvalue, old){
+          console.log('newvalue', newvalue)
         	 var event = new CustomEvent(
           			  'selectChangeEvent', 
           			  {detail:
@@ -131,6 +138,16 @@ export default {
         
        // var options = JSON.parse( this.options.replace(/'/g, '"'));
         this.indexes = options;
+        if (Object.keys(options)[0] !== "0") {
+          this.associative = true
+        }
+        if (!this.required && !this.multiple) {
+          if (this.type === 'associative') {
+            this.indexes = Object.assign({'---': '---'}, this.indexes)
+          } else {
+            this.indexes.splice(0,0, '---')
+          }
+        }
         this.initDefaultValue(); // trigger value change
 //         if(this.multiple){
 //             this.$emit( 'input', this.values)
@@ -153,15 +170,24 @@ export default {
       },
       
     methods:{
+    	changeOption(evt) {
+    	  if (!this.required && this.values.length === 1 && this.values[0] === event.target.value) {
+    	    this.values = []
+    	  }
+    	},
         handleReset(evt){
             this.initDefaultValue();
             
     	},
         handleSearch(evt){
             if(this.multiple){
+              if (this.values.length > 0 ) {
                 evt.detail[this.name] = this.values;
+              }
             }else{
+              if (this.value != '---') {
             	evt.detail[this.name] = this.value;
+              }
             }
         },
         handleTheme(theme) {
@@ -218,11 +244,10 @@ export default {
                    }else{
                        var value = this.indexes[0];
                    }
-                   console.log("value=" +value);
-                   if( this.multiple){
-                       this.values =  [ value ];
-                   }else{
+                   if( !this.multiple){
                        this.value = value;
+                   }else if (this.required) {
+                     this.values = [value]
                    }
 
            	}
