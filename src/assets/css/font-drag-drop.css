@@ -22,7 +22,7 @@
  .fa {
   line-height: 1em;
 }
- [class^="fmt-"]:before, [class*=" fmt-"]:before {
+ [class^="fmt-"]:not(.fa):before, [class*=" fmt-"]:not(.fa):before {
   font-family: "formater";
   font-style: normal;
   font-weight: normal;
