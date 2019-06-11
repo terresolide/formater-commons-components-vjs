@@ -87,13 +87,16 @@ export default {
             aerisThemeListener:null,
             selectMarkerListener:null,
             computedSize: "auto",
-            associative: false
+            associative: false,
+            initialized: false
             
         }
     },
     watch:{
         value:function(newvalue){
-             console.log('value change')
+          if (!this.initialized) {
+            this.initialized = true
+          } else {
         	 var event = new CustomEvent(
        			  'selectChangeEvent', 
        			  {detail:
@@ -102,11 +105,15 @@ export default {
        				  value: this.value
        				 }
        			  });
+             
        	  	document.dispatchEvent(event);
             this.$emit( 'input', this.value);
+          }
         },
         values: function(newvalue, old){
-          console.log('newvalue', newvalue)
+          if (!this.initialized) {
+            this.initialized = true
+          } else {
         	 var event = new CustomEvent(
           			  'selectChangeEvent', 
           			  {detail:
@@ -118,6 +125,7 @@ export default {
           	 document.dispatchEvent(event);
 
             this.$emit( 'input', this.values);
+          }
         },
 	    indexes(ev){
 			this.computeSize();
