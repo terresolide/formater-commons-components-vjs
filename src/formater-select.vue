@@ -151,9 +151,13 @@ export default {
         }
         if (!this.required && !this.multiple) {
           if (this.type === 'associative') {
-            this.indexes = Object.assign({'---': '---'}, this.indexes)
+            if (!Object.keys(this.indexes).indexOf('---') < 0) {
+            	this.indexes = Object.assign({'---': '---'}, this.indexes)
+            }
           } else {
-            this.indexes.splice(0,0, '---')
+            if (this.indexes[0] != '---') {
+            	this.indexes.splice(0,0, '---')
+            }
           }
         }
         this.initDefaultValue(); // trigger value change
