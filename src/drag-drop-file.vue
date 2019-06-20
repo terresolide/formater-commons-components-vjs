@@ -270,7 +270,7 @@ export default {
 }
 </script>
 <style>
-  @import "./assets/css/font-drag-drop.css";
+  @import "./assets/css/formater-icon.css";
   .drag-drop-file{
     display:block;
   }
