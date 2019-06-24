@@ -127,39 +127,46 @@ export default {
             this.$emit( 'input', this.values);
           }
         },
-	    indexes(ev){
-			this.computeSize();
-	    }
-       
+        options (newvalue) {
+          this.initIndexes(newvalue)
+        },
+        defaut (newvalue) {
+          if (this.multiple) {
+            this.values = [newvalue]
+          } else {
+            this.value = newvalue
+          }
+        }
     },
     
     created(){
       
-        if (typeof this.options === 'object'){
-            var options = this.options
-        }else if( this.options.substr(0,1) == "[" || this.options.substr(0,1) == "{"){
-        	 var options = JSON.parse( this.options.replace(/'/g, '"'));
-        }else{
+//         if (typeof this.options === 'object'){
+//             var options = this.options
+//         }else if( this.options.substr(0,1) == "[" || this.options.substr(0,1) == "{"){
+//         	 var options = JSON.parse( this.options.replace(/'/g, '"'));
+//         }else{
 
-            var options = this.options.split(",");
-        }
+//             var options = this.options.split(",");
+//         }
         
-       // var options = JSON.parse( this.options.replace(/'/g, '"'));
-        this.indexes = options;
-        if (Object.keys(options)[0] !== "0") {
-          this.associative = true
-        }
-        if (!this.required && !this.multiple) {
-          if (this.type === 'associative') {
-            if (!Object.keys(this.indexes).indexOf('---') < 0) {
-            	this.indexes = Object.assign({'---': '---'}, this.indexes)
-            }
-          } else {
-            if (this.indexes[0] != '---') {
-            	this.indexes.splice(0,0, '---')
-            }
-          }
-        }
+//        // var options = JSON.parse( this.options.replace(/'/g, '"'));
+//         this.indexes = options;
+//         if (Object.keys(options)[0] !== "0") {
+//           this.associative = true
+//         }
+//         if (!this.required && !this.multiple) {
+//           if (this.type === 'associative') {
+//             if (!Object.keys(this.indexes).indexOf('---') < 0) {
+//             	this.indexes = Object.assign({'---': '---'}, this.indexes)
+//             }
+//           } else {
+//             if (this.indexes[0] != '---') {
+//             	this.indexes.splice(0,0, '---')
+//             }
+//           }
+//         }
+        this.initIndexes(this.options)
         this.initDefaultValue(); // trigger value change
 //         if(this.multiple){
 //             this.$emit( 'input', this.values)
@@ -186,6 +193,33 @@ export default {
     	  if (!this.required && this.values.length === 1 && this.values[0] === event.target.value) {
     	    this.values = []
     	  }
+    	},
+    	initIndexes(options) {
+    	  if (typeof options === 'object'){
+          	var indexes = options
+      	  }else if( options.substr(0,1) == "[" || options.substr(0,1) == "{"){
+      	 	var indexes = JSON.parse( options.replace(/'/g, '"'));
+      	  }else{
+
+          	var indexes = options.split(",");
+      	  }
+      
+     	  // var options = JSON.parse( this.options.replace(/'/g, '"'));
+     	  this.indexes = indexes;
+	      if (Object.keys(indexes)[0] !== "0") {
+	        this.associative = true
+	      }
+	      if (!this.required && !this.multiple) {
+	        if (this.type === 'associative') {
+	          if (!Object.keys(this.indexes).indexOf('---') < 0) {
+	          	this.indexes = Object.assign({'---': '---'}, this.indexes)
+	          }
+	        } else {
+	          if (this.indexes[0] != '---') {
+	          	this.indexes.splice(0,0, '---')
+	          }
+	        }
+	      }
     	},
         handleReset(evt){
             this.initDefaultValue();
