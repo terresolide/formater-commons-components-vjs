@@ -246,8 +246,8 @@ export default {
                        });
                      
                    }else{
-                   	if( (this.indexes[this.defaut]
-                       || this.indexes.indexOf( this.defaut )>-1))
+                   	if( this.indexes[this.defaut]
+                       || (this.indexes.indexOf && this.indexes.indexOf( this.defaut )>-1))
                    	this.value = this.defaut;
                    }
                }else{
