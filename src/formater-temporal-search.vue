@@ -19,12 +19,12 @@
 <span class="formater-temporal-search" :class="{disable: disable}">
     <div class="formater-input-group" >
        <span class="right">{{$t('from')}}</span>
-      <input id="from" v-model="from" @click="errorMessage = null" @input="input"  :placeholder="date2str(daymin)" :pattern="pattern"/>
+      <input id="from" autocomplete="off" v-model="from" @click="errorMessage = null" @input="input"  :placeholder="date2str(daymin)" :pattern="pattern"/>
     </div>
     <aeris-datepicker for="input#from" :format="format" :lang="lang"  :daymin="daymin" :daymax="daymax"></aeris-datepicker>
     <div class="formater-input-group">
         <span class="right">{{$t('to')}}</span>
-        <input id="to" v-model="to" @click="errorMessage = null" @input="input" :placeholder="date2str(daymax)" :pattern="pattern">
+        <input id="to" autocomplete="off" v-model="to" @click="errorMessage = null" @input="input" :placeholder="date2str(daymax)" :pattern="pattern">
     </div>
     <aeris-datepicker for="input#to" :format="format" :lang="lang" :daymin="daymin" :daymax="daymax" ></aeris-datepicker> 
     <span class="error-message" v-if="errorMessage">{{errorMessage}}</span>
