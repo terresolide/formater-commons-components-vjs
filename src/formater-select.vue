@@ -55,6 +55,10 @@ export default {
            type: Boolean,
            default: false
        },
+       setValue: {
+    	     type: String,
+    	     default: null
+       },
        required: {
            type: Boolean,
            default: false
@@ -222,7 +226,7 @@ export default {
 	      }
     	},
         handleReset(evt){
-            this.initDefaultValue();
+            this.initDefaultValue(true);
             
     	},
         handleSearch(evt){
@@ -266,10 +270,10 @@ export default {
 	        }
     	},
     	
-    	initDefaultValue(){
-               if(this.defaut){
+    	initDefaultValue(reset){
+               if(this.setValue && !reset){
                    if( this.multiple){
-                   	var defaut = this.defaut.split(",");
+                   	var defaut = this.setValue.split(",");
                        if( this.type == "associative"){
                        	var values = Object.keys(this.indexes);
                        }else{
@@ -280,11 +284,28 @@ export default {
                        });
                      
                    }else{
-                   	if( this.indexes[this.defaut]
-                       || (this.indexes.indexOf && this.indexes.indexOf( this.defaut )>-1))
-                   	this.value = this.defaut;
+                   	if( this.indexes[this.setValue]
+                       || (this.indexes.indexOf && this.indexes.indexOf( this.setValue )>-1))
+                   	this.value = this.setValue;
                    }
-               }else{
+               } else if (this.defaut) {
+            	   if( this.multiple){
+                      	var defaut = this.defaut.split(",");
+                          if( this.type == "associative"){
+                          	var values = Object.keys(this.indexes);
+                          }else{
+                          	var values = this.indexes;
+                          }
+                          this.values = values.filter(function(n){
+                          		return defaut.indexOf(n)>-1;
+                          });
+                        
+                      }else{
+                      	if( this.indexes[this.defaut]
+                          || (this.indexes.indexOf && this.indexes.indexOf( this.defaut )>-1))
+                      	this.value = this.defaut;
+                      }
+            	 } else {
                    if( this.type == "associative"){
                        var value = Object.keys(this.indexes)[0];
                    }else{
