@@ -62,6 +62,10 @@ export default {
        required: {
            type: Boolean,
            default: false
+       },
+       depth: {
+         type: Number,
+         default: 0
        }
     },
     computed:{
@@ -230,6 +234,9 @@ export default {
             
     	},
         handleSearch(evt){
+    	    if (typeof evt.detail.depth != 'undefined' && evt.detail.depth != this.depth) {
+    	      return
+    	    }
             if(this.multiple){
               if (this.values.length > 0 ) {
                 evt.detail[this.name] = this.values;
