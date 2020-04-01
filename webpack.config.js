@@ -5,6 +5,7 @@ var PACKAGE = require('./package.json');
 var buildVersion = PACKAGE.version;
 var buildName = PACKAGE.name;
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
 var preUrl = PACKAGE.preproduction.url + "/webcomponents/";
 var prodUrl = PACKAGE.production.url + buildName + "/" + buildVersion + "/dist/";
 
@@ -13,6 +14,7 @@ var pathsToClean = [
 ]
 
 module.exports = {
+  mode: 'production',
   entry: './src/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -24,12 +26,17 @@ module.exports = {
       {
         test: /\.vue$/,
         loader: 'vue-loader',
-        options: {
+        /*options: {
           loaders: {
         	  i18n: '@kazupon/vue-i18n-loader'
           }
           // other vue-loader options go here
-        }
+        }*/
+      },
+      {
+        resourceQuery: /blockType=i18n/,
+        type: 'javascript/auto',
+        loader: '@intlify/vue-i18n-loader'
       },
       {
         test: /\.js$/,
@@ -37,9 +44,13 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: /\.css$/,
+        use: [ 'vue-style-loader','css-loader' ]
+      },
+      /* {
         test: /\.s[a|c]ss$/,
         loader: 'style!css!sass'
-      },
+      }, */
       {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         loader: 'url-loader',
@@ -71,10 +82,12 @@ module.exports = {
                 name: 'assets/fonts/[name].[hash:7].[ext]'
             }
         }]
-    }
-      
+      }
     ]
   },
+  plugins: [
+    new VueLoaderPlugin() 
+  ],
   resolve: {
     alias: {
       'vue$': 'vue/dist/vue.esm.js'
@@ -90,6 +103,7 @@ module.exports = {
   devtool: '#eval-source-map'
 }
 if (process.env.NODE_ENV === 'development') {
+  module.exports.mode ="development"
 	module.exports.output.filename='build.js'
 }
 if (process.env.NODE_ENV === 'production') {
@@ -102,7 +116,7 @@ if (process.env.NODE_ENV === 'production') {
         NODE_ENV: '"production"'
       }
     }),
-    new CleanWebpackPlugin(pathsToClean),
+    new CleanWebpackPlugin({cleanOnceBeforeBuildPatterns:pathsToClean}),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: true,
       compress: {
