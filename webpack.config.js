@@ -4,7 +4,7 @@ var webpack = require('webpack')
 var PACKAGE = require('./package.json');
 var buildVersion = PACKAGE.version;
 var buildName = PACKAGE.name;
-var CleanWebpackPlugin = require('clean-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 var preUrl = PACKAGE.preproduction.url + "/webcomponents/";
 var prodUrl = PACKAGE.production.url + buildName + "/" + buildVersion + "/dist/";
@@ -117,12 +117,7 @@ if (process.env.NODE_ENV === 'production') {
       }
     }),
     new CleanWebpackPlugin({cleanOnceBeforeBuildPatterns:pathsToClean}),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false
-      }
-    }),
+  
     new webpack.LoaderOptionsPlugin({
       minimize: true
     })
