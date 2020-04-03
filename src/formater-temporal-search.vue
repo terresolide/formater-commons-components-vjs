@@ -157,9 +157,9 @@ export default {
       },
     handleReset: function() {
          this.from = ""
-         this.$el.querySelector('#from').value = ""
+         this.$el.querySelector('#' + this.name +'from').value = ""
          this.to = ""
-         this.$el.querySelector('#to').value = ""
+         this.$el.querySelector('#' + this.name + 'to').value = ""
     },
     
     handleSearch: function(e) {
@@ -170,8 +170,8 @@ export default {
         }
         //v-model not working??
          
-        this.from =  this.$el.querySelector('#from').value
-        this.to =  this.$el.querySelector('#to').value
+        this.from =  this.$el.querySelector('#' + this.name + 'from').value
+        this.to =  this.$el.querySelector('#' + this.name + 'to').value
         var fromDefault = false;
         var toDefault = false
 
