@@ -9,6 +9,13 @@ const VueToolsPlugin = {
 		      // return "red";
 		      return "#"+(0x1000000+(Math.round((t-R)*p)+R)*0x10000+(Math.round((t-G)*p)+G)*0x100+(Math.round((t-B)*p)+B)).toString(16).slice(1);
 		   }
+		    Vue.prototype.$buttonStyle = function (color) {
+		      return {
+		       background: color,
+		       borderColor: this.$shadeColor(color, 0.2),
+		       color: 'white'
+		      }
+		    }
 		   Vue.prototype.$getExtension = function (path) {
 		     var basename = path.split(/[\\/]/).pop(),  // extract file name from full path ...
 		     // (supports `\\` and `/` separators)
