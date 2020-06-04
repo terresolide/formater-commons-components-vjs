@@ -1,6 +1,6 @@
 {
   "name": "formater-commons-components-vjs",
-  "version": "0.23.1",
+  "version": "0.24.0",
   "description": "commons components for poleterresolide",
   "preproduction": {
     "url": "https://api.poleterresolide.fr/"

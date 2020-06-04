@@ -71,6 +71,14 @@ export default {
     name: {
       type: String,
       default: ''
+    },
+    defaultTo: {
+      type: String,
+      default: null
+    },
+    defaultFrom: {
+      type: String,
+      default: null
     }
   }, 
   destroyed: function() {
@@ -81,7 +89,14 @@ export default {
         document.removeEventListener('aerisTheme', this.aerisThemeListener);
         this.aerisThemeListener = null;
   },
-  
+  watch: {
+    defaultFrom (newvalue) {
+      this.from = this.filterDate(newvalue)
+    },
+    defaultTo (newvalue) {
+      this.to = this.filterDate(newvalue)
+    }
+  },
   created: function () {
         this.$i18n.locale = this.lang;
         this.resetEventListener = this.handleReset.bind(this) 
@@ -90,6 +105,8 @@ export default {
         document.addEventListener('aerisSearchEvent', this.searchEventListener);
         this.aerisThemeListener = this.handleTheme.bind(this) 
         document.addEventListener('aerisTheme', this.aerisThemeListener);
+        this.from = this.filterDate(this.defaultFrom)
+        this.to = this.filterDate(this.defaultTo)
   },
 
   mounted: function(){
@@ -138,7 +155,14 @@ export default {
           document.dispatchEvent(event);
          
       },
-      date2str(  date){
+      filterDate (date) {
+        if (date) {
+          return this.date2str(this.str2date(date.substr(0, 10), 'YYYY-MM-DD'), this.format)
+        } else {
+          return ''
+        }
+      },
+      date2str( date){
           if (date === 'now') {
             return moment().format(this.format)
           } else {
