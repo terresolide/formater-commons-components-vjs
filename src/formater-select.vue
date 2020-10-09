@@ -101,6 +101,9 @@ export default {
         }
     },
     watch:{
+        setValue (newvalue) {
+          this.initDefaultValue(false)
+        },
         value:function(newvalue){
           if (!this.initialized) {
             this.initialized = true
