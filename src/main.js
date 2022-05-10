@@ -20,6 +20,7 @@ Vue.use(VueTools)
 
 import AerisTheme from 'aeris-commons-components-vjs/src/aeris-theme/aeris-theme.vue';
 import FormaterAlertMessage from './formater-alert-message.vue'
+import FormaterDatepicker from './formater-datepicker.vue'
 import FormaterAttribution from './formater-attribution.vue'
 import FormaterDraggableBlock from './formater-draggable-block.vue'
 import FormaterLayout from './formater-layout.vue'
@@ -35,8 +36,8 @@ import DragdropFile from './drag-drop-file.vue'
 ljs.addAliases({
 	dep: [
 	    'https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', 
-	    'https://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.4.1/document-register-element.js',
-	    'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js'
+	    'https://cdnjs.cloudflare.com/ajax/libs/document-register-element/1.4.1/document-register-element.js' //,
+	  //  'https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment-with-locales.min.js'
 	    ]
 })
 ljs.load('dep', function() {
@@ -78,6 +79,7 @@ ljs.load('dep', function() {
         registerElement('formater-temporal-search', FormaterTemporalSearch);
         registerElement('formater-search-box', FormaterSearchBox); // register last because it can contains other component
         registerElement('language-switcher', LanguageSwitcher);
+        registerElement('formater-datepicker', FormaterDatepicker);
         registerElement('dragdrop-file', DragdropFile);
 
     }

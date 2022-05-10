@@ -21,27 +21,27 @@
        <span class="right">{{$t('from')}}</span>
       <input :id="name+'from'" autocomplete="off" v-model="from" @click="errorMessage = null" @input="input"  :placeholder="date2str(daymin)" :pattern="pattern"/>
     </div>
-    <aeris-datepicker :for="'input#' + name + 'from'" :format="format" :lang="lang"  :daymin="daymin" :daymax="daymax"></aeris-datepicker>
+    <formater-datepicker :for="'input#' + name + 'from'" :format="format" :lang="lang"  :daymin="daymin" :daymax="daymax"></formater-datepicker>
     <div class="formater-input-group">
         <span class="right">{{$t('to')}}</span>
         <input :id="name + 'to'" autocomplete="off" v-model="to" @click="errorMessage = null" @input="input" :placeholder="date2str(daymax)" :pattern="pattern">
     </div>
-    <aeris-datepicker :for="'input#' + name + 'to'" :format="format" :lang="lang" :daymin="daymin" :daymax="daymax" ></aeris-datepicker> 
+    <formater-datepicker :for="'input#' + name + 'to'" :format="format" :lang="lang" :daymin="daymin" :daymax="daymax" ></formater-datepicker> 
     <span class="error-message" v-if="errorMessage">{{errorMessage}}</span>
 </span>
 </template>
 
 <script>
-import AerisDatepicker from 'aeris-commons-components-vjs/src/aeris-datepicker/aeris-datepicker.vue';
+import FormaterDatepicker from './formater-datepicker.vue';
 import moment from 'moment';
  // (!window.momentCst) {
- import { extendMoment } from 'moment-range';
+//  import { extendMoment } from 'moment-range';
  // var extendMoment = (extendMoment)  => import('moment-range')
-  window.momentCst = extendMoment(moment);
+ // window.momentCst = extendMoment(moment);
 //}
 export default {
   components: {
-    AerisDatepicker
+    FormaterDatepicker
   },
   props: {
       lang:  {
