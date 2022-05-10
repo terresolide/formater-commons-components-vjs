@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "aeris-commons-components-vjs": "github:aeris-data/aeris-commons-components-vjs#0.3.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "vue": "^2.6.11",
     "vue-custom-element": "^3.2.13",
     "vue-i18n": "^8.15.6",
