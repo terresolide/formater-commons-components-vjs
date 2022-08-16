@@ -51,7 +51,7 @@
 
 <div class="dp-container unselectable">
 
-<header class="dp-header">
+<header class="dp-header" :style="{background: color}">
 			<div class="dp-header-left dp-header-button" @click="prevMonth" :class="firstMonth?'disable':''">
 				<i class="fa fa-chevron-left"></i>
 			</div>
@@ -74,11 +74,11 @@
    <div class="dp-day" v-for="item in offsetBefore"></div>
 	<div class="dp-day " :class="computeDayClass(item)" v-for="item in monthDays" @click="clickDay">{{item.date()}}</div>
 </div>
-<div class="dp-selectors dp-hours" v-if="hasHour">
-<select id="hourSelect" v-model="selectedHour" @change="refreshHour">
+<div class="dp-selectors dp-hours" v-if="hasHour" :style="{color: color}">
+<select id="hourSelect" :style="{color: color}" v-model="selectedHour" @change="refreshHour">
 	<option :value="id" v-for="id in allHours">{{ id }}</option>
 </select> :
-<select id="minSelect" v-model="selectedMin" @change="refreshHour">
+<select id="minSelect" :style="{color: color}" v-model="selectedMin" @change="refreshHour">
 	<option :value="id" v-for="id in allMins">{{ id }}</option>
 </select>
 </div>
@@ -86,12 +86,12 @@
 
 <footer class="dp-footer">
 
-<div class="today-button" @click="setToToday" v-if="hasToday">{{$t('today')}}</div>
+<div class="today-button" :style="{color: color}" @click="setToToday" v-if="hasToday">{{$t('today')}}</div>
 <div class="dp-selectors" >
-<select id="monthSelect" v-model="selectedMonth" @change="refreshMonth">
+<select id="monthSelect" :style="{color: color}" v-model="selectedMonth" @change="refreshMonth">
 	<option :value="id" v-for="id in allMonthId">{{$t(allMonths[id])}}</option>
 </select>
-<select id="yearSelect" v-model="selectedYear" @change="refreshYear">
+<select id="yearSelect" :style="{color: color}" v-model="selectedYear" @change="refreshYear">
 	<option :value="item" v-for="item in allYears">{{item}}</option>
 </select>
 </div>
@@ -110,31 +110,35 @@ extendMoment(moment);
 export default {
   props: {
 	
-	lang:  {
-		type: String,
-		default: 'en'
-	},	  
-	format:  {
-		type: String,
-		default: 'DD/MM/YYYY'  
-	},
- 	for: {
-		type: String,
-		default:''
+		lang:  {
+			type: String,
+			default: 'en'
+		},	  
+		format:  {
+			type: String,
+			default: 'DD/MM/YYYY'  
+		},
+	 	for: {
+			type: String,
+			default:''
   	},
   	after: {
-		default: true,
-		type: Boolean
+			default: true,
+			type: Boolean
   	},
-	daymin:{
-		type: String,
-		default:"1970-01-01",
-		
-	},
-	daymax:{
-		type: String,
-		default:null,	
-	}
+		daymin:{
+			type: String,
+			default:"1970-01-01",
+			
+		},
+		daymax:{
+			type: String,
+			default:null,	
+		},
+		color: {
+		  type: String,
+		  default: '#39B062'
+		}
   },
   data () {
     return {
@@ -177,8 +181,8 @@ export default {
 	  this.clickListener = null;
 	  document.removeEventListener('keypress', this.closeListener);
 	  this.closeListener = null;
-	  document.removeEventListener('aerisTheme', this.aerisThemeListener);
-	  this.aerisThemeListener = null;
+// 	  document.removeEventListener('aerisTheme', this.aerisThemeListener);
+// 	  this.aerisThemeListener = null;
   },
   
   created: function() {
@@ -187,8 +191,8 @@ export default {
       document.addEventListener('mousedown', this.clickListener);
 	  this.closeListener = this.close.bind(this)
       document.addEventListener('keypress', this.closeListener);
-	  this.aerisThemeListener = this.handleTheme.bind(this) 
-	  document.addEventListener('aerisTheme', this.aerisThemeListener);
+// 	  this.aerisThemeListener = this.handleTheme.bind(this) 
+// 	  document.addEventListener('aerisTheme', this.aerisThemeListener);
 	  this.allHours = this.geneTime( 0, 23);
 	  this.allMins = this.geneTime( 0, 59);
   },
@@ -334,11 +338,11 @@ export default {
 	 			 day.style.color = "";
 	 		 })
 	 		 if( this.$el.querySelector(".dp-day.day-selected")){
-		 			this.$el.querySelector(".dp-day.day-selected").style.borderColor=this.theme.emphasis;
+		 			this.$el.querySelector(".dp-day.day-selected").style.borderColor=this.color;
 		 	 }
 	 		 
 	 		if(  this.$el.querySelector(".dp-day.is-today")){
-	 			this.$el.querySelector(".dp-day.is-today").style.color=this.theme.emphasis;
+	 			this.$el.querySelector(".dp-day.is-today").style.color=this.color;
 	 	 	}
  	  },
 	  geneTime: function(begin, end){

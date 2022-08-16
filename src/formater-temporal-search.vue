@@ -17,16 +17,16 @@
 
 <template>
 <span class="formater-temporal-search" :class="{disable: disable}">
-    <div class="formater-input-group" >
+    <div class="formater-input-group" :style="{background: background}">
        <span class="right">{{$t('from')}}</span>
       <input :id="name+'from'" autocomplete="off" v-model="from" @click="errorMessage = null" @input="input"  :placeholder="date2str(daymin)" :pattern="pattern"/>
     </div>
-    <formater-datepicker :for="'input#' + name + 'from'" :format="format" :lang="lang"  :daymin="daymin" :daymax="daymax"></formater-datepicker>
-    <div class="formater-input-group">
+    <formater-datepicker :for="'input#' + name + 'from'" :format="format" :lang="lang" :color="color" :daymin="daymin" :daymax="daymax"></formater-datepicker>
+    <div class="formater-input-group" :style="{background: background}">
         <span class="right">{{$t('to')}}</span>
         <input :id="name + 'to'" autocomplete="off" v-model="to" @click="errorMessage = null" @input="input" :placeholder="date2str(daymax)" :pattern="pattern">
     </div>
-    <formater-datepicker :for="'input#' + name + 'to'" :format="format" :lang="lang" :daymin="daymin" :daymax="daymax" ></formater-datepicker> 
+    <formater-datepicker :for="'input#' + name + 'to'" :format="format" :lang="lang" :color="color" :daymin="daymin" :daymax="daymax" ></formater-datepicker> 
     <span class="error-message" v-if="errorMessage">{{errorMessage}}</span>
 </span>
 </template>
@@ -79,15 +79,24 @@ export default {
     defaultFrom: {
       type: String,
       default: null
+    },
+    color: {
+      type: String,
+      default: '#39B062'
     }
-  }, 
+  },
+  computed: {
+    background () {
+      return  this.$shadeColor( this.color, 0.8)
+    }
+  },
   destroyed: function() {
         document.removeEventListener('aerisResetEvent', this.resetEventListener);
         this.resetEventListener = null;
         document.removeEventListener('aerisSearchEvent', this.searchEventListener);
         this.searchEventListener = null;
-        document.removeEventListener('aerisTheme', this.aerisThemeListener);
-        this.aerisThemeListener = null;
+//         document.removeEventListener('aerisTheme', this.aerisThemeListener);
+//         this.aerisThemeListener = null;
   },
   watch: {
     defaultFrom (newvalue) {
@@ -103,8 +112,8 @@ export default {
         document.addEventListener('aerisResetEvent', this.resetEventListener);
         this.searchEventListener = this.handleSearch.bind(this) 
         document.addEventListener('aerisSearchEvent', this.searchEventListener);
-        this.aerisThemeListener = this.handleTheme.bind(this) 
-        document.addEventListener('aerisTheme', this.aerisThemeListener);
+//         this.aerisThemeListener = this.handleTheme.bind(this) 
+//         document.addEventListener('aerisTheme', this.aerisThemeListener);
         this.from = this.filterDate(this.defaultFrom)
         this.to = this.filterDate(this.defaultTo)
   },
@@ -118,9 +127,9 @@ export default {
    data () {
     return {
         searchEventListener: null,
-           resetEventListener: null,
-           aerisThemeListener:null,
-           theme:null,
+        resetEventListener: null,
+      //     aerisThemeListener:null,
+      //    theme:null,
         from:null,
         to:null,
         old:{ from:null, to: null},
@@ -128,15 +137,7 @@ export default {
         hasChanged:false
     }
   },
- 
-  updated: function() {
-  },
-
-  
   methods: {
-      close:function(){
-          console.log("close");
-      },
       input: function(e){
           //Impossible de déclencher un événement avec this.$emit sur le composant??
           // Apparemment c'est une question de profondeur.
@@ -232,23 +233,22 @@ export default {
             e.detail.startDefault = fromDefault
             e.detail.endDefault = toDefault
         }
-      },
-     
-      handleTheme: function(theme) {
-              this.theme = theme.detail;
-            this.ensureTheme();
-      },
+      }   
+//       handleTheme: function(theme) {
+//               this.theme = theme.detail;
+//             this.ensureTheme();
+//       },
           
-     ensureTheme: function() {
-          if ((this.$el) && (this.$el.querySelector)) {
-              var color3 =  this.$shadeColor( this.theme.emphasis, 0.8);
-              var nodes= this.$el.querySelectorAll(".formater-input-group");
-              [].forEach.call(nodes, function(node){
-                  node.style.backgroundColor = color3;
-              })
+//      ensureTheme: function() {
+//           if ((this.$el) && (this.$el.querySelector)) {
+//               var color3 =  this.$shadeColor( this.theme.emphasis, 0.8);
+//               var nodes= this.$el.querySelectorAll(".formater-input-group");
+//               [].forEach.call(nodes, function(node){
+//                   node.style.backgroundColor = color3;
+//               })
               
-          }
-     }
+//           }
+//      }
   }
 }
  

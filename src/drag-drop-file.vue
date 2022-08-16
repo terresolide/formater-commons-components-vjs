@@ -87,7 +87,7 @@ export default {
   data () {
     return {
       extension: [],
-      aerisThemeListener: null,
+    //  aerisThemeListener: null,
       files: [],
      // files: [{name:'machin.png'},{name: 'chose.jpg'}, {name:'bidule.gif'}],
       theme: null,
@@ -97,6 +97,14 @@ export default {
       error: null
     }
   },
+  computed: {
+    lightColor () {
+      return this.$shadeColor( this.color, 0.8) //lightcolor
+    }, 
+    darkColor () {
+      return  this.$shadeColor( this.color, 0.6)
+    }
+  },
   watch : {
     lang (newvalue) {
       this.$i18n.locale = newvalue
@@ -104,17 +112,17 @@ export default {
   },
   created () {
     this.$i18n.locale = this.lang
-    this.theme = {primary: this.color }
-    this.aerisThemeListener = this.handleTheme.bind(this) 
-    document.addEventListener('aerisTheme', this.aerisThemeListener)
+//     this.theme = {primary: this.color }
+//     this.aerisThemeListener = this.handleTheme.bind(this) 
+//     document.addEventListener('aerisTheme', this.aerisThemeListener)
   },
   mounted () { 
     this.extension = this.ext.split(',')
     this.fileByPage = Math.trunc(this.$el.offsetWidth/142)
     this.$el.style.width = (this.fileByPage * 142 + 62) + 'px'
     this.ensureTheme()
-    var event = new CustomEvent('aerisThemeRequest', {})
-    document.dispatchEvent(event)
+//     var event = new CustomEvent('aerisThemeRequest', {})
+//     document.dispatchEvent(event)
   },
   destroyed () {
     document.removeEventListener('aerisTheme', this.aerisThemeListener)
@@ -185,20 +193,17 @@ export default {
         ev.dataTransfer.clearData();
       }
     },
-    handleTheme: function(theme) {
-      this.theme = theme.detail
-      this.ensureTheme()
-    },
+//     handleTheme: function(theme) {
+//       this.theme = theme.detail
+//       this.ensureTheme()
+//     },
     ensureTheme: function() {
-      if (this.theme) {
-        this.lightColor =  this.$shadeColor( this.theme.primary, 0.8)
-        this.darkColor = this.$shadeColor( this.theme.primary, 0.6)
         if (this.$el && this.$el.querySelector) { 
           this.$el.querySelector(".files-container").style.background = this.lightColor
-          var color = this.theme.primary;  
-          var color1 = this.$shadeColor( this.theme.primary, 0.1); //lightcolor
-          var color2 = this.$shadeColor( this.theme.primary, -.1); //dark color
-          var color3 = this.$shadeColor( this.theme.primary, 0.2);
+          var color = this.color
+          var color1 = this.$shadeColor( this.color, 0.1); //lightcolor
+          var color2 = this.$shadeColor( this.color, -.1); //dark color
+          var color3 = this.$shadeColor( this.color, 0.2);
                 
           this.$el.querySelectorAll("[role='button']").forEach(function (button) {
               button.style.background = color
@@ -222,7 +227,6 @@ export default {
             })
             
           })
-        }
       }
     },
     readUrl (event) {

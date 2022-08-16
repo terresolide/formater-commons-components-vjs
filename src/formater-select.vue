@@ -31,7 +31,7 @@ export default {
            type:String,
            default:"auto"
        },
-      color:{
+       color:{
            type: String,
            default:null
        },
@@ -69,42 +69,41 @@ export default {
        }
     },
     computed:{
-        cas(){
-            if( this.type == "associative" ){
-                if(this.multiple){
-                    return 0;
-                }else{
-                    return 1;
-                }
-            }else{
-                if(this.multiple){
-                    return 2;
-                }else{
-                    return 3;
-                }
-            }
-        }    
-    },
-    data(){
-        return {
-            value:'', 
-            values:[],
-            indexes: [], 
-            resetEventListener: null, 
-            searchEventListener:null,
-            aerisThemeListener:null,
-            selectMarkerListener:null,
-            computedSize: "auto",
-            associative: false,
-            initialized: false
-            
+      cas () {
+        if (this.type == "associative") {
+          if (this.multiple) {
+            return 0;
+          } else {
+            return 1;
+          }
+        } else {
+          if (this.multiple) {
+            return 2;
+          } else {
+            return 3;
+          }
         }
+      }    
+    },
+    data () {
+      return {
+        value:'', 
+        values:[],
+        indexes: [], 
+        resetEventListener: null, 
+        searchEventListener:null,
+      //  aerisThemeListener:null,
+        selectMarkerListener:null,
+        computedSize: "auto",
+        associative: false,
+        initialized: false
+      }
     },
     watch:{
         setValue (newvalue) {
           this.initDefaultValue(false)
         },
-        value:function(newvalue){
+        value (newvalue) {
           if (!this.initialized) {
             this.initialized = true
           } else {
@@ -114,27 +113,25 @@ export default {
        			  	{
        				  name: this.name, 
        				  value: this.value
-       				 }
+       				  }
        			  });
-             
        	  	document.dispatchEvent(event);
-            this.$emit( 'input', this.value);
+            this.$emit('input', this.value);
           }
         },
-        values: function(newvalue, old){
+        values (newvalue, old) {
           if (!this.initialized) {
             this.initialized = true
           } else {
-        	 var event = new CustomEvent(
-          			  'selectChangeEvent', 
-          			  {detail:
-          			  	{
-          				  name: this.name, 
-          				  values: this.values
-          				 }
-          			  });
-          	 document.dispatchEvent(event);
-
+        	  var event = new CustomEvent(
+        	    'selectChangeEvent', 
+        	    {detail:
+        	    	{
+        	    	  name: this.name, 
+        	    	  values: this.values
+        	    	}
+        	    });
+            document.dispatchEvent(event);
             this.$emit( 'input', this.values);
           }
         },
@@ -149,8 +146,7 @@ export default {
           }
         }
     },
-    
-    created(){
+    created () {
       
 //         if (typeof this.options === 'object'){
 //             var options = this.options
@@ -177,35 +173,32 @@ export default {
 //             }
 //           }
 //         }
-        this.initIndexes(this.options)
-        this.initDefaultValue(); // trigger value change
+      this.initIndexes(this.options)
+      this.initDefaultValue(); // trigger value change
 //         if(this.multiple){
 //             this.$emit( 'input', this.values)
 //         }else{
 //         	this.$emit( 'input', this.value); 
 //         }
-        this.computeSize();
-        this.initListeners();
-      
+      this.computeSize();
+      this.initListeners();
     },
-    mounted(){
-        this.initCss();
+    mounted () {
+      this.initCss();
         
-        var event = new CustomEvent('aerisThemeRequest', {});
-        document.dispatchEvent(event);
-  
+//         var event = new CustomEvent('aerisThemeRequest', {});
+//         document.dispatchEvent(event);
     },
-    destroyed() {
+    destroyed () {
     	this.removeListeners();
-      },
-      
-    methods:{
-    	changeOption(evt) {
+    },
+    methods: {
+    	changeOption (evt) {
     	  if (!this.required && this.values.length === 1 && this.values[0] === event.target.value) {
     	    this.values = []
     	  }
     	},
-    	initIndexes(options) {
+    	initIndexes (options) {
     	  if (typeof options === 'object'){
           	var indexes = options
       	  }else if( options.substr(0,1) == "[" || options.substr(0,1) == "{"){
@@ -232,102 +225,98 @@ export default {
 	        }
 	      }
     	},
-        handleReset(evt){
+      handleReset (evt) {
             this.initDefaultValue(true);
-            
-    	},
-        handleSearch(evt){
-    	    if (typeof evt.detail.depth != 'undefined' && evt.detail.depth != this.depth) {
-    	      return
-    	    }
-            if(this.multiple){
-              if (this.values.length > 0 ) {
-                evt.detail[this.name] = this.values;
-              }
-            }else{
-              if (this.value != '---') {
-            	evt.detail[this.name] = this.value;
-              }
+      },
+      handleSearch (evt) {
+  	    if (typeof evt.detail.depth != 'undefined' && evt.detail.depth != this.depth) {
+  	      return
+  	    }
+          if(this.multiple){
+            if (this.values.length > 0 ) {
+              evt.detail[this.name] = this.values;
             }
-        },
-        handleTheme(theme) {
-	  		this.theme = theme.detail;
-	  		this.ensureTheme();
-		},
-		  	
-		ensureTheme() {
-		 	if ( !this.color &&  (this.$el) && (this.$el.querySelector)) {
-		 		var color3 =  this.$shadeColor( this.theme.emphasis, 0.8);
-		 		this.$el.querySelector("select").style.backgroundColor = color3;
-		 	}
-		},
-		computeSize(){
-		    if(this.multiple){
-	            if(this.size){
-	                this.computedSize = this.size;
-	            }else{
-	                this.computedSize = Object.keys(this.indexes).length;
-	            }
-		    }
-		},
-		initCss(){
-	        if ((this.$el) && (this.$el.querySelector)) {
-	            this.$el.querySelector("select").style.width = this.width;
-	            this.$el.style.width = this.width;
-	            if(this.color){
-	                this.$el.querySelector("select").style.backgroundColor = this.color;
-	            }
+          }else{
+            if (this.value != '---') {
+          	evt.detail[this.name] = this.value;
+            }
+          }
+      },
+//       handleTheme (theme) {
+//  		      this.theme = theme.detail;
+//  		     this.ensureTheme();
+// 		  }, 	
+// 		  ensureTheme () {
+// 		   	if ( !this.color &&  (this.$el) && (this.$el.querySelector)) {
+// 		   		var color3 =  this.$shadeColor( this.color, 0.8);
+// 		   		this.$el.querySelector("select").style.backgroundColor = color3;
+// 		   	}
+// 		  },
+		  computeSize(){
+		      if(this.multiple){
+	              if(this.size){
+	                  this.computedSize = this.size;
+	              }else{
+	                  this.computedSize = Object.keys(this.indexes).length;
+	              }
+		      }
+		  },
+		  initCss () {
+	      if (this.$el && this.$el.querySelector) {
+	        this.$el.querySelector("select").style.width = this.width;
+	        this.$el.style.width = this.width;
+	        if (this.color) {
+	          // this.$el.querySelector("select").style.backgroundColor = this.color;
+	          var color3 =  this.$shadeColor( this.color, 0.8);
+	          this.$el.querySelector("select").style.backgroundColor = this.$shadeColor( this.color, 0.8)
 	        }
-    	},
-    	
+	      }
+      },
     	initDefaultValue(reset){
-               if(this.setValue && !reset){
-                   if( this.multiple){
-                   	var defaut = this.setValue.split(",");
-                       if( this.type == "associative"){
-                       	var values = Object.keys(this.indexes);
-                       }else{
-                       	var values = this.indexes;
-                       }
-                       this.values = values.filter(function(n){
-                       		return defaut.indexOf(n)>-1;
-                       });
-                     
-                   }else{
-                   	if( this.indexes[this.setValue]
-                       || (this.indexes.indexOf && this.indexes.indexOf( this.setValue )>-1))
-                   	this.value = this.setValue;
-                   }
-               } else if (this.defaut) {
-            	   if( this.multiple){
-                      	var defaut = this.defaut.split(",");
-                          if( this.type == "associative"){
-                          	var values = Object.keys(this.indexes);
-                          }else{
-                          	var values = this.indexes;
-                          }
-                          this.values = values.filter(function(n){
-                          		return defaut.indexOf(n)>-1;
-                          });
-                        
-                      }else{
-                      	if( this.indexes[this.defaut]
-                          || (this.indexes.indexOf && this.indexes.indexOf( this.defaut )>-1))
-                      	this.value = this.defaut;
-                      }
-            	 } else {
-                   if( this.type == "associative"){
-                       var value = Object.keys(this.indexes)[0];
-                   }else{
-                       var value = this.indexes[0];
-                   }
-                   if( !this.multiple){
-                       this.value = value;
-                   }else if (this.required) {
-                     this.values = [value]
-                   }
-
-           	}
+        if(this.setValue && !reset){
+           if( this.multiple){
+           	 var defaut = this.setValue.split(",");
+             if( this.type == "associative"){
+             	 var values = Object.keys(this.indexes);
+             }else{
+             	 var values = this.indexes;
+             }
+             this.values = values.filter(function (n) {
+             	 return defaut.indexOf(n)>-1;
+             })
+           }else {
+           	 if( this.indexes[this.setValue]
+               || (this.indexes.indexOf && this.indexes.indexOf( this.setValue )>-1))
+           	   this.value = this.setValue;
+           }
+        } else if (this.defaut) {
+          if( this.multiple){
+            var defaut = this.defaut.split(",");
+              if( this.type == "associative"){
+              	var values = Object.keys(this.indexes);
+              }else{
+              	var values = this.indexes;
+              }
+              this.values = values.filter(function (n) {
+              		return defaut.indexOf(n) > -1;
+              })
+            } else {
+              if( this.indexes[this.defaut]
+                  || (this.indexes.indexOf && this.indexes.indexOf( this.defaut )>-1))
+                this.value = this.defaut;
+            }
+        } else {
+           if (this.type == "associative") {
+               var value = Object.keys(this.indexes)[0];
+           }else{
+               var value = this.indexes[0];
+           }
+           if (!this.multiple) {
+             this.value = value;
+           } else if (this.required) {
+             this.values = [value]
+           }
+        }
     	},
     	selectOption( event ){
     	
@@ -346,28 +335,27 @@ export default {
     			this.value = event.detail.value;
     		}
     	},
-	    initListeners(){
-	       this.resetEventListener = this.handleReset.bind(this) 
-	       document.addEventListener('aerisResetEvent', this.resetEventListener);
-	       this.searchEventListener = this.handleSearch.bind(this) 
-	       document.addEventListener('aerisSearchEvent', this.searchEventListener);
-	       this.aerisThemeListener = this.handleTheme.bind(this) 
-	       document.addEventListener('aerisTheme', this.aerisThemeListener);
+	    initListeners () {
+	      this.resetEventListener = this.handleReset.bind(this) 
+	      document.addEventListener('aerisResetEvent', this.resetEventListener);
+	      this.searchEventListener = this.handleSearch.bind(this) 
+	      document.addEventListener('aerisSearchEvent', this.searchEventListener);
+// 	       this.aerisThemeListener = this.handleTheme.bind(this) 
+// 	       document.addEventListener('aerisTheme', this.aerisThemeListener);
 	       this.selectMarkerListener = this.selectOption.bind(this) 
 	       document.addEventListener('selectMarkerEvent', this.selectMarkerListener); 
 	    },
-	    removeListeners: function(){
-			document.removeEventListener('aerisResetEvent', this.resetEventListener);
-			this.resetEventListener = null;
-			document.removeEventListener('aerisSearchEvent', this.searchEventListener);
-			this.searchEventListener = null;
-			document.removeEventListener('aerisTheme', this.aerisThemeListener);
-	        this.aerisThemeListener = null;
-	        document.removeEventListener('selectMarkerEvent', this.selectMarkerListener);
-	        this.selectMarkerListener = null;
+	    removeListeners () {
+			  document.removeEventListener('aerisResetEvent', this.resetEventListener);
+			  this.resetEventListener = null;
+			  document.removeEventListener('aerisSearchEvent', this.searchEventListener);
+			  this.searchEventListener = null;
+// 			document.removeEventListener('aerisTheme', this.aerisThemeListener);
+// 	        this.aerisThemeListener = null;
+	      document.removeEventListener('selectMarkerEvent', this.selectMarkerListener);
+	      this.selectMarkerListener = null;
 	    }
-	}
-
+   }
 }
 
 </script>

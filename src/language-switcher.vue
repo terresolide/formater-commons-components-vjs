@@ -58,7 +58,6 @@ export default {
       document.addEventListener('languageRequest', this.languageRequestListener)
   },
   destroyed () {
-    console.log('destroyed')
     document.removeEventListener('languageRequest', this.languageRequestListener)
     this.languageRequestListener = null
   },
@@ -73,7 +72,6 @@ export default {
       this.$i18n.locale = key
       this.current = key
       this.currentLanguage()
-
     }
   }
 }

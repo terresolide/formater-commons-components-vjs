@@ -18,7 +18,7 @@ Vue.use(VueResource);
 import VueTools from './formater-tools.js'
 Vue.use(VueTools)
 
-import AerisTheme from 'aeris-commons-components-vjs/src/aeris-theme/aeris-theme.vue';
+// import AerisTheme from 'aeris-commons-components-vjs/src/aeris-theme/aeris-theme.vue';
 import FormaterAlertMessage from './formater-alert-message.vue'
 import FormaterDatepicker from './formater-datepicker.vue'
 import FormaterAttribution from './formater-attribution.vue'
@@ -70,7 +70,7 @@ ljs.load('dep', function() {
         }
      }, 100);
      function load(){
-    	  registerElement('aeris-theme', AerisTheme);
+    	//  registerElement('aeris-theme', AerisTheme);
         registerElement('formater-alert-message', FormaterAlertMessage);
         registerElement('formater-attribution', FormaterAttribution);
         registerElement('formater-draggable-block', FormaterDraggableBlock);

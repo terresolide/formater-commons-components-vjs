@@ -54,6 +54,10 @@ export default {
     disableLevel: {
         type: Number,
         default: 0
+    },
+    color: {
+      type: String,
+      default: '#39B062'
     }
     
     
@@ -62,21 +66,22 @@ export default {
   watch: {
   },
   
-  destroyed: function() {
-  	document.removeEventListener('aerisTheme', this.aerisThemeListener);
-  	this.aerisThemeListener = null;
-  },
+//   destroyed: function() {
+//   	document.removeEventListener('aerisTheme', this.aerisThemeListener);
+//   	this.aerisThemeListener = null;
+//   },
   
   created: function () {
-   this.aerisThemeListener = this.handleTheme.bind(this) 
-   document.addEventListener('aerisTheme', this.aerisThemeListener);
+//    this.aerisThemeListener = this.handleTheme.bind(this) 
+//    document.addEventListener('aerisTheme', this.aerisThemeListener);
    this.isdeployed = this.deployed
    console.log(this.disable)
   },
 
   mounted: function() {
-  	var event = new CustomEvent('aerisThemeRequest', {});
-  	document.dispatchEvent(event);
+    this.ensureTheme()
+//   	var event = new CustomEvent('aerisThemeRequest', {});
+//   	document.dispatchEvent(event);
   },
   
   computed: {
@@ -85,8 +90,8 @@ export default {
 
    data () {
     return {
-    	theme: null,
-    	aerisThemeListener: null,
+//     	theme: null,
+//     	aerisThemeListener: null,
     	hasToolbar: false,
     	isdeployed: null
     }
@@ -102,24 +107,20 @@ export default {
        
     },
   	
-  	handleTheme: function(theme) {
-  		this.theme = theme.detail
-		this.ensureTheme()
-  	},
+//   	handleTheme: function(theme) {
+//   		this.theme = theme.detail
+// 		this.ensureTheme()
+//   	},
   	
   	ensureTheme: function() {
-  	if (this.theme) {
   		if (this.$el) { 
   		  if (this.type === 'fill') {
-  			this.$el.querySelector("header").style.background=this.theme.primary
+  			this.$el.querySelector("header").style.background=this.color
   		  } else {
-  		    this.$el.querySelector("header").style.color=this.theme.primary
+  		    this.$el.querySelector("header").style.color=this.color
   		  }
   		}
-  	}
-  	}
-  	
-  	
+  	} 	
   }
 }
 </script>
