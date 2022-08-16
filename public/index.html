@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <title>Vue Example</title>
+    <style>img.dragdrop{
+      margin-top:50px;
+    }</style>
+   
+  </head>
+  <body style="height:4000px;"> 
+  <h1>Tests component in dev</h1>
+  <div style="position: fixed;margin-bottom:10px;display:block;top:0;left:0;display:block">
+     MON TEST
+  </div>
+	<!-- Call copxonents -->
+<!--  <aeris-theme id="theme2" active="true" primary="#DD9946" emphasis="#39B062"></aeris-theme> -->
+	<test-component></test-component>
+	<!-- <formater-layout> -->
+		<header><h1>mon layout test </h1> </header>
+		<aside>
+		<formater-draggable-block title="machin" show="true" color="#f5F5F5" close="true">
+		Le contenu de la boite à miracle
+		</formater-draggable-block>
+		<formater-select    width="150px"  name="autre" options="['un', 'deux', '<b>trois </b> jfsm jsmq fkjmqf jfmqsfjsmq f']" multiple="true" defaut="deux"></formater-select>
+		<formater-select    color="#39B062"  name="index0" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  @input="test"></formater-select>
+		</aside>
+	
+		<formater-select   width="260px" color="#39B062" type="associative" options="{'aa':'anatole armand jfsm jsmq fkjmqf jfmqsfjsmq f', 'am': 'alphonse monge'}"  type="associative" ></formater-select>
+		<formater-select name="truc" type="associative" defaut="hor" name="DataInterval0" options="{'sec': 'second', 'min': 'minute', 'hor':'hour', 'day':'day', 'mon':'month'}" width="260px" ></formater-select>
+	
+	<formater-attribution name="machin" position="TR"></formater-attribution>
+	<formater-alert-message msg="['message 1','message 2']" ></formater-alert-message>
+	<!-- </formater-layout> -->
+	<formater-search-box header-icon-class="fa fa-bars" disable-level="1" title="Mon titre" value="index" @input="index = $event.target.value" deployed="true">
+			<formater-select width="260px" name="index2"   multiple="true" options="['aa', 'am', 'Kp', 'Dst', 'PC', 'AE', 'SC', 'SFE', 'Qdays', 'CKdays']"  ></formater-select>
+	</formater-search-box>
+	<formater-search-box  value="test" title="truc" >
+	<formater-temporal-search lang="fr" daymin="1981-05-12" disable="false" color="#ab384f"></formater-temporal-search>
+
+	</formater-search-box>
+<div style="position:relative;margin-bottom:50px;">
+	<language-switcher lang="MAIN"></language-switcher>
+ </div>
+<div style="width:358px;">
+   <dragdrop-file ext="png,jpg" max-files="3" lang="fr" disable="false" color="#ab384f"></dragdrop-file>
+</div>
+    <!-- le fichier build est créé lorsqu'on lance la commande build -->
+  	 <script src="dist/build.js"></script> 
+	 <script>
+	   
+	   function addImage(e) {
+	     console.log(e)
+	     var reader  = new FileReader();
+	     var img = document.createElement('img')
+	     img.setAttribute('width',250)
+	      img.setAttribute('class','dragdrop')
+	     document.body.appendChild(img)
+	     files[e.detail.index]= e.detail.file.name
+	     img.setAttribute('name', e.detail.file.name)
+	     img.setAttribute('id', 'img'+ e.detail.index)
+	     reader.addEventListener("load", function () {
+	       img.src = reader.result;
+	     }, false);
+
+	     if (e.detail) {
+	       reader.readAsDataURL(e.detail.file);
+	     }
+	     console.log(files)
+	   }
+	   function removeImage(event) {
+	       console.log(event.detail)
+		   var node = document.querySelector('#img' + event.detail.index)
+		   if (node) {
+		     node.remove()
+		   }
+	   }
+	 </script>
+  </body>
+</html>
