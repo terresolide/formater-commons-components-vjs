@@ -265,10 +265,12 @@ export default {
 	      if (this.$el && this.$el.querySelector) {
 	        this.$el.querySelector("select").style.width = this.width;
 	        this.$el.style.width = this.width;
-	        if (this.color) {
+	        if (this.color && this.color !== 'transparent') {
 	          // this.$el.querySelector("select").style.backgroundColor = this.color;
 	          var color3 =  this.$shadeColor( this.color, 0.8);
 	          this.$el.querySelector("select").style.backgroundColor = this.$shadeColor( this.color, 0.8)
+	        } else {
+	          this.$el.querySelector("select").style.backgroundColor = 'transparent'
 	        }
 	      }
       },
